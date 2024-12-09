@@ -22,12 +22,19 @@ namespace Survival_Island
         public Image[] laMer;
         public BitmapImage mer = new BitmapImage(new Uri("pack://application:,,,./tile_73.png"));
 
+        private void Fenetre_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+                Canvas.SetLeft(can, Canvas.GetLeft(can) + 5);
+        }
+
         public MainWindow()
         {
             InitializeComponent();
             IM_MER_LARG = (int)can.Width / (int)mer.Width;
             IM_MER_HAUT = (int)can.Height / (int)mer.Height;
             NOMBRE_IMAGE_MER = IM_MER_HAUT * IM_MER_LARG;
+            Console.WriteLine(NOMBRE_IMAGE_MER);
             laMer = new Image[NOMBRE_IMAGE_MER];
             InitCarte();
         }
