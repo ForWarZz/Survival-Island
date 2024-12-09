@@ -19,24 +19,34 @@ namespace Survival_Island
     public partial class MainWindow : Window
     {
         public int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
-        public Image[] laMer;
-        public BitmapImage mer = new BitmapImage(new Uri("pack://application:,,,./tile_73.png"));
 
-        private void Fenetre_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Left)
-                Canvas.SetLeft(can, Canvas.GetLeft(can) + 5);
-        }
+        public Image[] laMer;
+        public BitmapImage bitmapMer;
 
         public MainWindow()
         {
             InitializeComponent();
-            IM_MER_LARG = (int)can.Width / (int)mer.Width;
-            IM_MER_HAUT = (int)can.Height / (int)mer.Height;
-            NOMBRE_IMAGE_MER = IM_MER_HAUT * IM_MER_LARG;
+
+            InitBitmaps();
+            InitCarteSize();
+
             Console.WriteLine(NOMBRE_IMAGE_MER);
-            laMer = new Image[NOMBRE_IMAGE_MER];
+
             InitCarte();
+        }
+
+        private void InitBitmaps()
+        {
+            bitmapMer = new BitmapImage(new Uri(Paths.IMAGE_MER));
+        }
+
+        private void InitCarteSize()
+        {
+            IM_MER_LARG = (int)carteBackground.Width / (int)bitmapMer.Width;
+            IM_MER_HAUT = (int)carteBackground.Height / (int)bitmapMer.Height;
+            NOMBRE_IMAGE_MER = IM_MER_HAUT * IM_MER_LARG;
+
+            laMer = new Image[NOMBRE_IMAGE_MER];
         }
 
         private void InitCarte()
@@ -46,13 +56,25 @@ namespace Survival_Island
                 for (int j = 0; j < IM_MER_LARG; j++)
                 {
                     laMer[i] = new Image();
-                    laMer[i].Source = mer;
-                    laMer[i].Width = mer.Width;
-                    laMer[i].Height = mer.Height;
-                    Canvas.SetLeft(laMer[i], j * mer.Width);
-                    Canvas.SetTop(laMer[i], i * mer.Height);
-                    can.Children.Add(laMer[i]);
+                    laMer[i].Source = bitmapMer;
+                    laMer[i].Width = bitmapMer.Width;
+                    laMer[i].Height = bitmapMer.Height;
+
+                    Canvas.SetLeft(laMer[i], j * bitmapMer.Width);
+                    Canvas.SetTop(laMer[i], i * bitmapMer.Height);
+
+                    carteBackground.Children.Add(laMer[i]);
                 }
+            }
+        }
+
+        private void Fenetre_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                Canvas.SetLeft(carteBackground, Canvas.GetLeft(carteBackground) + 5);
+                Console.WriteLine("Left");
+                Console.WriteLine(Canvas.GetLeft(carteBackground));
             }
         }
     }

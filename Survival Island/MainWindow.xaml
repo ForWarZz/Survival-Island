@@ -11,38 +11,53 @@
     Height="778"
     WindowState="Maximized"
     mc:Ignorable="d" KeyDown="Fenetre_KeyDown">
-    <Canvas
-        x:Name="bigCan"
-        Width="8000"
-        Height="8000"
-        Margin="0,0,-567,-555"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center">
-        <Canvas
-            x:Name="can"
-            Canvas.Left="1040"
-            Canvas.Top="1268"
-            Width="5920"
-            Height="5104"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
-            <Image
-                Canvas.Left="0"
-                Canvas.Top="0"
-                Width="64"
-                Height="64"
-                Source="/tile_73.png"
-                Stretch="Fill" />
+    <Grid>
+        <Canvas>
+            <Canvas
+                x:Name="carteBackground"
+                Width="4000"
+                Height="4000" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="-1130" Canvas.Top="-1619">
+            </Canvas>
         </Canvas>
+
+
         <Ellipse
             x:Name="ellips"
             Canvas.Left="3561"
             Canvas.Top="3659"
             Width="151"
             Height="170"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Fill="Black"
             Stroke="Black" />
-    </Canvas>
+
+        <StackPanel Orientation="Vertical" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar
+                    x:Name="progressVieIle"
+                    Width="300"
+                    Height="20"
+                    Value="75"
+                    Foreground="#FF9C220E"
+                    Background="#FF444444" />
+                <TextBlock
+                    x:Name="txtVieIle"
+                    Text="750 / 1000 PV" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,25,0,0">
+
+                <ProgressBar
+                    x:Name="progressVieNavire"
+                    Width="300"
+                    Height="20"
+                    Value="50"
+                    Foreground="#FF59A214"
+                    Background="#FF444444" />
+                <TextBlock
+                    x:Name="txtVieNavire"
+                    Text="500 / 1000 PV" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </Window>

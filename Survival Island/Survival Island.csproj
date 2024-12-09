@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="tile_73.png">
+    <Resource Include="images\tile_73.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
