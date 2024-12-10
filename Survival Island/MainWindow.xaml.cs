@@ -20,12 +20,10 @@ namespace Survival_Island
     public partial class MainWindow : Window
     {
         private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
+        private static readonly int VITESSE_MOUVEMENT_MER = 2;
 
         private Image[] laMer;
         private BitmapImage bitmapMer;
-
-        private DispatcherTimer mouvementMenuAccueil;
-        private bool mouvementAvant = true;
 
         public MainWindow()
         {
@@ -34,21 +32,6 @@ namespace Survival_Island
             InitBitmaps();
             InitCarteSize();
             InitCarte();
-
-            InitMenuAccueil();
-        }
-
-        private void InitMenuAccueil()
-        {
-            mouvementMenuAccueil = new DispatcherTimer();
-            mouvementMenuAccueil.Interval = TimeSpan.FromMilliseconds(16);
-            mouvementMenuAccueil.Tick += MouvementMer;
-            mouvementMenuAccueil.Start();
-        }
-
-        private void MouvementMer(object? sender, EventArgs e)
-        {
-
         }
 
         private void InitBitmaps()
