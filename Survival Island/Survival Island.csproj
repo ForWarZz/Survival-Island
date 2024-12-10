@@ -10,15 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="images\ile.png" />
+    <None Remove="images\tile_73.png" />
     <None Remove="tile_73.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\ile.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="tile_73.png">
+    <Resource Include="images\tile_73.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

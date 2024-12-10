@@ -30,17 +30,30 @@ namespace Survival_Island
         public MainWindow()
         {
             InitializeComponent();
+
             InitBitmaps();
             InitCarteSize();
-
-            Console.WriteLine(NOMBRE_IMAGE_MER);
-
             InitCarte();
+
+            InitMenuAccueil();
+        }
+
+        private void InitMenuAccueil()
+        {
+            mouvementMenuAccueil = new DispatcherTimer();
+            mouvementMenuAccueil.Interval = TimeSpan.FromMilliseconds(16);
+            mouvementMenuAccueil.Tick += MouvementMer;
+            mouvementMenuAccueil.Start();
+        }
+
+        private void MouvementMer(object? sender, EventArgs e)
+        {
+
         }
 
         private void InitBitmaps()
         {
-            bitmapMer = new BitmapImage(new Uri(Paths.IMAGE_MER));
+            bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
         }
 
         private void InitCarteSize()
@@ -88,17 +101,40 @@ namespace Survival_Island
                 double positionY = Canvas.GetTop(element);
                 Canvas.SetTop(element, positionY + y);
             }
-            
         }
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
             {
-                Canvas.SetLeft(carteBackground, Canvas.GetLeft(carteBackground) + 5);
-                Console.WriteLine("Left");
-                Console.WriteLine(Canvas.GetLeft(carteBackground));
+                DeplaceMonde(5, 0);
             }
+            else if (e.Key == Key.Right)
+            {
+                DeplaceMonde(-5, 0);
+            }
+            else if (e.Key == Key.Up)
+            {
+                DeplaceMonde(0, 5);
+            }
+            else if (e.Key == Key.Down)
+            {
+                DeplaceMonde(0, -5);
+            }
+        }
+
+        private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Êtes vous sûr de vouloir quitter le jeu ?", "Fermer le jeu", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+                Application.Current.Shutdown();
+        }
+
+        private void btnJouer_Click(object sender, RoutedEventArgs e)
+        {
+            menuAccueil.Visibility = Visibility.Hidden;
+            LancerJeu();
         }
     }
 }
