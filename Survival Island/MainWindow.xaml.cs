@@ -50,6 +50,7 @@ namespace Survival_Island
 
         private void InitCarte()
         {
+            /// Initialisation de la mer en fond
             for (int i = 0; i < IM_MER_HAUT; i++)
             {
                 for (int j = 0; j < IM_MER_LARG; j++)
@@ -68,12 +69,16 @@ namespace Survival_Island
         }
         private void InitIle()
         {
+            /// REMPLACER CE CODE PAR LA CLASSE DE L'ILE
             Image ile = new Image();
+
             ile.Source = bitmapIle;
             ile.Width = bitmapIle.PixelWidth;
             ile.Height = bitmapIle.PixelHeight;
+
             Canvas.SetLeft(ile, 1750);
             Canvas.SetTop(ile, 1700);
+
             carteBackground.Children.Add(ile);
         }
 
