@@ -30,6 +30,8 @@ namespace Survival_Island
         public Image BateauVert = new Image();
 
         private DispatcherTimer MinuterieGlobal;
+        private bool MouvementDroitBolleen, MouvementGaucheBolleen, MouvementHautBolleen, MouvementBasBolleen;
+
 
         Joueur joueur;
 
@@ -73,7 +75,29 @@ namespace Survival_Island
             // Appliquer la rotation à l'image
             joueur.RotateImage(joueur.AngleActuelDuBateau);
 
+            verifieDeplacement();
+
             this.Focus();
+        }
+
+        private void verifieDeplacement()
+        {
+            if  (MouvementDroitBolleen == true)
+                {
+                    DeplaceMonde(-5, 0);
+                }
+            else if (MouvementGaucheBolleen == true)
+            {
+                DeplaceMonde(5, 0);
+            }
+            else if (MouvementHautBolleen == true)
+                {
+                DeplaceMonde(0, 5);
+            }
+            else if (MouvementBasBolleen == true)
+            {
+                DeplaceMonde(0, -5);
+            }
         }
 
         private void InitBitmaps()
@@ -183,6 +207,7 @@ namespace Survival_Island
             foreach (UIElement element in carteBackground.Children)
             {
                 // Ignorer le joueur et autres éléments ne devant pas bouger
+                
                 double positionX = Canvas.GetLeft(element);
                 Canvas.SetLeft(element, positionX + x);
 
@@ -197,19 +222,19 @@ namespace Survival_Island
             {
                 if (e.Key == Key.D)
                 {
-                    joueur.MouvementDroitBolleen = false; // Stop moving right
+                    MouvementDroitBolleen = false; // Stop moving right
                 }
                 else if (e.Key == Key.Q)
                 {
-                    joueur.MouvementGaucheBolleen = false; // Stop moving left
+                    MouvementGaucheBolleen = false; // Stop moving left
                 }
                 else if (e.Key == Key.Z)
                 {
-                    joueur.MouvementHautBolleen = false; // Stop moving up
+                    MouvementHautBolleen = false; // Stop moving up
                 }
                 else if (e.Key == Key.S)
                 {
-                    joueur.MouvementBasBolleen = false; // Stop moving down
+                    MouvementBasBolleen = false; // Stop moving down
                 }
             }
         }
@@ -241,21 +266,24 @@ namespace Survival_Island
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Left)
+            if (boutonJouerClique)
             {
-                DeplaceMonde(5, 0);
-            }
-            else if (e.Key == Key.Right)
-            {
-                DeplaceMonde(-5, 0);
-            }
-            else if (e.Key == Key.Up)
-            {
-                DeplaceMonde(0, 5);
-            }
-            else if (e.Key == Key.Down)
-            {
-                DeplaceMonde(0, -5);
+                if (e.Key == Key.D)
+                {
+                    MouvementDroitBolleen = true; // Start moving right
+                }
+                else if (e.Key == Key.Q)
+                {
+                    MouvementGaucheBolleen = true; // Start moving left
+                }
+                else if (e.Key == Key.Z)
+                {
+                    MouvementHautBolleen = true; // Start moving up
+                }
+                else if (e.Key == Key.S)
+                {
+                    MouvementBasBolleen = true; // Start moving down
+                }
             }
         }
 
