@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Survival_Island.joueur;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,20 +23,19 @@ namespace Survival_Island
         private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
 
         private Image[] laMer;
-        private BitmapImage bitmapMer, bitmapIle, bitmapBateauRouge, bitmapBateauVert, bitmapIleC;
         private Image ile;
 
-        public Image BateauRouge = new Image();
+        private BitmapImage bitmapMer, bitmapIle, bitmapBateau, bitmapBouletCanon, bitmapIleC;
 
-        public Image BateauVert = new Image();
+        private DispatcherTimer minuterieJeu;
+        private bool deplacementHaut, deplacementBas, deplacementDroite, deplacementGauche;
 
-        private DispatcherTimer MinuterieGlobal;
-        private bool MouvementDroitBolleen, MouvementGaucheBolleen, MouvementHautBolleen, MouvementBasBolleen;
+        private Joueur joueur;
+        private bool canonActif = false;
+
+        private bool jouer = false;
 
 
-        Joueur joueur;
-
-        private bool boutonJouerClique = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -47,80 +47,42 @@ namespace Survival_Island
 
         private void InitMinuterie()
         {
-
-            MinuterieGlobal = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(6) // Environ 60 FPS
-            };
-            MinuterieGlobal.Tick += Jeu;
-            MinuterieGlobal.Start();
+            CompositionTarget.Rendering += Jeu;
         }
 
         private void Jeu(object? sender, EventArgs e)
         {
+            CheckDeplacement();
 
+            if (canonActif)
+                joueur.TirerBoulet();
 
-            if (joueur.CannonActif && joueur.TempsDernierShoot <= 0)
-            {
-                joueur.Shoot();
-                joueur.TempsDernierShoot = joueur.VitesseRechargement;
-            }
-            joueur.TempsDernierShoot -= 1;
-            // Calculer l'angle cible entre le centre de l'image et la souris
-            double targetAngle = joueur.CalculateAngle(joueur.PositionSouris);
-
-            // Interpoler vers l'angle cible
-            joueur.AngleActuelDuBateau = joueur.InterpolateAngle(joueur.AngleActuelDuBateau, targetAngle, joueur.RotationSpeed);
-
-            // Appliquer la rotation à l'image
-            joueur.RotateImage(joueur.AngleActuelDuBateau);
-
-            verifieDeplacement();
-
-            this.Focus();
+            joueur.DeplacerBoulets();
         }
 
-        private void verifieDeplacement()
+        private void CheckDeplacement()
         {
-            if  (MouvementDroitBolleen == true)
-                {
-                    DeplaceMonde(-5, 0);
-                }
-            else if (MouvementGaucheBolleen == true)
-            {
-                DeplaceMonde(5, 0);
-            }
-            else if (MouvementHautBolleen == true)
-                {
-                DeplaceMonde(0, 5);
-            }
-            else if (MouvementBasBolleen == true)
-            {
-                DeplaceMonde(0, -5);
-            }
+            double vitesse = joueur.caracteristique.vitesse;
+
+            if  (deplacementDroite)
+                DeplaceMonde(-vitesse, 0);
+            else if (deplacementGauche)
+                DeplaceMonde(vitesse, 0);
+            else if (deplacementHaut)
+                DeplaceMonde(0, vitesse);
+            else if (deplacementBas)
+                DeplaceMonde(0, -vitesse);
         }
 
         private void InitBitmaps()
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
             bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
-            bitmapBateauRouge = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
-            bitmapBateauVert = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
-        }
-        private void InitBateaux()
-        {
-            BateauRouge.Source = bitmapBateauRouge;
-            BateauRouge.Width = 60;
-            BateauRouge.Height = 100;
-            Canvas.SetLeft(BateauRouge, 1650);
-            Canvas.SetTop(BateauRouge, 1600);
 
-            BateauVert.Source = bitmapBateauVert;
-            BateauVert.Width = 60;
-            BateauVert.Height = 100;
-            Canvas.SetLeft(BateauVert, 1650);
-            Canvas.SetTop(BateauVert, 1700);
+            bitmapBateau = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
+            bitmapBouletCanon = new BitmapImage(new Uri(Chemin.IMAGE_BOULET_CANON));
         }
+
         private void InitCarteSize()
         {
             IM_MER_LARG = (int)carteBackground.Width / (int)bitmapMer.Width;
@@ -168,38 +130,11 @@ namespace Survival_Island
         {
             hudJoueur.Visibility = Visibility.Visible;
             InitIle();
-            // Faire spawn le navire du joueur
-            InitBateaux();
 
-            joueur = new Joueur(BateauRouge, carteBackground);
-            ChoisirCouleurBateau();
+            joueur = new Joueur(bitmapBateau, bitmapBouletCanon, carteBackground);
+            joueur.ApparaitreBateau();
+
             InitMinuterie();
-
-        }
-        private void ChoisirCouleurBateau()
-        {
-            // Afficher une boîte de dialogue pour le choix de la couleur
-            MessageBoxResult result = MessageBox.Show(
-                "Choisissez la couleur de votre bateau :\n\n" +
-                "Cliquez sur Oui pour Rouge ou sur Non pour Vert.",
-                "Choix de la couleur du bateau",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question
-            );
-
-            // Appliquer la couleur en fonction du choix
-            if (result == MessageBoxResult.Yes)
-            {
-                joueur.RedShip = BateauRouge; // Couleur rouge
-
-                carteBackground.Children.Add(BateauRouge);
-            }
-            else if (result == MessageBoxResult.No)
-            {
-                joueur.RedShip = BateauVert; // Couleur verte
-
-                carteBackground.Children.Add(BateauVert);
-            }
         }
 
         private void DeplaceMonde(double x, double y)
@@ -207,8 +142,9 @@ namespace Survival_Island
             foreach (UIElement element in carteBackground.Children)
             {
                 // Ignorer le joueur et autres éléments ne devant pas bouger
-                if (element == joueur.RedShip)
+                if (element == joueur.bateau)
                     continue;
+
                 double positionX = Canvas.GetLeft(element);
                 Canvas.SetLeft(element, positionX + x);
 
@@ -219,23 +155,26 @@ namespace Survival_Island
 
         private void Fenetre_KeyUp(object sender, KeyEventArgs e)
         {
-            if (boutonJouerClique)
+            if (jouer)
             {
                 if (e.Key == Key.D)
                 {
-                    MouvementDroitBolleen = false; // Stop moving right
+                    deplacementDroite = false;
                 }
-                else if (e.Key == Key.Q)
+
+                if (e.Key == Key.Q)
                 {
-                    MouvementGaucheBolleen = false; // Stop moving left
+                    deplacementGauche = false;
                 }
-                else if (e.Key == Key.Z)
+
+                if (e.Key == Key.Z)
                 {
-                    MouvementHautBolleen = false; // Stop moving up
+                    deplacementHaut = false;
                 }
-                else if (e.Key == Key.S)
+
+                if (e.Key == Key.S)
                 {
-                    MouvementBasBolleen = false; // Stop moving down
+                    deplacementBas = false;
                 }
             }
         }
@@ -243,47 +182,57 @@ namespace Survival_Island
 
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (boutonJouerClique)
-                joueur.CannonActif = true; // Set cannon active when mouse button is pressed
-
+            if (jouer)
+                canonActif = true;
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (boutonJouerClique)
-                joueur.CannonActif = false; // Set cannon inactive when mouse button is released
+            if (jouer)
+                canonActif = false;
         }
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
         {
-            if (boutonJouerClique)
+/*            if (boutonJouerClique)
             {
                 // Récupérer la position de la souris
                 joueur.PositionSouris = e.GetPosition(this);
 
+            }*/
+
+            if (jouer)
+            {
+                Console.WriteLine("BOUGE");
+
+                Point positionSouris = e.GetPosition(carteBackground);
+                joueur.UpdateOrientation(positionSouris);
             }
 
         }
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
-            if (boutonJouerClique)
+            if (jouer)
             {
                 if (e.Key == Key.D)
                 {
-                    MouvementDroitBolleen = true; // Start moving right
+                    deplacementDroite = true;
                 }
-                else if (e.Key == Key.Q)
+
+                if (e.Key == Key.Q)
                 {
-                    MouvementGaucheBolleen = true; // Start moving left
+                    deplacementGauche = true;
                 }
-                else if (e.Key == Key.Z)
+
+                if (e.Key == Key.Z)
                 {
-                    MouvementHautBolleen = true; // Start moving up
+                    deplacementHaut = true;
                 }
-                else if (e.Key == Key.S)
+
+                if (e.Key == Key.S)
                 {
-                    MouvementBasBolleen = true; // Start moving down
+                    deplacementBas = true;
                 }
             }
         }
@@ -299,7 +248,7 @@ namespace Survival_Island
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
             menuAccueil.Visibility = Visibility.Hidden;
-            boutonJouerClique = true;
+            jouer = true;
             LancerJeu();
         }
     }
