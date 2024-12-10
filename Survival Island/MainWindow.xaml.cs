@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Survival_Island
 {
@@ -18,23 +19,28 @@ namespace Survival_Island
     /// 
     public partial class MainWindow : Window
     {
-        public int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
+        private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
 
-        public Image[] laMer;
-        public BitmapImage bitmapMer, bitmapIle;
+        private Image[] laMer;
+        private BitmapImage bitmapMer;
+
+        private DispatcherTimer mouvementMenuAccueil;
+        private bool mouvementAvant = true;
 
         public MainWindow()
         {
             InitializeComponent();
             InitBitmaps();
             InitCarteSize();
+
+            Console.WriteLine(NOMBRE_IMAGE_MER);
+
             InitCarte();
         }
 
         private void InitBitmaps()
         {
             bitmapMer = new BitmapImage(new Uri(Paths.IMAGE_MER));
-            bitmapIle = new BitmapImage(new Uri(Paths.IMAGE_ILE));
         }
 
         private void InitCarteSize()
@@ -63,6 +69,25 @@ namespace Survival_Island
                     carteBackground.Children.Add(laMer[i]);
                 }
             }
+        }
+
+        private void LancerJeu()
+        {
+            hudJoueur.Visibility = Visibility.Visible;
+            // Faire spawn le navire du joueur
+            // Définir ses stats
+        }
+
+        private void DeplaceMonde(double x, double y)
+        {
+            foreach (UIElement element in carteBackground.Children)
+            {
+                double positionX = Canvas.GetLeft(element);
+                Canvas.SetLeft(element, positionX + x);
+
+                double positionY = Canvas.GetTop(element);
+                Canvas.SetTop(element, positionY + y);
+            }
             
         }
 
@@ -71,6 +96,8 @@ namespace Survival_Island
             if (e.Key == Key.Left)
             {
                 Canvas.SetLeft(carteBackground, Canvas.GetLeft(carteBackground) + 5);
+                Console.WriteLine("Left");
+                Console.WriteLine(Canvas.GetLeft(carteBackground));
             }
         }
     }

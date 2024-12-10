@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Survival_Island
 {
-    public static class Paths
+    public static class Chemin
     {
         public const string IMAGE_MER = "pack://application:,,,/images/tile_73.png";
         public const string IMAGE_ILE = "pack://application:,,,/images/ile.png";

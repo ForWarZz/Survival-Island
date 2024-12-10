@@ -9,55 +9,102 @@
     Title="Survival Island"
     Width="1740"
     Height="778"
+    KeyDown="Fenetre_KeyDown"
     WindowState="Maximized"
-    mc:Ignorable="d" KeyDown="Fenetre_KeyDown">
+    mc:Ignorable="d">
     <Grid>
-        <Canvas>
-            <Canvas
-                x:Name="carteBackground"
-                Width="4000"
-                Height="4000" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="-1130" Canvas.Top="-1619">
-            </Canvas>
-        </Canvas>
-
-
-        <Ellipse
-            x:Name="ellips"
-            Canvas.Left="3561"
-            Canvas.Top="3659"
-            Width="151"
-            Height="170"
+        <Canvas
+            x:Name="carteBackground"
+            Width="4000"
+            Height="4000"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Fill="Black"
-            Stroke="Black" />
+            VerticalAlignment="Center" />
 
-        <StackPanel Orientation="Vertical" Margin="20" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock
+            Canvas.Left="1792"
+            Canvas.Top="1722"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            FontSize="48"
+            FontWeight="Bold"
+            TextWrapping="Wrap"><Run Language="fr-fr" Text="SURVIVAL ISLAND" /></TextBlock>
+
+        <StackPanel
+            x:Name="hudJoueur"
+            Margin="20"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Orientation="Vertical"
+            Visibility="Hidden">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
                 <ProgressBar
                     x:Name="progressVieIle"
                     Width="300"
                     Height="20"
-                    Value="75"
+                    Background="#FF444444"
                     Foreground="#FF9C220E"
-                    Background="#FF444444"/>
+                    Value="75" />
                 <TextBlock
                     x:Name="txtVieIle"
-                    Text="750 / 1000 PV" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="750 / 1000 PV" />
             </StackPanel>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,25,0,0">
+            <StackPanel
+                Margin="0,25,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Vertical">
 
                 <ProgressBar
                     x:Name="progressVieNavire"
                     Width="300"
                     Height="20"
-                    Value="50"
+                    Background="#FF444444"
                     Foreground="#FF59A214"
-                    Background="#FF444444" />
+                    Value="90" />
                 <TextBlock
                     x:Name="txtVieNavire"
-                    Text="500 / 1000 PV" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" />
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold"
+                    Text="500 / 1000 PV" />
             </StackPanel>
+        </StackPanel>
+
+        <StackPanel
+            x:Name="menuAccueil"
+            Width="398"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Button
+                x:Name="btnJouer"
+                Height="40"
+                Background="#FFC15911"
+                Click="btnJouer_Click"
+                Content="Jouer"
+                FontSize="18"
+                Foreground="White" />
+            <Button
+                x:Name="btnOuvrirBoutique"
+                Height="40"
+                Margin="0,20,0,0"
+                Background="#FFC15911"
+                Content="Boutique"
+                FontSize="18"
+                Foreground="White" />
+            <Button
+                x:Name="btnFermerJeu"
+                Height="40"
+                Margin="0,60,0,0"
+                Background="#FFC15911"
+                Click="btnFermerJeu_Click"
+                Content="Retour au bureau"
+                FontSize="18"
+                Foreground="White" />
         </StackPanel>
     </Grid>
 </Window>
