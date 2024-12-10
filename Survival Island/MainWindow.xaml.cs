@@ -23,7 +23,7 @@ namespace Survival_Island
         private static readonly int VITESSE_MOUVEMENT_MER = 2;
 
         private Image[] laMer;
-        private BitmapImage bitmapMer;
+        private BitmapImage bitmapMer, bitmapIle;
 
         public MainWindow()
         {
@@ -37,6 +37,7 @@ namespace Survival_Island
         private void InitBitmaps()
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
+            bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
         }
 
         private void InitCarteSize()
@@ -66,10 +67,23 @@ namespace Survival_Island
                 }
             }
         }
+        private void InitIle()
+        {
+            Image ile = new Image();
+            ile.Source = bitmapIle;
+            ile.Width = bitmapIle.PixelWidth;
+            ile.Height = bitmapIle.PixelHeight;
+            Canvas.SetLeft(ile, 1750);
+            Canvas.SetTop(ile, 1700);
+            carteBackground.Children.Add(ile);
+            Console.WriteLine(bitmapIle.Width);
+            Console.WriteLine(bitmapIle.Height);
+        }
 
         private void LancerJeu()
         {
             hudJoueur.Visibility = Visibility.Visible;
+            InitIle();
             // Faire spawn le navire du joueur
             // Définir ses stats
         }
