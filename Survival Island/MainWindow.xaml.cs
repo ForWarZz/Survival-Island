@@ -94,7 +94,7 @@ namespace Survival_Island
         {
             foreach (UIElement element in carteBackground.Children)
             {
-                // Ignorer le joueur
+                // Ignorer le joueur et autres éléments ne devant pas bouger
                 double positionX = Canvas.GetLeft(element);
                 Canvas.SetLeft(element, positionX + x);
 
