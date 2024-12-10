@@ -9,6 +9,8 @@
     Title="Survival Island"
     Width="1740"
     Height="778"
+    MinWidth="400"
+    MinHeight="1000"
     KeyDown="Fenetre_KeyDown"
     KeyUp="Fenetre_KeyUp"
     MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
