@@ -22,7 +22,8 @@ namespace Survival_Island
         private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
 
         private Image[] laMer;
-        private BitmapImage bitmapMer, bitmapIle;
+        private BitmapImage bitmapMer, bitmapIle, bitmapIleC;
+        private Image ile;
 
         public MainWindow()
         {
@@ -37,6 +38,7 @@ namespace Survival_Island
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
             bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
+            bitmapIleC = new BitmapImage(new Uri(Chemin.IMAGE_ILEC));
         }
 
         private void InitCarteSize()
@@ -70,7 +72,7 @@ namespace Survival_Island
         private void InitIle()
         {
             /// REMPLACER CE CODE PAR LA CLASSE DE L'ILE
-            Image ile = new Image();
+            ile = new Image();
 
             ile.Source = bitmapIle;
             ile.Width = bitmapIle.PixelWidth;
@@ -120,6 +122,14 @@ namespace Survival_Island
             else if (e.Key == Key.Down)
             {
                 DeplaceMonde(0, -5);
+            }
+            else if (e.Key == Key.C)
+            {
+                ile.Source = bitmapIleC;
+            }
+            else if (e.Key == Key.R)
+            {
+                ile.Source = bitmapIle;
             }
         }
 
