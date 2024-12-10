@@ -22,8 +22,7 @@ namespace Survival_Island
         private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
 
         private Image[] laMer;
-        private BitmapImage bitmapMer, bitmapIle, bitmapBateauRouge, bitmapBateauVert;
-        private BitmapImage bitmapMer, bitmapIle, bitmapIleC;
+        private BitmapImage bitmapMer, bitmapIle, bitmapBateauRouge, bitmapBateauVert, bitmapIleC;
         private Image ile;
 
         public Image BateauRouge = new Image();
@@ -81,6 +80,8 @@ namespace Survival_Island
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
             bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
+            bitmapBateauRouge = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
+            bitmapBateauVert = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
         }
         private void InitBateaux()
         {
