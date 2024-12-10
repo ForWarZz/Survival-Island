@@ -72,17 +72,21 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
-            <TextBlock
-                Margin="0,0,0,150"
-                FontSize="48"
-                FontWeight="Bold"
-                Text="SURVIVAL ISLAND"
-                TextWrapping="Wrap" />
+            <Image
+                Canvas.Left="1856"
+                Canvas.Top="1659"
+                Width="370"
+                Height="371"
+                Margin="0,0,0,80"
+                Source="/images/logo.png"
+                Stretch="Fill" />
+
 
             <Button
                 x:Name="btnJouer"
                 Height="40"
                 Background="#FFC15911"
+                BorderBrush="#FFC15911"
                 Click="btnJouer_Click"
                 Content="Jouer"
                 FontSize="18"
@@ -92,6 +96,7 @@
                 Height="40"
                 Margin="0,20,0,0"
                 Background="#FFC15911"
+                BorderBrush="#FFC15911"
                 Content="Boutique"
                 FontSize="18"
                 Foreground="White" />
@@ -100,6 +105,7 @@
                 Height="40"
                 Margin="0,60,0,0"
                 Background="#FFC15911"
+                BorderBrush="#FFC15911"
                 Click="btnFermerJeu_Click"
                 Content="Retour au bureau"
                 FontSize="18"
