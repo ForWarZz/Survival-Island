@@ -66,11 +66,11 @@ namespace Survival_Island
 
             if  (deplacementDroite)
                 DeplaceMonde(-vitesse, 0);
-            else if (deplacementGauche)
+            if (deplacementGauche)
                 DeplaceMonde(vitesse, 0);
-            else if (deplacementHaut)
+            if (deplacementHaut)
                 DeplaceMonde(0, vitesse);
-            else if (deplacementBas)
+            if (deplacementBas)
                 DeplaceMonde(0, -vitesse);
         }
 
@@ -145,11 +145,17 @@ namespace Survival_Island
                 if (element == joueur.bateau)
                     continue;
 
-                double positionX = Canvas.GetLeft(element);
-                Canvas.SetLeft(element, positionX + x);
+                if (x != 0)
+                {
+                    double positionX = Canvas.GetLeft(element);
+                    Canvas.SetLeft(element, positionX + x);
+                }
 
-                double positionY = Canvas.GetTop(element);
-                Canvas.SetTop(element, positionY + y);
+                if (y != 0)
+                {
+                    double positionY = Canvas.GetTop(element);
+                    Canvas.SetTop(element, positionY + y);
+                }
             }
         }
 
