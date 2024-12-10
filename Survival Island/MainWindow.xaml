@@ -10,6 +10,10 @@
     Width="1740"
     Height="778"
     KeyDown="Fenetre_KeyDown"
+    KeyUp="Fenetre_KeyUp"
+    MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
+    MouseLeftButtonUp="Fenetre_MouseLeftButtonUp"
+    MouseMove="Fenetre_MouseMove"
     WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
