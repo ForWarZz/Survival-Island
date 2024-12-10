@@ -120,7 +120,6 @@ namespace Survival_Island.joueur
         private void AnimationRotation(object? sender, EventArgs e)
         {
             double diffAngle = angleCible - angleActuel;
-            diffAngle = (diffAngle + 180) % 360 - 180;
 
             if (Math.Abs(diffAngle) <= 3)   // On ajoute une tolérance pour éviter les oscillations infinies
             {
@@ -129,7 +128,7 @@ namespace Survival_Island.joueur
             }
             else
             {
-                angleActuel += Math.Sign(diffAngle) * Math.Min(Math.Abs(diffAngle), 5);
+                angleActuel += Math.Sign(diffAngle) * 5;
             }
 
             bateau.RenderTransform = new RotateTransform(angleActuel, bateau.Width / 2, bateau.Height / 2);
