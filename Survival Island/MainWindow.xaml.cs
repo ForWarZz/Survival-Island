@@ -21,23 +21,20 @@ namespace Survival_Island
         public int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
 
         public Image[] laMer;
-        public BitmapImage bitmapMer;
+        public BitmapImage bitmapMer, bitmapIle;
 
         public MainWindow()
         {
             InitializeComponent();
-
             InitBitmaps();
             InitCarteSize();
-
-            Console.WriteLine(NOMBRE_IMAGE_MER);
-
             InitCarte();
         }
 
         private void InitBitmaps()
         {
             bitmapMer = new BitmapImage(new Uri(Paths.IMAGE_MER));
+            bitmapIle = new BitmapImage(new Uri(Paths.IMAGE_ILE));
         }
 
         private void InitCarteSize()
@@ -66,6 +63,7 @@ namespace Survival_Island
                     carteBackground.Children.Add(laMer[i]);
                 }
             }
+            
         }
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
@@ -73,8 +71,6 @@ namespace Survival_Island
             if (e.Key == Key.Left)
             {
                 Canvas.SetLeft(carteBackground, Canvas.GetLeft(carteBackground) + 5);
-                Console.WriteLine("Left");
-                Console.WriteLine(Canvas.GetLeft(carteBackground));
             }
         }
     }

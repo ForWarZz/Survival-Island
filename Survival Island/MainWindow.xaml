@@ -40,7 +40,7 @@
                     Height="20"
                     Value="75"
                     Foreground="#FF9C220E"
-                    Background="#FF444444" />
+                    Background="#FF444444"/>
                 <TextBlock
                     x:Name="txtVieIle"
                     Text="750 / 1000 PV" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
