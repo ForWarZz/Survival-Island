@@ -75,8 +75,6 @@ namespace Survival_Island
             Canvas.SetLeft(ile, 1750);
             Canvas.SetTop(ile, 1700);
             carteBackground.Children.Add(ile);
-            Console.WriteLine(bitmapIle.Width);
-            Console.WriteLine(bitmapIle.Height);
         }
 
         private void LancerJeu()
