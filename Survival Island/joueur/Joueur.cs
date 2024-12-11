@@ -130,7 +130,7 @@ namespace Survival_Island.joueur
             if (diffAngle > 180) diffAngle -= 360;
             if (diffAngle < -180) diffAngle += 360;
 
-            if (Math.Abs(diffAngle) <= 3)   // On ajoute une tolérance pour éviter les oscillations infinies
+            if (Math.Abs(diffAngle) <= Constante.TOLERANCE_ANGLE_ROTATION)   // On ajoute une tolérance pour éviter les oscillations infinies
             {
                 angleActuel = angleCible;
                 rotationTemps.Stop();
@@ -163,9 +163,6 @@ namespace Survival_Island.joueur
                 Height = 10,
                 Fill = Brushes.Black
             };
-            /*            bouletImage.Source = bitmapBouletCanon;
-                        bouletImage.Width = bitmapBouletCanon.Width;
-                        bouletImage.Height = bitmapBouletCanon.Height;*/
 
             Canvas.SetLeft(bouletImage, centreBateauX - bouletImage.Width / 2);
             Canvas.SetTop(bouletImage, centreBateauY - bouletImage.Height / 2);
