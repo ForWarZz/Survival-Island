@@ -62,16 +62,16 @@ namespace Survival_Island.joueur
             carte.Children.Add(bateau);
         }
 
-        public void UpdateOrientation(Point positionSouris)
+        public void UpdateOrientation(Point position)
         {
             Console.WriteLine("UpdateOrientation");
-            Console.WriteLine("SOURIS X: " + positionSouris.X);
+            Console.WriteLine("SOURIS X: " + position.X);
 
             double bateauX = Canvas.GetLeft(bateau) + bateau.Width / 2;
             double bateauY = Canvas.GetTop(bateau) + bateau.Height / 2;
 
-            double deltaX = positionSouris.X - bateauX;
-            double deltaY = positionSouris.Y - bateauY;
+            double deltaX = position.X - bateauX;
+            double deltaY = position.Y - bateauY;
 
             angleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
 
