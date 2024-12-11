@@ -131,7 +131,7 @@ namespace Survival_Island.joueur
             if (diffAngle > 180) diffAngle -= 360;
             if (diffAngle < -180) diffAngle += 360;
 
-            if (Math.Abs(diffAngle) <= 3)   // On ajoute une tolérance pour éviter les oscillations infinies
+            if (Math.Abs(diffAngle) <= Constante.TOLERANCE_ANGLE_ROTATION)   // On ajoute une tolérance pour éviter les oscillations infinies
             {
                 angleActuel = angleCible;
                 rotationTemps.Stop();

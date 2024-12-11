@@ -9,7 +9,7 @@ namespace Survival_Island
     internal class Constante
     {
         public const double JOUEUR_VIE_MAX = 100;
-        public const double JOUEUR_VITESSE = 10;
+        public const double JOUEUR_VITESSE = 5;
         public const double JOUEUR_DEGATS = 20;
         public const double JOUEUR_RECHARGEMENT_CANON = 1;
 

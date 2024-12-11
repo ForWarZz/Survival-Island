@@ -24,9 +24,7 @@
             Width="4000"
             Height="4000"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-            <Grid x:Name="gridMap" />
-        </Canvas>
+            VerticalAlignment="Center" />
 
         <StackPanel
             x:Name="hudJoueur"
