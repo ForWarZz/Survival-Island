@@ -5,18 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
+using Survival_Island.carte;
 
 namespace Survival_Island
 {
-    internal class Boulet
+    internal class Boulet: Collision
     {
-        public Ellipse boulet { get; set; }
         public Vector direction { get; set; }
 
-        public Boulet(Ellipse boulet, Vector direction)
+        public Boulet(Canvas carte, Vector direction): base(carte)
         {
-            this.boulet = boulet;
+            Ellipse bouletEllipse = new Ellipse();
+            bouletEllipse.Width = Constante.TAILLE_BOULET;
+            bouletEllipse.Height = Constante.TAILLE_BOULET;
+            bouletEllipse.Fill = Brushes.Black;
+
+            element = bouletEllipse;
             this.direction = direction;
         }
     }

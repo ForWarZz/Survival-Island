@@ -19,12 +19,15 @@
     WindowState="Maximized"
     mc:Ignorable="d">
     <Grid>
-        <Canvas
-            x:Name="carteBackground"
-            Width="4000"
-            Height="4000"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center" />
+        <Canvas x:Name="camera">
+            <Canvas
+                x:Name="carte"
+                Width="4000"
+                Height="4000"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" />
+        </Canvas>
+
 
         <StackPanel
             x:Name="hudJoueur"
@@ -79,8 +82,6 @@
             VerticalAlignment="Center">
 
             <Image
-                Canvas.Left="1856"
-                Canvas.Top="1659"
                 Width="370"
                 Height="371"
                 Margin="0,0,0,80"

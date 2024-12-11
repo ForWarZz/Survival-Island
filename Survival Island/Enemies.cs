@@ -12,7 +12,7 @@ namespace Survival_Island
 {
     internal class Ennemi
     {
-        public Image image { get; set; }
+       /* public Image image { get; set; }
         public Vector position { get; set; }
         public double vie { get; set; } = 50;
         public Canvas carte { get; set; }
@@ -126,14 +126,14 @@ namespace Survival_Island
 
                 if (joueurRect.IntersectsWith(bouletRect))
                 {
-                    joueur.caracteristique.vie -= 10; // Infliger des dégâts au joueur
+                    joueur.vie -= 10; // Infliger des dégâts au joueur
 
                     carte.Children.Remove(boulet.boulet);
                     projectiles.RemoveAt(i);
                     i--;
 
                     // Vérifier si le joueur est mort
-                    if (joueur.caracteristique.vie <= 0)
+                    if (joueur.vie <= 0)
                     {
                         MessageBox.Show("Le joueur est mort !", "Game Over", MessageBoxButton.OK);
                         Application.Current.Shutdown();
@@ -151,6 +151,6 @@ namespace Survival_Island
                 carte.Children.Remove(image);
                 minuterieTir.Stop();
             }
-        }
+        }*/
     }
 }

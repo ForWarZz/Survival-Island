@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Survival_Island.carte;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -14,42 +15,44 @@ using System.Windows.Threading;
 
 namespace Survival_Island.joueur
 {
-    internal class Joueur
+    internal class Joueur: Collision
     {
-        public Image bateau { get; set; }
-        public NavireCaracteristique caracteristique { get; set; }
+        public int vie { get; set; } = Constante.JOUEUR_VIE_MAX;
 
-        public int vie {  get; set; }
-        public int vieMax { get; set; }
-        private Canvas carte;
+        public NavireCaracteristique caracteristique { get; set; }
+        public double tempsDernierBoulet = 0;
+
+        public bool canonActif, deplacement;
+        public Vector orientation;
+
+        private ProgressBar progressBar;
+        private TextBlock valeurProgressBar;
 
         private DispatcherTimer rotationTemps;
         private double angleCible;
         private double angleActuel;
 
         private BitmapImage bitmapBateau;
+        private List<Boulet> boulets;
 
-        private List<Boulet> boulets = new List<Boulet>();
-        private double tempsDernierBoulet = 0;
-        private int vieDeBase = 100;
-
-        public Joueur(Canvas carte)
+        public Joueur(Canvas carte, ProgressBar progressBar, TextBlock valeurProgressBar, List<Boulet> boulets): base(carte)
         {
             this.carte = carte;
+            this.progressBar = progressBar;
+            this.valeurProgressBar = valeurProgressBar;
+            this.boulets = boulets;
 
-            this.vie = vieDeBase;
-            this.vieMax = vieDeBase;
             InitBitmaps();
 
-            bateau = new Image();
-            bateau.Source = bitmapBateau;
-            bateau.Width = Constante.LARGEUR_NAVIRE;
-            bateau.Height = Constante.HAUTEUR_NAVIRE;
+            element = new Image();
+            ((Image) element).Source = bitmapBateau;
+            element.Width = Constante.LARGEUR_NAVIRE;
+            element.Height = Constante.HAUTEUR_NAVIRE;
 
             caracteristique = new NavireCaracteristique();
 
-
             InitRotationTemps();
+            UpdateHUD();
         }
 
         private void InitBitmaps()
@@ -64,25 +67,25 @@ namespace Survival_Island.joueur
             rotationTemps.Tick += AnimationRotation;
         }
 
-        public void ApparaitreBateau()
+        public override void Apparaitre()
         {
-            double centreEcranX = (carte.ActualWidth - bateau.Width) / 2;
-            double centreEcranY = (carte.ActualHeight - bateau.Height) / 2;
+            double centreEcranX = (carte.ActualWidth - element.Width) / 2;
+            double centreEcranY = (carte.ActualHeight - element.Height) / 2;
 
-            Canvas.SetLeft(bateau, centreEcranX);
-            Canvas.SetTop(bateau, centreEcranY);
+            Canvas.SetLeft(element, centreEcranX);
+            Canvas.SetTop(element, centreEcranY);
 
-            bateau.RenderTransform = new RotateTransform(0, bateau.Width / 2, bateau.Height / 2);
-            carte.Children.Add(bateau);
+            element.RenderTransform = new RotateTransform(0, element.Width / 2, element.Height / 2);
+            carte.Children.Add(element);
         }
 
         public void UpdateOrientation(Point position)
         {
-            double bateauX = Canvas.GetLeft(bateau) + bateau.Width / 2;
-            double bateauY = Canvas.GetTop(bateau) + bateau.Height / 2;
+            double centreBateauX = Canvas.GetLeft(element) + element.Width / 2;
+            double centreBateauY = Canvas.GetTop(element) + element.Height / 2;
 
-            double deltaX = position.X - bateauX;
-            double deltaY = position.Y - bateauY;
+            double deltaX = position.X - centreBateauX;
+            double deltaY = position.Y - centreBateauY;
 
             angleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
 
@@ -91,38 +94,6 @@ namespace Survival_Island.joueur
                 rotationTemps.Start();
             }
         }
-
-        public void DeplacerBoulets()
-        {
-            // On parcourt la liste des boulets à l'envers pour pouvoir supprimer des éléments
-            for (int i = 0; i < boulets.Count; i++)
-            {
-                Boulet boulet = boulets[i];
-                double bouletX = Canvas.GetLeft(boulet.boulet);
-                double bouletY = Canvas.GetTop(boulet.boulet);
-
-                bouletX += boulet.direction.X * Constante.VITESSE_BOULET; // Vitesse du boulet
-                bouletY += boulet.direction.Y * Constante.VITESSE_BOULET;
-
-                Canvas.SetLeft(boulet.boulet, bouletX);
-                Canvas.SetTop(boulet.boulet, bouletY);
-
-                // Supprimer le boulet si hors écran
-                if (bouletX < 0 || bouletY < 0 ||
-                    bouletX > carte.ActualWidth + boulet.boulet.Width || bouletY > carte.ActualHeight + boulet.boulet.Width)
-                {
-                    carte.Children.Remove(boulet.boulet);
-                    boulets.RemoveAt(i);
-                }
-            }
-
-            if (tempsDernierBoulet > 0)
-            {
-                tempsDernierBoulet -= 1.0 / 60.0;   // On suppose 60 FPS, pour convertir
-            }
-
-        }
-
 
         private void AnimationRotation(object? sender, EventArgs e)
         {
@@ -141,40 +112,30 @@ namespace Survival_Island.joueur
                 angleActuel += Math.Sign(diffAngle) * 5;
             }
 
-            bateau.RenderTransform = new RotateTransform(angleActuel, bateau.Width / 2, bateau.Height / 2);
-        }
+            // On calcule le vetceur directeur (utilisé pour le tir des boulets ou encore le mouvement)
+            double angleRad = (angleActuel + 90) * Math.PI / 180;
+            orientation = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
+            orientation.Normalize();
 
+            element.RenderTransform = new RotateTransform(angleActuel, element.Width / 2, element.Height / 2);
+        }
 
         public void TirerBoulet()
         {
+            double centreBateauX = Canvas.GetLeft(element) + element.Width / 2;
+            double centreBateauY = Canvas.GetTop(element) + element.Height / 2;
+
             if (tempsDernierBoulet > 0) return;
             tempsDernierBoulet = caracteristique.tempsRechargementCanon;
 
-            // On calcule le vecteur directeur du boulet, par rapport a l'angle de direction du bateau
-            double angleRad = (angleActuel + 90) * Math.PI / 180;
-            Vector direction = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
-
-            double centreBateauX = Canvas.GetLeft(bateau) + bateau.Width / 2;
-            double centreBateauY = Canvas.GetTop(bateau) + bateau.Height / 2;
-
             // On créer un nouveau boulet
-            Ellipse bouletImage = new Ellipse
-            {
-                Width = 10,
-                Height = 10,
-                Fill = Brushes.Black
-            };
+            Boulet boulet = new Boulet(carte, orientation);
+            boulet.Apparaitre(centreBateauX - boulet.element.Width / 2, centreBateauY - boulet.element.Height / 2);
 
-            Canvas.SetLeft(bouletImage, centreBateauX - bouletImage.Width / 2);
-            Canvas.SetTop(bouletImage, centreBateauY - bouletImage.Height / 2);
-
-            carte.Children.Add(bouletImage);
-
-            Boulet boulet = new Boulet(bouletImage, direction);
             boulets.Add(boulet);
         }
         
-
+/*
         public void CheckCollisions(List<Ennemi> listeEnnemis)
         {
             for (int i = 0; i < boulets.Count; i++)
@@ -199,7 +160,18 @@ namespace Survival_Island.joueur
                     }
                 }
             }
+        }*/
+
+        public void InfligerDegats(int degats)
+        {
+            vie -= degats;
+            UpdateHUD();
         }
 
+        public void UpdateHUD()
+        {
+            progressBar.Value = vie * 100 / caracteristique.vieMax;
+            valeurProgressBar.Text = vie + "/" + caracteristique.vieMax + " PV";
+        }
     }
 }
