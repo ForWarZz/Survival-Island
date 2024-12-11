@@ -15,8 +15,8 @@ namespace Survival_Island.ile
         private BitmapImage bitmapIle, bitmapIleFaible;
 
         public Image image;
-        public int vieMax = 1000;
-        public int vie = 1000;
+        public double vieMax = Constante.ILE_VIE_MAX;
+        public double vie = Constante.ILE_VIE_MAX;
 
         public Ile(Canvas carte)
         {
@@ -54,15 +54,16 @@ namespace Survival_Island.ile
             return new Rectangle((int) ileX, (int) ileY, (int) image.Width, (int) image.Height);
         }
 
-        public void InfligerDegats(int degats)
+        public bool InfligerDegats(int degats)
         {
             vie -= degats;
-            CheckVie();
+            return CheckVie();
         }
 
-        private void CheckVie()
+        private bool CheckVie()
         {
             // Verifier sa vie, changer l'image en fonction....
+            return false;
         }
     }
 }

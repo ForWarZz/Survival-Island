@@ -8,12 +8,12 @@ namespace Survival_Island.joueur
 {
     internal class NavireCaracteristique
     {
-        public double vie { get; set; } = 100;
-        public double vieMax { get; set; } = 100;
+        public double vie { get; set; } = Constante.JOUEUR_VIE_MAX;
+        public double vieMax { get; set; } = Constante.JOUEUR_VIE_MAX;
 
-        public double vitesse { get; set; } = 10;
-        public double degat { get; set; } = 10;
+        public double vitesse { get; set; } = Constante.JOUEUR_VITESSE;
+        public double degats { get; set; } = Constante.JOUEUR_DEGATS;
 
-        public double tempsRechargementCanon { get; set; } = 1;
+        public double tempsRechargementCanon { get; set; } = Constante.JOUEUR_RECHARGEMENT_CANON;
     }
 }
