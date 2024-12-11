@@ -51,9 +51,6 @@ namespace Survival_Island
             InitCarteSize();
             InitCarte();
 
-            //Fonction de test des items.
-
-            AjoutItems(listeItem,70, [Chemin.IMAGE_TRESOR],0,4000,0,4000,20,70);
 
         }
 
@@ -181,6 +178,10 @@ namespace Survival_Island
             joueur.ApparaitreBateau();
 
             InitMinuterie();
+
+            //Fonction de test des items.
+
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 20, 70);
         }
 
         private void DeplaceMonde(double x, double y)
