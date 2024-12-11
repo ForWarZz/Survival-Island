@@ -15,16 +15,13 @@
     <None Remove="images\bateau_rouge.png" />
     <None Remove="images\bateau_vert.png" />
     <None Remove="images\boulet_canon.png" />
-    <None Remove="images\Cailloux1.png" />
-    <None Remove="images\Cailloux2.png" />
-    <None Remove="images\Cailloux3.png" />
+    <None Remove="images\CaseMer.png" />
     <None Remove="images\ile.png" />
     <None Remove="images\ile_cassee.png" />
     <None Remove="images\logo.png" />
-    <None Remove="images\tile_65.png" />
-    <None Remove="images\tile_66.png" />
-    <None Remove="images\tile_67.png" />
-    <None Remove="images\tile_73.png" />
+    <None Remove="images\Rocher1.png" />
+    <None Remove="images\Rocher2.png" />
+    <None Remove="images\Rocher3.png" />
     <None Remove="images\tresor.png" />
     <None Remove="tile_73.png" />
   </ItemGroup>
@@ -48,25 +45,16 @@
     <Resource Include="images\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\tile_65.png">
+    <Resource Include="images\Rocher1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\tile_66.png">
+    <Resource Include="images\Rocher2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\tile_67.png">
+    <Resource Include="images\Rocher3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\Cailloux2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\Cailloux1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\Cailloux3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\tile_73.png">
+    <Resource Include="images\CaseMer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\tresor.png">

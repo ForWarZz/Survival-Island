@@ -17,10 +17,10 @@ namespace Survival_Island
 
         public const string IMAGE_ILE = "pack://application:,,,/images/ile.png";
         public const string IMAGE_ILEC = "pack://application:,,,/images/ile_cassee.png"; 
-        public const string IMAGE_MER = "pack://application:,,,/images/tile_73.png";
-        public const string IMAGE_ROCHER1 = "pack://application:,,,/images/tile_65.png";
-        public const string IMAGE_ROCHER2 = "pack://application:,,,/images/tile_66.png";
-        public const string IMAGE_ROCHER3 = "pack://application:,,,/images/tile_67.png";
+        public const string IMAGE_MER = "pack://application:,,,/images/CaseMer.png";
+        public const string IMAGE_ROCHER1 = "pack://application:,,,/images/Rocher1.png";
+        public const string IMAGE_ROCHER2 = "pack://application:,,,/images/Rocher2.png";
+        public const string IMAGE_ROCHER3 = "pack://application:,,,/images/Rocher3.png";
 
         public const string IMAGE_TRESOR = "pack://application:,,,/images/tresor.png";
 

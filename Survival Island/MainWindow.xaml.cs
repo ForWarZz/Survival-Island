@@ -54,13 +54,13 @@ namespace Survival_Island
 
         }
 
-        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax)
+        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation)
         {
             int posX,posY,longCoteImage, longListeChemin = listeCheminAjout.Length;
             int indChemin;
-            
+            int nbitem = listeItem.Count;
 
-            for (int i =0 ; i <51  ; i++)
+            for (int i =nbitem ; i < nbitem+nbItemAjout; i++)
             {
                 longCoteImage=random.Next(longCoteImageMin, longCoteImageMax);
                 posX = random.Next(posXmin,posXmax);
@@ -70,7 +70,10 @@ namespace Survival_Island
 
                 listeItem.Add( new Item(posX, posY, 90,30, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carteBackground));
 
-
+                if (rotation)
+                {
+                    listeItem[i].image.RenderTransform = new RotateTransform(rnd.Next(0, 361), longCoteImage, longCoteImage);
+                }
             }
 
 
@@ -145,26 +148,7 @@ namespace Survival_Island
             }
         }
 
-        private void InitCailloux()
-        {
-            lesCailloux = new Image[NOMBRE_CAILLOUX];
-            imgCailloux = [bitmapRocher1, bitmapRocher2, bitmapRocher3];
-            for (int i = 0; i < lesCailloux.Length; i++)
-            {
-                Image rocher = new Image();
-                lesCailloux[i] = rocher;
-                rocher.Source = imgCailloux[rnd.Next(0,3)];
-                rocher.Width = bitmapRocher1.PixelWidth * (0.5 + rnd.NextDouble());
-                rocher.Height = bitmapRocher1.PixelHeight * (0.5 + rnd.NextDouble());
-                rocher.RenderTransform = new RotateTransform(rnd.Next(0, 361), rocher.Width/2, rocher.Height/2);
-
-                
-                Canvas.SetLeft(rocher, rnd.Next(50, 3500));
-                Canvas.SetTop(rocher, rnd.Next(50, 3500));
-
-                carteBackground.Children.Add(rocher);
-            }
-        }
+        
 
         private void LancerJeu()
         {
@@ -172,7 +156,6 @@ namespace Survival_Island
             ile = new Ile(carteBackground);
             ile.ApparaitreIle();
 
-            InitCailloux();
 
             joueur = new Joueur(carteBackground);
             joueur.ApparaitreBateau();
@@ -181,7 +164,8 @@ namespace Survival_Island
 
             //Fonction de test des items.
 
-            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 20, 70);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 20, 70, false);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true);
         }
 
         private void DeplaceMonde(double x, double y)
