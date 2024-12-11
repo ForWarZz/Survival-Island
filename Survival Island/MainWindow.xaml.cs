@@ -214,16 +214,9 @@ namespace Survival_Island
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
         {
-/*            if (boutonJouerClique)
-            {
-                // Récupérer la position de la souris
-                joueur.PositionSouris = e.GetPosition(this);
-
-            }*/
 
             if (jouer)
             {
-                Console.WriteLine("BOUGE");
 
                 Point positionSouris = e.GetPosition(carteBackground);
                 joueur.UpdateOrientation(positionSouris);
