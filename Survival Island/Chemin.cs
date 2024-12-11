@@ -17,5 +17,12 @@ namespace Survival_Island
         public const string IMAGE_ILE = "pack://application:,,,/images/ile.png";
         public const string IMAGE_ILEC = "pack://application:,,,/images/ile_cassee.png";
         public const string IMAGE_MER = "pack://application:,,,/images/tile_73.png";
+
+        public const string IMAGE_CAILLOUX1 = "pack://application:,,,/images/Cailloux1.png";
+        public const string IMAGE_CAILLOUX2 = "pack://application:,,,/images/Cailloux2.png";
+        public const string IMAGE_CAILLOUX3 = "pack://application:,,,/images/Cailloux3.png";
+
+        public const string IMAGE_TRESOR = "pack://application:,,,/images/tresor.png";
+
     }
 }

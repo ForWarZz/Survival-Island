@@ -35,6 +35,9 @@ namespace Survival_Island
 
         private bool jouer = false;
 
+        private Random random = new Random();
+
+        private List<Item> listeItem = new List<Item>();
 
         public MainWindow()
         {
@@ -43,7 +46,36 @@ namespace Survival_Island
             InitBitmaps();
             InitCarteSize();
             InitCarte();
+
+            //Fonction de test des items.
+
+            AjoutItems(listeItem,70, [Chemin.IMAGE_TRESOR],0,4000,0,4000,20,70);
+
         }
+
+        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax)
+        {
+            int posX,posY,longCoteImage, longListeChemin = listeCheminAjout.Length;
+            int indChemin;
+            
+
+            for (int i =0 ; i <51  ; i++)
+            {
+                longCoteImage=random.Next(longCoteImageMin, longCoteImageMax);
+                posX = random.Next(posXmin,posXmax);
+                posY = random.Next(posYmin,posYmax);
+                indChemin = random.Next(0,longListeChemin);
+                Console.WriteLine("Add item, " + listeCheminAjout[indChemin] +" pos :"+posX+posY+longCoteImage);
+
+                listeItem.Add( new Item(posX, posY, 90,30, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carteBackground));
+
+
+            }
+
+
+
+        }
+
 
         private void InitMinuterie()
         {

@@ -75,6 +75,8 @@ namespace Survival_Island.joueur
 
             angleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
 
+            
+
             if (!rotationTemps.IsEnabled)
             {
                 rotationTemps.Start();
@@ -121,6 +123,9 @@ namespace Survival_Island.joueur
         private void AnimationRotation(object? sender, EventArgs e)
         {
             double diffAngle = angleCible - angleActuel;
+
+            if (diffAngle > 180) diffAngle -= 360;
+            if (diffAngle < -180) diffAngle += 360;
 
             if (Math.Abs(diffAngle) <= 3)   // On ajoute une tolérance pour éviter les oscillations infinies
             {
