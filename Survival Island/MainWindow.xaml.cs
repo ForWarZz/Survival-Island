@@ -42,6 +42,9 @@ namespace Survival_Island
         private Random random = new Random();
 
         private List<Item> listeItem = new List<Item>();
+        private List<Ennemi> listeEnnemis;
+
+
 
         public MainWindow()
         {
@@ -53,7 +56,40 @@ namespace Survival_Island
 
 
         }
+        public void PrendreDegats(int degats)
+        {
+            joueur.vie -= degats;
 
+            if (joueur.vie <= 0)
+            {
+                MessageBox.Show("Vous êtes mort !", "Game Over", MessageBoxButton.OK);
+                Application.Current.Shutdown();
+            }
+
+            // Mettre à jour l'interface utilisateur pour refléter la santé restante
+            // Exemple : Mettre à jour la barre de vie
+            if (progressVieNavire != null)
+            {
+                progressVieNavire.Value = (joueur.vie / joueur.vieMax) * 100;
+                txtVieNavire.Text = $"{joueur.vie} / {joueur.vieMax} PV";
+            }
+        }
+
+        private void InitEnemies()
+        {
+            listeEnnemis = new List<Ennemi>();
+
+            for (int i = 0; i < 5; i++) // Ajouter 5 ennemis
+            {
+                double posX = rnd.Next(0, (int)carteBackground.Width);
+                double posY = rnd.Next(0, (int)carteBackground.Height);
+                Vector position = new Vector(posX, posY);
+
+                Ennemi ennemi = new Ennemi(carteBackground, joueur, position);
+                listeEnnemis.Add(ennemi);
+            }
+
+        }
         private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation)
         {
             int posX,posY,longCoteImage, longListeChemin = listeCheminAjout.Length;
@@ -94,6 +130,11 @@ namespace Survival_Island
                 joueur.TirerBoulet();
 
             joueur.DeplacerBoulets();
+            foreach (var ennemi in listeEnnemis)
+            {
+                ennemi.MettreAJour();
+            }
+            joueur.CheckCollisions(listeEnnemis);
         }
 
         private void CheckDeplacement()
@@ -166,6 +207,7 @@ namespace Survival_Island
 
             AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 20, 70, false);
             AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true);
+            InitEnemies();
         }
 
         private void DeplaceMonde(double x, double y)

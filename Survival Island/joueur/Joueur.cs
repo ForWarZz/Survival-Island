@@ -19,6 +19,8 @@ namespace Survival_Island.joueur
         public Image bateau { get; set; }
         public NavireCaracteristique caracteristique { get; set; }
 
+        public int vie {  get; set; }
+        public int vieMax { get; set; }
         private Canvas carte;
 
         private DispatcherTimer rotationTemps;
@@ -29,11 +31,14 @@ namespace Survival_Island.joueur
 
         private List<Boulet> boulets = new List<Boulet>();
         private double tempsDernierBoulet = 0;
+        private int vieDeBase = 100;
 
         public Joueur(Canvas carte)
         {
             this.carte = carte;
 
+            this.vie = vieDeBase;
+            this.vieMax = vieDeBase;
             InitBitmaps();
 
             bateau = new Image();
@@ -42,6 +47,7 @@ namespace Survival_Island.joueur
             bateau.Height = Constante.HAUTEUR_NAVIRE;
 
             caracteristique = new NavireCaracteristique();
+
 
             InitRotationTemps();
         }
@@ -115,13 +121,8 @@ namespace Survival_Island.joueur
                 tempsDernierBoulet -= 1.0 / 60.0;   // On suppose 60 FPS, pour convertir
             }
 
-            CheckCollisions();
         }
 
-        private void CheckCollisions()
-        {
-
-        }
 
         private void AnimationRotation(object? sender, EventArgs e)
         {
@@ -163,9 +164,6 @@ namespace Survival_Island.joueur
                 Height = 10,
                 Fill = Brushes.Black
             };
-            /*            bouletImage.Source = bitmapBouletCanon;
-                        bouletImage.Width = bitmapBouletCanon.Width;
-                        bouletImage.Height = bitmapBouletCanon.Height;*/
 
             Canvas.SetLeft(bouletImage, centreBateauX - bouletImage.Width / 2);
             Canvas.SetTop(bouletImage, centreBateauY - bouletImage.Height / 2);
@@ -175,5 +173,33 @@ namespace Survival_Island.joueur
             Boulet boulet = new Boulet(bouletImage, direction);
             boulets.Add(boulet);
         }
+        
+
+        public void CheckCollisions(List<Ennemi> listeEnnemis)
+        {
+            for (int i = 0; i < boulets.Count; i++)
+            {
+                Boulet boulet = boulets[i];
+                double bouletX = Canvas.GetLeft(boulet.boulet);
+                double bouletY = Canvas.GetTop(boulet.boulet);
+
+                // Vérifier les collisions avec les ennemis
+                foreach (var ennemi in listeEnnemis)
+                {
+                    Rect ennemiRect = new Rect(Canvas.GetLeft(ennemi.image), Canvas.GetTop(ennemi.image), ennemi.image.Width, ennemi.image.Height);
+                    Rect bouletRect = new Rect(bouletX, bouletY, boulet.boulet.Width, boulet.boulet.Height);
+
+                    if (ennemiRect.IntersectsWith(bouletRect))
+                    {
+                        ennemi.RecevoirDegats(caracteristique.degats);
+                        carte.Children.Remove(boulet.boulet);
+                        boulets.RemoveAt(i);
+                        i--;
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 }
