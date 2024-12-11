@@ -20,12 +20,13 @@ namespace Survival_Island
     /// 
     public partial class MainWindow : Window
     {
-        private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
+        private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT, NOMBRE_CAILLOUX = 20;
 
-        private Image[] laMer;
+        private Image[] laMer, lesCailloux;
         private Image ile;
 
-        private BitmapImage bitmapMer, bitmapIle, bitmapBateau, bitmapBouletCanon, bitmapIleC;
+        private BitmapImage bitmapMer, bitmapIle, bitmapBateau, bitmapBouletCanon, bitmapIleC, bitmapRocher1, bitmapRocher2, bitmapRocher3;
+        private BitmapImage[] imgCailloux;
 
         private DispatcherTimer minuterieJeu;
         private bool deplacementHaut, deplacementBas, deplacementDroite, deplacementGauche;
@@ -35,6 +36,7 @@ namespace Survival_Island
 
         private bool jouer = false;
 
+        private Random rnd = new Random();
 
         public MainWindow()
         {
@@ -78,6 +80,9 @@ namespace Survival_Island
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
             bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
+            bitmapRocher1 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER1));
+            bitmapRocher2 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER2));
+            bitmapRocher3 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER3));
 
             bitmapBateau = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
             bitmapBouletCanon = new BitmapImage(new Uri(Chemin.IMAGE_BOULET_CANON));
@@ -114,6 +119,7 @@ namespace Survival_Island
         private void InitIle()
         {
             /// REMPLACER CE CODE PAR LA CLASSE DE L'ILE
+            /// 
             ile = new Image();
 
             ile.Source = bitmapIle;
@@ -125,11 +131,32 @@ namespace Survival_Island
 
             carteBackground.Children.Add(ile);
         }
+        private void InitCailloux()
+        {
+            lesCailloux = new Image[NOMBRE_CAILLOUX];
+            imgCailloux = [bitmapRocher1, bitmapRocher2, bitmapRocher3];
+            for (int i = 0; i < lesCailloux.Length; i++)
+            {
+                Image rocher = new Image();
+                lesCailloux[i] = rocher;
+                rocher.Source = imgCailloux[rnd.Next(0,3)];
+                rocher.Width = bitmapRocher1.PixelWidth * (0.5 + rnd.NextDouble());
+                rocher.Height = bitmapRocher1.PixelHeight * (0.5 + rnd.NextDouble());
+                rocher.RenderTransform = new RotateTransform(rnd.Next(0, 361), rocher.Width/2, rocher.Height/2);
+
+                
+                Canvas.SetLeft(rocher, rnd.Next(50, 3500));
+                Canvas.SetTop(rocher, rnd.Next(50, 3500));
+
+                carteBackground.Children.Add(rocher);
+            }
+        }
 
         private void LancerJeu()
         {
             hudJoueur.Visibility = Visibility.Visible;
             InitIle();
+            InitCailloux();
 
             joueur = new Joueur(bitmapBateau, bitmapBouletCanon, carteBackground);
             joueur.ApparaitreBateau();
