@@ -18,8 +18,6 @@ namespace Survival_Island.ile
         public int vieMax = 1000;
         public int vie = 1000;
 
-        public Rectangle rectangle;
-
         public Ile(Canvas carte)
         {
             this.carte = carte;
@@ -46,7 +44,14 @@ namespace Survival_Island.ile
             Canvas.SetTop(image, centerY);
 
             carte.Children.Add(image);
-            rectangle = new Rectangle((int)centerX, (int)centerY, (int)image.Width, (int)image.Height);
+        }
+
+        public Rectangle RecupereCollisionRectangle()
+        {
+            double ileX = Canvas.GetLeft(image);
+            double ileY = Canvas.GetTop(image);
+
+            return new Rectangle((int) ileX, (int) ileY, (int) image.Width, (int) image.Height);
         }
 
         public void InfligerDegats(int degats)
