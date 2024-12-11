@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Survival_Island.joueur
 {
-    internal class JoueurCaracteristique
+    internal class NavireCaracteristique
     {
         public double vie { get; set; } = 100;
         public double vieMax { get; set; } = 100;

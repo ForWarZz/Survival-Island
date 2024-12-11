@@ -16,7 +16,7 @@ namespace Survival_Island.joueur
     internal class Joueur
     {
         public Image bateau { get; set; }
-        public JoueurCaracteristique caracteristique { get; set; }
+        public NavireCaracteristique caracteristique { get; set; }
 
         private Canvas carte;
 
@@ -38,7 +38,7 @@ namespace Survival_Island.joueur
             bateau.Width = 50;
             bateau.Height = 100;
 
-            caracteristique = new JoueurCaracteristique();
+            caracteristique = new NavireCaracteristique();
 
             InitRotationTemps();
         }
