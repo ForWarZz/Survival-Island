@@ -83,6 +83,7 @@ namespace Survival_Island.joueur
 
         public void DeplacerBoulets()
         {
+            // On parcourt la liste des boulets à l'envers pour pouvoir supprimer des éléments
             for (int i = boulets.Count - 1; i >= 0; i--)
             {
                 Boulet boulet = boulets[i];
@@ -140,12 +141,14 @@ namespace Survival_Island.joueur
             if (tempsDernierBoulet > 0) return;
             tempsDernierBoulet = caracteristique.tempsRechargementCanon;
 
+            // On calcule le vecteur directeur du boulet, par rapport a l'angle de direction du bateau
             double angleRad = (angleActuel + 90) * Math.PI / 180;
             Vector direction = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
 
             double centreBateauX = Canvas.GetLeft(bateau) + bateau.Width / 2;
             double centreBateauY = Canvas.GetTop(bateau) + bateau.Height / 2;
 
+            // On créer un nouveau boulet
             Image bouletImage = new Image();
             bouletImage.Source = bitmapBouletCanon;
             bouletImage.Width = bitmapBouletCanon.Width;
