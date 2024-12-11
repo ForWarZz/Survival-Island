@@ -1,4 +1,5 @@
-﻿using Survival_Island.joueur;
+﻿using Survival_Island.ile;
+using Survival_Island.joueur;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -20,12 +21,12 @@ namespace Survival_Island
     /// 
     public partial class MainWindow : Window
     {
-        private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT;
+        private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT, NOMBRE_CAILLOUX = 20;
 
-        private Image[] laMer;
-        private Image ile;
+        private Image[] laMer, lesCailloux;
 
-        private BitmapImage bitmapMer, bitmapIle, bitmapBateau, bitmapBouletCanon, bitmapIleC;
+        private BitmapImage bitmapMer, bitmapRocher1, bitmapRocher2, bitmapRocher3;
+        private BitmapImage[] imgCailloux;
 
         private DispatcherTimer minuterieJeu;
         private bool deplacementHaut, deplacementBas, deplacementDroite, deplacementGauche;
@@ -33,8 +34,11 @@ namespace Survival_Island
         private Joueur joueur;
         private bool canonActif = false;
 
+        private Ile ile;
+
         private bool jouer = false;
 
+        private Random rnd = new Random();
         private Random random = new Random();
 
         private List<Item> listeItem = new List<Item>();
@@ -109,10 +113,10 @@ namespace Survival_Island
         private void InitBitmaps()
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
-            bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
 
-            bitmapBateau = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
-            bitmapBouletCanon = new BitmapImage(new Uri(Chemin.IMAGE_BOULET_CANON));
+            bitmapRocher1 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER1));
+            bitmapRocher2 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER2));
+            bitmapRocher3 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER3));
         }
 
         private void InitCarteSize()
@@ -143,27 +147,37 @@ namespace Survival_Island
                 }
             }
         }
-        private void InitIle()
+
+        private void InitCailloux()
         {
-            /// REMPLACER CE CODE PAR LA CLASSE DE L'ILE
-            ile = new Image();
+            lesCailloux = new Image[NOMBRE_CAILLOUX];
+            imgCailloux = [bitmapRocher1, bitmapRocher2, bitmapRocher3];
+            for (int i = 0; i < lesCailloux.Length; i++)
+            {
+                Image rocher = new Image();
+                lesCailloux[i] = rocher;
+                rocher.Source = imgCailloux[rnd.Next(0,3)];
+                rocher.Width = bitmapRocher1.PixelWidth * (0.5 + rnd.NextDouble());
+                rocher.Height = bitmapRocher1.PixelHeight * (0.5 + rnd.NextDouble());
+                rocher.RenderTransform = new RotateTransform(rnd.Next(0, 361), rocher.Width/2, rocher.Height/2);
 
-            ile.Source = bitmapIle;
-            ile.Width = bitmapIle.PixelWidth;
-            ile.Height = bitmapIle.PixelHeight;
+                
+                Canvas.SetLeft(rocher, rnd.Next(50, 3500));
+                Canvas.SetTop(rocher, rnd.Next(50, 3500));
 
-            Canvas.SetLeft(ile, 1750);
-            Canvas.SetTop(ile, 1700);
-
-            carteBackground.Children.Add(ile);
+                carteBackground.Children.Add(rocher);
+            }
         }
 
         private void LancerJeu()
         {
             hudJoueur.Visibility = Visibility.Visible;
-            InitIle();
+            ile = new Ile(carteBackground);
+            ile.ApparaitreIle();
 
-            joueur = new Joueur(bitmapBateau, bitmapBouletCanon, carteBackground);
+            InitCailloux();
+
+            joueur = new Joueur(carteBackground);
             joueur.ApparaitreBateau();
 
             InitMinuterie();
@@ -232,16 +246,9 @@ namespace Survival_Island
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
         {
-/*            if (boutonJouerClique)
-            {
-                // Récupérer la position de la souris
-                joueur.PositionSouris = e.GetPosition(this);
-
-            }*/
 
             if (jouer)
             {
-                Console.WriteLine("BOUGE");
 
                 Point positionSouris = e.GetPosition(carteBackground);
                 joueur.UpdateOrientation(positionSouris);

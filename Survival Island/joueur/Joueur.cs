@@ -24,14 +24,16 @@ namespace Survival_Island.joueur
         private double angleCible;
         private double angleActuel;
 
-        private BitmapImage bitmapBouletCanon;
+        private BitmapImage bitmapBateau;
+
         private List<Boulet> boulets = new List<Boulet>();
         private double tempsDernierBoulet = 0;
 
-        public Joueur(BitmapImage bitmapBateau, BitmapImage bitmapBouletCanon, Canvas carte)
+        public Joueur(Canvas carte)
         {
             this.carte = carte;
-            this.bitmapBouletCanon = bitmapBouletCanon;
+
+            InitBitmaps();
 
             bateau = new Image();
             bateau.Source = bitmapBateau;
@@ -41,6 +43,11 @@ namespace Survival_Island.joueur
             caracteristique = new NavireCaracteristique();
 
             InitRotationTemps();
+        }
+
+        private void InitBitmaps()
+        {
+            bitmapBateau = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
         }
 
         private void InitRotationTemps()
@@ -64,9 +71,6 @@ namespace Survival_Island.joueur
 
         public void UpdateOrientation(Point position)
         {
-            Console.WriteLine("UpdateOrientation");
-            Console.WriteLine("SOURIS X: " + position.X);
-
             double bateauX = Canvas.GetLeft(bateau) + bateau.Width / 2;
             double bateauY = Canvas.GetTop(bateau) + bateau.Height / 2;
 
@@ -86,7 +90,7 @@ namespace Survival_Island.joueur
         public void DeplacerBoulets()
         {
             // On parcourt la liste des boulets à l'envers pour pouvoir supprimer des éléments
-            for (int i = boulets.Count - 1; i >= 0; i--)
+            for (int i = 0; i < boulets.Count; i++)
             {
                 Boulet boulet = boulets[i];
                 double bouletX = Canvas.GetLeft(boulet.image);
@@ -155,9 +159,9 @@ namespace Survival_Island.joueur
 
             // On créer un nouveau boulet
             Image bouletImage = new Image();
-            bouletImage.Source = bitmapBouletCanon;
-            bouletImage.Width = bitmapBouletCanon.Width;
-            bouletImage.Height = bitmapBouletCanon.Height;
+            /*            bouletImage.Source = bitmapBouletCanon;
+                        bouletImage.Width = bitmapBouletCanon.Width;
+                        bouletImage.Height = bitmapBouletCanon.Height;*/
 
             Canvas.SetLeft(bouletImage, centreBateauX - bouletImage.Width / 2);
             Canvas.SetTop(bouletImage, centreBateauY - bouletImage.Height / 2);
