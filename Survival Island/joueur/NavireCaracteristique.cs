@@ -14,6 +14,6 @@ namespace Survival_Island.joueur
         public double vitesse { get; set; } = 1;
         public double degat { get; set; } = 10;
 
-        public double tempsRechargementCanon { get; set; } = 0.1;
+        public double tempsRechargementCanon { get; set; } = 1;
     }
 }
