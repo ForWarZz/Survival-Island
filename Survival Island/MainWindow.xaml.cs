@@ -1,4 +1,5 @@
-﻿using Survival_Island.joueur;
+﻿using Survival_Island.ile;
+using Survival_Island.joueur;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -23,9 +24,8 @@ namespace Survival_Island
         private int NOMBRE_IMAGE_MER, IM_MER_LARG, IM_MER_HAUT, NOMBRE_CAILLOUX = 20;
 
         private Image[] laMer, lesCailloux;
-        private Image ile;
 
-        private BitmapImage bitmapMer, bitmapIle, bitmapBateau, bitmapBouletCanon, bitmapIleC, bitmapRocher1, bitmapRocher2, bitmapRocher3;
+        private BitmapImage bitmapMer, bitmapRocher1, bitmapRocher2, bitmapRocher3;
         private BitmapImage[] imgCailloux;
 
         private DispatcherTimer minuterieJeu;
@@ -33,6 +33,8 @@ namespace Survival_Island
 
         private Joueur joueur;
         private bool canonActif = false;
+
+        private Ile ile;
 
         private bool jouer = false;
 
@@ -79,13 +81,10 @@ namespace Survival_Island
         private void InitBitmaps()
         {
             bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
-            bitmapIle = new BitmapImage(new Uri(Chemin.IMAGE_ILE));
+
             bitmapRocher1 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER1));
             bitmapRocher2 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER2));
             bitmapRocher3 = new BitmapImage(new Uri(Chemin.IMAGE_ROCHER3));
-
-            bitmapBateau = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
-            bitmapBouletCanon = new BitmapImage(new Uri(Chemin.IMAGE_BOULET_CANON));
         }
 
         private void InitCarteSize()
@@ -116,21 +115,7 @@ namespace Survival_Island
                 }
             }
         }
-        private void InitIle()
-        {
-            /// REMPLACER CE CODE PAR LA CLASSE DE L'ILE
-            /// 
-            ile = new Image();
 
-            ile.Source = bitmapIle;
-            ile.Width = bitmapIle.PixelWidth;
-            ile.Height = bitmapIle.PixelHeight;
-
-            Canvas.SetLeft(ile, 1750);
-            Canvas.SetTop(ile, 1700);
-
-            carteBackground.Children.Add(ile);
-        }
         private void InitCailloux()
         {
             lesCailloux = new Image[NOMBRE_CAILLOUX];
@@ -155,10 +140,12 @@ namespace Survival_Island
         private void LancerJeu()
         {
             hudJoueur.Visibility = Visibility.Visible;
-            InitIle();
+            ile = new Ile(carteBackground);
+            ile.ApparaitreIle();
+
             InitCailloux();
 
-            joueur = new Joueur(bitmapBateau, bitmapBouletCanon, carteBackground);
+            joueur = new Joueur(carteBackground);
             joueur.ApparaitreBateau();
 
             InitMinuterie();
