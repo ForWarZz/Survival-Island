@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace Survival_Island
 {
     internal class Boulet
     {
-        public Image image { get; set; }
+        public Ellipse boulet { get; set; }
         public Vector direction { get; set; }
 
-        public Boulet(Image image, Vector direction)
+        public Boulet(Ellipse boulet, Vector direction)
         {
-            this.image = image;
+            this.boulet = boulet;
             this.direction = direction;
         }
     }

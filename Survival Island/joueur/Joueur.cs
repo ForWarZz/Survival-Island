@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Survival_Island.joueur
@@ -93,20 +94,20 @@ namespace Survival_Island.joueur
             for (int i = 0; i < boulets.Count; i++)
             {
                 Boulet boulet = boulets[i];
-                double bouletX = Canvas.GetLeft(boulet.image);
-                double bouletY = Canvas.GetTop(boulet.image);
+                double bouletX = Canvas.GetLeft(boulet.boulet);
+                double bouletY = Canvas.GetTop(boulet.boulet);
 
                 bouletX += boulet.direction.X * 10; // Vitesse du boulet
                 bouletY += boulet.direction.Y * 10;
 
-                Canvas.SetLeft(boulet.image, bouletX);
-                Canvas.SetTop(boulet.image, bouletY);
+                Canvas.SetLeft(boulet.boulet, bouletX);
+                Canvas.SetTop(boulet.boulet, bouletY);
 
                 // Supprimer le boulet si hors écran
                 if (bouletX < 0 || bouletY < 0 ||
-                    bouletX > carte.ActualWidth + boulet.image.Width || bouletY > carte.ActualHeight + boulet.image.Width)
+                    bouletX > carte.ActualWidth + boulet.boulet.Width || bouletY > carte.ActualHeight + boulet.boulet.Width)
                 {
-                    carte.Children.Remove(boulet.image);
+                    carte.Children.Remove(boulet.boulet);
                     boulets.RemoveAt(i);
                 }
             }
@@ -158,7 +159,12 @@ namespace Survival_Island.joueur
             double centreBateauY = Canvas.GetTop(bateau) + bateau.Height / 2;
 
             // On créer un nouveau boulet
-            Image bouletImage = new Image();
+            Ellipse bouletImage = new Ellipse
+            {
+                Width = 10,
+                Height = 10,
+                Fill = Brushes.Black
+            };
             /*            bouletImage.Source = bitmapBouletCanon;
                         bouletImage.Width = bitmapBouletCanon.Width;
                         bouletImage.Height = bitmapBouletCanon.Height;*/
