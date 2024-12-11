@@ -38,8 +38,8 @@ namespace Survival_Island.joueur
 
             bateau = new Image();
             bateau.Source = bitmapBateau;
-            bateau.Width = 50;
-            bateau.Height = 100;
+            bateau.Width = Constante.LARGEUR_NAVIRE;
+            bateau.Height = Constante.HAUTEUR_NAVIRE;
 
             caracteristique = new NavireCaracteristique();
 
@@ -54,7 +54,7 @@ namespace Survival_Island.joueur
         private void InitRotationTemps()
         {
             rotationTemps = new DispatcherTimer();
-            rotationTemps.Interval = TimeSpan.FromMilliseconds(20);
+            rotationTemps.Interval = TimeSpan.FromMilliseconds(Constante.TEMPS_ROTATION_NAVIRE);
             rotationTemps.Tick += AnimationRotation;
         }
 
@@ -80,8 +80,6 @@ namespace Survival_Island.joueur
 
             angleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
 
-            
-
             if (!rotationTemps.IsEnabled)
             {
                 rotationTemps.Start();
@@ -97,8 +95,8 @@ namespace Survival_Island.joueur
                 double bouletX = Canvas.GetLeft(boulet.boulet);
                 double bouletY = Canvas.GetTop(boulet.boulet);
 
-                bouletX += boulet.direction.X * 10; // Vitesse du boulet
-                bouletY += boulet.direction.Y * 10;
+                bouletX += boulet.direction.X * Constante.VITESSE_BOULET; // Vitesse du boulet
+                bouletY += boulet.direction.Y * Constante.VITESSE_BOULET;
 
                 Canvas.SetLeft(boulet.boulet, bouletX);
                 Canvas.SetTop(boulet.boulet, bouletY);
@@ -114,7 +112,7 @@ namespace Survival_Island.joueur
 
             if (tempsDernierBoulet > 0)
             {
-                tempsDernierBoulet -= 1.0 / 60.0;   // On suppose 60 FPS 
+                tempsDernierBoulet -= 1.0 / 60.0;   // On suppose 60 FPS, pour convertir
             }
 
             CheckCollisions();

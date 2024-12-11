@@ -22,8 +22,6 @@ namespace Survival_Island
         public const string IMAGE_ROCHER2 = "pack://application:,,,/images/Rocher2.png";
         public const string IMAGE_ROCHER3 = "pack://application:,,,/images/Rocher3.png";
 
-
-
         public const string IMAGE_TRESOR = "pack://application:,,,/images/tresor.png";
 
     }
