@@ -1,4 +1,5 @@
 ﻿using Survival_Island.carte;
+using Survival_Island.carte.objets;
 using Survival_Island.joueur;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -46,9 +47,6 @@ namespace Survival_Island
         private List<Objet> objetsBonus;
         private Obstacle[] obstacles;
 
-        private double cameraX; // Position caméra (X)
-        private double cameraY; // Position caméra (Y)
-
         public MainWindow()
         {
             InitializeComponent();
@@ -60,9 +58,9 @@ namespace Survival_Island
         private void InitBonusMinuteur()
         { 
             objetBonusMinuteur = new DispatcherTimer();
-            objetBonusMinuteur.Interval = TimeSpan.FromSeconds(10);
+            objetBonusMinuteur.Interval = TimeSpan.FromMinutes(1);
             objetBonusMinuteur.Tick += GenererBonus;
-           /* objetBonusMinuteur.Start();*/
+            objetBonusMinuteur.Start();
         }
 
         private void GenererBonus(object? sender, EventArgs e)
@@ -208,8 +206,6 @@ namespace Survival_Island
             carte.Width = mer.Length * bitmapMer.Width;
             carte.Height = mer.Length * bitmapMer.Height;
 
-            Console.WriteLine("Mer length : " + mer.Length + " taille mer : " + bitmapMer.Width);
-
             /// Initialisation de la mer en fond
             for (int i = 0; i < mer.Length; i++)
             {
@@ -242,7 +238,7 @@ namespace Survival_Island
             joueur.Apparaitre();
 
             InitRochers();
-           /* InitBonusMinuteur();*/
+            InitBonusMinuteur();
 
             InitBoucleJeu();
 

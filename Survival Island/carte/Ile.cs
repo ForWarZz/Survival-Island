@@ -50,7 +50,7 @@ namespace Survival_Island.carte
             Apparaitre(centerX, centerY);
         }
 
-        public void InfligerDegats(int degats)
+        public bool InfligerDegats(int degats)
         {
             vie -= degats;
             Image image = (Image)canvaElement;
@@ -58,7 +58,14 @@ namespace Survival_Island.carte
             if (vie <= vieMax / 2 && image.Source != bitmapIleFaible)
                 image.Source = bitmapIleFaible;
 
-            UpdateHUD();
+            if (vie <= 0)
+            {
+                return true;
+            }
+
+             UpdateHUD();
+
+            return false;
         }
 
         public void UpdateHUD()

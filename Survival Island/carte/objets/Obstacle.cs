@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Survival_Island.carte
+namespace Survival_Island.carte.objets
 {
     internal class Obstacle : Collision
     {

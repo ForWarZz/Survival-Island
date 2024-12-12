@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace Survival_Island.carte
+namespace Survival_Island.carte.objets
 {
     internal class Objet : Collision
     {
