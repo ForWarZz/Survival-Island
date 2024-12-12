@@ -16,6 +16,50 @@
     MouseMove="Fenetre_MouseMove"
     WindowState="Maximized"
     mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style x:Key="BoutonArrondi" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightCyan"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BoutonRond" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="50">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DarkGoldenrod"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Canvas x:Name="camera">
             <Canvas
@@ -37,7 +81,7 @@
                 VerticalAlignment="Center"
                 Orientation="Vertical">
                 <ProgressBar
-                    x:Name="progressVieIle"
+                    x:Name="barreVieIle"
                     Width="300"
                     Height="20"
                     Background="#FF444444"
@@ -55,16 +99,15 @@
                 HorizontalAlignment="Center"
                 Orientation="Vertical">
 
-
                 <ProgressBar
-                    x:Name="progressVieNavire"
+                    x:Name="barreVieJoueur"
                     Width="300"
                     Height="20"
                     Background="#FF444444"
                     Foreground="#FF59A214"
                     Value="90" />
                 <TextBlock
-                    x:Name="txtVieNavire"
+                    x:Name="txtVieJoueur"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontWeight="Bold"
@@ -88,8 +131,8 @@
             <Button
                 x:Name="btnJouer"
                 Height="40"
-                Background="#FFC15911"
-                BorderBrush="#FFC15911"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
                 Click="btnJouer_Click"
                 Content="Jouer"
                 FontSize="18"
@@ -98,8 +141,8 @@
                 x:Name="btnOuvrirOptions"
                 Height="40"
                 Margin="0,20,0,0"
-                Background="#FFC15911"
-                BorderBrush="#FFC15911"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
                 Content="Paramètres"
                 FontSize="18"
                 Foreground="White" />
@@ -107,12 +150,154 @@
                 x:Name="btnFermerJeu"
                 Height="40"
                 Margin="0,60,0,0"
-                Background="#FFC15911"
-                BorderBrush="#FFC15911"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
                 Click="btnFermerJeu_Click"
                 Content="Retour au bureau"
                 FontSize="18"
                 Foreground="White" />
+        </StackPanel>
+
+        <Button
+            x:Name="btnAmeliorations"
+            Width="330"
+            Height="50"
+            Margin="0,0,50,32"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Background="#6d5445"
+            BorderBrush="#6d5445"
+            Content="Améliorations"
+            FontSize="18"
+            Foreground="White"
+            Style="{StaticResource BoutonArrondi}" Click="btnAmeliorations_Click" Visibility="Hidden" />
+
+        <StackPanel
+            x:Name="spAmelio"
+            Width="330"
+            Height="350"
+            Margin="0,0,50,87"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Background="#33000000" Visibility="Hidden">
+            <Grid>
+                <Rectangle Fill="#6d5445" Height="50" />
+                <TextBlock
+                x:Name="txtAmelio"
+                VerticalAlignment="Center"
+                FontSize="22"
+                Foreground="White"
+                Text="Améliorations"
+                TextAlignment="Center"
+                TextWrapping="Wrap" HorizontalAlignment="Center" />
+            </Grid>
+            <StackPanel Height="60" Orientation="Horizontal">
+                <StackPanel Width="200">
+                    <TextBlock HorizontalAlignment="Center" Text="Progression avant prochain niveau :" />
+                    <ProgressBar
+                        x:Name="barreXPAmelio"
+                        Width="150"
+                        Height="20"
+                        Margin="0,5,0,0" />
+                    <TextBlock
+                        x:Name="txtXPAmelio"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="12" />
+                </StackPanel>
+                <TextBlock
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="9"
+                    Text="Points : " />
+                <Grid Margin="10,0,0,0">
+                    <Ellipse
+                        Width="50"
+                        Height="50"
+                        VerticalAlignment="Center"
+                        Fill="Black"
+                        Stroke="Black" />
+                    <TextBlock
+                        x:Name="txtPointAmelio"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Height="60" Orientation="Horizontal">
+                <TextBlock
+                    Height="25"
+                    Margin="30,0,0,0"
+                    FontSize="20"
+                    Text="Vie du bateau : " />
+                <TextBlock
+                    x:Name="txtVieJoueurAmelio"
+                    Width="50"
+                    Height="25"
+                    FontSize="20"
+                    Text="" />
+                <Button x:Name="btnVieBateauAmelio"
+                    Width="50"
+                    Height="50"
+                    Content="+"
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="22,0,0,0" />
+            </StackPanel>
+            <StackPanel Height="60" Orientation="Horizontal">
+                <TextBlock
+                    Height="30"
+                    FontSize="20"
+                    Text="Dégats du bateau : " Margin="16,0,0,0" />
+                <TextBlock
+                    x:Name="txtDegatsJoueurAmelio"
+                    Width="50"
+                    Height="25"
+                    FontSize="20"
+                    Text="" />
+                <Button x:Name="btnDegatsBateauAmelio"
+                    Width="50"
+                    Height="50"
+                    Content="+"
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="2,0,0,0" />
+            </StackPanel>
+            <StackPanel Height="60" Orientation="Horizontal">
+                <TextBlock
+                    Height="25"
+                    Margin="17,0,0,0"
+                    FontSize="20"
+                    Text="Vitesse du bateau : " />
+                <TextBlock
+                    x:Name="txtVitesseJoueurAmelio"
+                    Width="50"
+                    Height="25"
+                    FontSize="20"
+                    Text="" />
+                <Button x:Name="btnVitesseBateauAmelio"
+                    Width="50"
+                    Height="50"
+                    Content="+"
+                    Style="{StaticResource BoutonRond}" Background="#19000000" />
+            </StackPanel>
+            <StackPanel Height="60" Orientation="Horizontal">
+                <TextBlock
+                    Height="25"
+                    Margin="50,0,0,0"
+                    FontSize="20"
+                    Text="Vie de l'île: " />
+                <TextBlock
+                    x:Name="txtVieIleAmelio"
+                    Width="50"
+                    Height="25"
+                    FontSize="20"
+                    Text="" />
+                <Button x:Name="btnVieIleAmelio"
+                    Width="50"
+                    Height="50"
+                    Content="+"
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="39,0,0,0" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

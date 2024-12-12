@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Survival_Island.Outils;
+using Survival_Island.Outils.Entites;
 
 namespace Survival_Island.carte
 {
-    internal class Ile: Collision
+    public class Ile: EntiteBase
     {
-        private ProgressBar progressBar;
-        private TextBlock valeurProgressBar;
+        private MainWindow fenetre;
 
         private BitmapImage bitmapIle, bitmapIleFaible;
 
         public int vieMax { get; set; } = Constante.ILE_VIE_MAX;
         public int vie { get; private set; } = Constante.ILE_VIE_MAX;
 
-        public Ile(Canvas carte, ProgressBar progressBar, TextBlock valeurProgressBar): base(carte, true)
+        public Ile(Canvas carte, MainWindow fenetre): base(carte, true)
         {
             this.carte = carte;
-            this.progressBar = progressBar;
-            this.valeurProgressBar = valeurProgressBar;
+            this.fenetre = fenetre;
 
             InitBitmaps();
 
@@ -33,7 +33,7 @@ namespace Survival_Island.carte
             canvaElement.Width = bitmapIle.PixelWidth;
             canvaElement.Height = bitmapIle.PixelHeight;
 
-            UpdateHUD();
+            ActualiserHUD();
         }
 
         private void InitBitmaps()
@@ -63,15 +63,17 @@ namespace Survival_Island.carte
                 return true;
             }
 
-             UpdateHUD();
+             ActualiserHUD();
 
             return false;
         }
 
-        public void UpdateHUD()
+        public void ActualiserHUD()
         {
-            progressBar.Value = vie * 100 / vieMax;
-            valeurProgressBar.Text = vie + "/" + vieMax + " PV";
+            fenetre.barreVieIle.Value = vie;
+            fenetre.barreVieIle.Maximum = vieMax;
+
+            fenetre.txtVieIle.Text = vie + "/" + vieMax + " PV";
         }
     }
 }

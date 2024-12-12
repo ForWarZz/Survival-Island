@@ -7,15 +7,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Survival_Island.carte;
+using Survival_Island.Outils;
+using Survival_Island.Outils.Entites;
 
-namespace Survival_Island
+namespace Survival_Island.Joueurs
 {
-    internal class Boulet: Collision
+    public class Boulet : EntiteBase
     {
         public Vector direction { get; set; }
 
-        public Boulet(Canvas carte, Vector direction): base(carte, false)
+        public Boulet(Canvas carte, Vector direction) : base(carte, false)
         {
             Ellipse bouletEllipse = new Ellipse();
             bouletEllipse.Width = Constante.TAILLE_BOULET;

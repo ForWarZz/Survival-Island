@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Survival_Island
+namespace Survival_Island.Outils
 {
     public static class Chemin
     {
@@ -16,7 +16,7 @@ namespace Survival_Island
         public const string IMAGE_BOULET_CANON = "pack://application:,,,/images/bateaux/boulet_canon.png";
 
         public const string IMAGE_ILE = "pack://application:,,,/images/carte_jeu/iles/ile.png";
-        public const string IMAGE_ILEC = "pack://application:,,,/images/carte_jeu/iles/ile_cassee.png"; 
+        public const string IMAGE_ILEC = "pack://application:,,,/images/carte_jeu/iles/ile_cassee.png";
 
         public const string IMAGE_MER = "pack://application:,,,/images/carte_jeu/mer.png";
 

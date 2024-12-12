@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Survival_Island.carte
+namespace Survival_Island.Outils.Entites
 {
-    internal class Collision
+    public abstract class EntiteBase
     {
         public FrameworkElement canvaElement { get; protected set; }
 
@@ -20,7 +20,7 @@ namespace Survival_Island.carte
         private Rect rect;
 
 
-        public Collision(Canvas carte, bool estStatique)
+        public EntiteBase(Canvas carte, bool estStatique)
         {
             this.carte = carte;
             this.estStatique = estStatique;
@@ -46,17 +46,19 @@ namespace Survival_Island.carte
 
         public double positionY
         {
-            get { 
+            get
+            {
                 if (estStatique)
                     return posY;
                 else
                     return Canvas.GetTop(canvaElement);
             }
-            set { 
+            set
+            {
                 if (estStatique)
                     posY = value;
 
-                 Canvas.SetTop(canvaElement, value); 
+                Canvas.SetTop(canvaElement, value);
             }
         }
 
@@ -70,7 +72,7 @@ namespace Survival_Island.carte
             }
         }
 
-        public bool EnCollisionAvec(Collision objetCollision)
+        public bool EnCollisionAvec(EntiteBase objetCollision)
         {
             return collisionRectangle.IntersectsWith(objetCollision.collisionRectangle);
         }
@@ -86,15 +88,10 @@ namespace Survival_Island.carte
                 throw new Exception("La carte n'est pas définie");
 
             if (estStatique)
-            {
-                positionX = x;
-                positionY = y;
-
                 rect = new Rect(x, y, canvaElement.Width, canvaElement.Height);
-            }
 
-            Canvas.SetLeft(canvaElement, x);
-            Canvas.SetTop(canvaElement, y);
+            positionX = x;
+            positionY = y;
 
             carte.Children.Add(canvaElement);
         }
@@ -106,5 +103,7 @@ namespace Survival_Island.carte
 
             carte.Children.Remove(canvaElement);
         }
+
+        /*        public abstract void CollisionAvec(Collision objetCollision);*/
     }
 }
