@@ -316,8 +316,6 @@ namespace Survival_Island
 
                 if (boulet.EnCollisionAvec(ile))
                 {
-                    Console.WriteLine("Collision avec l'ile");
-
                     boulet.Disparaitre();
                     boulets.RemoveAt(i);
                 }
@@ -330,12 +328,12 @@ namespace Survival_Island
                         Console.WriteLine("Collision avec un objet bonus: X=" + objetBonus.positionX + " Y=" + objetBonus.positionY);
                         bool estDetruit = objetBonus.InfligerDegats(joueur.degats);
 
-                        if (estDetruit)
+                        if (estDetruit && boulet.tireur is Joueur)
                         {
                             switch (objetBonus.type)
                             {
                                 case TypeRecompense.VIE:
-                                    boulet.tireur.AjouterVie(objetBonus.valeurRecompense);
+                                    joueur.AjouterVie(objetBonus.valeurRecompense);
                                     break;
                                 case TypeRecompense.EXPERIENCE:
                                     joueur.AjouterExperience(objetBonus.valeurRecompense);
