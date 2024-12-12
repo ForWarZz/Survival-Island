@@ -175,7 +175,7 @@ namespace Survival_Island.joueur
         }
         
 
-        public void CheckCollisions(List<Ennemi> listeEnnemis)
+        public void CheckCollisionsBouletsJoueur(List<Ennemi> listeEnnemis, List<Item> listeItem)
         {
             for (int i = 0; i < boulets.Count; i++)
             {
@@ -192,6 +192,23 @@ namespace Survival_Island.joueur
                     if (ennemiRect.IntersectsWith(bouletRect))
                     {
                         ennemi.RecevoirDegats(caracteristique.degats);
+                        carte.Children.Remove(boulet.boulet);
+                        boulets.RemoveAt(i);
+                        i--;
+                        break;
+                    }
+                }
+
+                foreach (var item in listeItem)
+                {
+                    Rect itemRect = new Rect(Canvas.GetLeft(item.image) +Constante.TOLERANCE_PRECISION, Canvas.GetTop(item.image) + Constante.TOLERANCE_PRECISION, item.image.Width - Constante.TOLERANCE_PRECISION, item.image.Height - Constante.TOLERANCE_PRECISION);
+                    Rect bouletRect = new Rect(bouletX, bouletY, boulet.boulet.Width, boulet.boulet.Height);
+
+                    if (itemRect.IntersectsWith(bouletRect))
+                    {
+                        item.prendDesDegats(caracteristique.degats);
+
+
                         carte.Children.Remove(boulet.boulet);
                         boulets.RemoveAt(i);
                         i--;

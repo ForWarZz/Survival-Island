@@ -7,6 +7,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Survival_Island
 {
     internal class Item
@@ -16,7 +17,7 @@ namespace Survival_Island
         public string cheminImage { get; set; }
         public int positionX { get; set; }
         public int positionY { get; set; }
-        public int vie { get; set; } = 90;
+        public double vie { get; set; } = 90;
         public int experience { get; set; } = 30;
         public int largeur { get; set; }
         public int longeur { get; set; }
@@ -49,7 +50,7 @@ namespace Survival_Island
             Canvas.SetTop(this.image, positionY);
         }
 
-        public int prendDesDegats(int degats)
+        public double prendDesDegats(double degats)
         {
             this.vie -= degats;
             if (this.vie <= 0)

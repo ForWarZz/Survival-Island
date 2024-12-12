@@ -54,7 +54,6 @@ namespace Survival_Island
             InitCarteSize();
             InitCarte();
 
-
         }
         public void PrendreDegats(int degats)
         {
@@ -66,8 +65,7 @@ namespace Survival_Island
                 Application.Current.Shutdown();
             }
 
-            // Mettre à jour l'interface utilisateur pour refléter la santé restante
-            // Exemple : Mettre à jour la barre de vie
+            
             if (progressVieNavire != null)
             {
                 progressVieNavire.Value = (joueur.vie / joueur.vieMax) * 100;
@@ -108,7 +106,7 @@ namespace Survival_Island
 
                 if (rotation)
                 {
-                    listeItem[i].image.RenderTransform = new RotateTransform(rnd.Next(0, 361), longCoteImage, longCoteImage);
+                    listeItem[i].image.RenderTransform = new RotateTransform(rnd.Next(0, 361), longCoteImage/2, longCoteImage/2);
                 }
             }
 
@@ -134,7 +132,7 @@ namespace Survival_Island
             {
                 ennemi.MettreAJour();
             }
-            joueur.CheckCollisions(listeEnnemis);
+            joueur.CheckCollisionsBouletsJoueur(listeEnnemis, listeItem);
         }
 
         private void CheckDeplacement()
@@ -205,7 +203,7 @@ namespace Survival_Island
 
             //Fonction de test des items.
 
-            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 20, 70, false);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 50, 70, false);
             AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true);
             InitEnemies();
         }
