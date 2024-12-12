@@ -35,5 +35,14 @@ namespace Survival_Island
 
         public const int DEGATS_ENEMIS = 10;
 
+        public const int XP_PREMIER_NIVEAU = 100;
+
+        public const double MULTIPLICATEUR_NIVEAU = 1.5;
+
+        public const int XP_BATEAU_ENEMIE_MORT = 50;
+
+        public const int XP_TRESOR = 30;
+        public const int XP_CAILLOUX = 3000000;
+
     }
 }

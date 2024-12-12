@@ -24,6 +24,8 @@ namespace Survival_Island
 
         public ProgressBar pBar { get; set; }
 
+        public int experienceALaMort {  get; set; }
+
         public DispatcherTimer minuterieEnemiSeconde { get; set; }
 
 
@@ -35,6 +37,8 @@ namespace Survival_Island
             this.joueur = joueur;
             this.position = position;
             this.projectiles = new List<Boulet>();
+
+            this.experienceALaMort = Constante.XP_BATEAU_ENEMIE_MORT;
 
             this.image = new Image
             {
@@ -188,7 +192,7 @@ namespace Survival_Island
             }
         }
 
-        public void RecevoirDegats(double degats)
+        public bool RecevoirDegats(double degats)
         {
             vie -= degats;
             this.tempsAffichepBar = 0;
@@ -199,8 +203,10 @@ namespace Survival_Island
                 carte.Children.Remove(this.pBar);
                 carte.Children.Remove(image);
                 minuterieTir.Stop();
+                return true;
             }
             this.pBar.Visibility = Visibility.Visible;
+            return false;
 
         }
     }

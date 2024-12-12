@@ -75,18 +75,19 @@ namespace Survival_Island
             Canvas.SetTop(this.image, positionY);
         }
 
-        public double prendDesDegats(double degats)
+        public bool prendDesDegats(double degats)
         {
             this.vie -= degats;
             if (this.vie <= 0)
             {
                 this.canvasToAdd.Children.Remove(this.pBar);
                 this.canvasToAdd.Children.Remove(this.image);
+                return true;
             }
             this.pBar.Visibility = Visibility.Visible;
             this.pBar.Value = vie;
             this.tempsAffichepBar = 0;
-            return vie;
+            return false;
 
         }
 

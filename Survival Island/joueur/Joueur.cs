@@ -33,11 +33,19 @@ namespace Survival_Island.joueur
         private List<Boulet> boulets = new List<Boulet>();
         private double tempsDernierBoulet = 0;
         private int vieDeBase = 100;
+
+        public int experience {  get; set; }
+        public int prochainNiveau { get; set; }
+
         private int pointAmelioration = 0;
 
         public Joueur(Canvas carte)
         {
             this.carte = carte;
+
+            this.prochainNiveau = Constante.XP_PREMIER_NIVEAU;
+
+            this.experience = 0;
 
             this.vie = vieDeBase;
             this.vieMax = vieDeBase;
@@ -53,6 +61,19 @@ namespace Survival_Island.joueur
 
             InitRotationTemps();
         }
+
+        public void AddExperience(int experienceAjout)
+        {
+            this.experience += experienceAjout;
+            if (this.experience >= this.prochainNiveau)
+            {
+                this.experience -= this.prochainNiveau;
+                this.prochainNiveau = (int)(this.prochainNiveau * Constante.MULTIPLICATEUR_NIVEAU);
+                this.pointAmelioration += 1;
+            }
+            Console.WriteLine("XP : "+this.experience+", Niveau : "+this.pointAmelioration);
+        }
+
 
         private void InitBitmaps()
         {
@@ -193,7 +214,10 @@ namespace Survival_Island.joueur
 
                     if (ennemiRect.IntersectsWith(bouletRect))
                     {
-                        ennemi.RecevoirDegats(caracteristique.degats);
+                        if (ennemi.RecevoirDegats(caracteristique.degats) == true)
+                        {
+                            this.AddExperience(ennemi.experienceALaMort);
+                        }
                         carte.Children.Remove(boulet.boulet);
                         boulets.RemoveAt(i);
                         i--;
@@ -208,12 +232,16 @@ namespace Survival_Island.joueur
 
                     if (itemRect.IntersectsWith(bouletRect))
                     {
-                        item.prendDesDegats(caracteristique.degats);
-
+                        
+                        if (item.prendDesDegats(caracteristique.degats) == true)
+                        {
+                            this.AddExperience(item.experience);
+                        }
 
                         carte.Children.Remove(boulet.boulet);
                         boulets.RemoveAt(i);
                         i--;
+
                         break;
                     }
                 }
