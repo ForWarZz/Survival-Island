@@ -37,7 +37,7 @@ namespace Survival_Island.joueur
         public int experience {  get; set; }
         public int prochainNiveau { get; set; }
 
-        private int pointAmelioration = 0;
+        public int pointAmelioration = 0;
 
         public Joueur(Canvas carte)
         {

@@ -44,6 +44,8 @@ namespace Survival_Island
         private List<Item> listeItem = new List<Item>();
         private List<Ennemi> listeEnnemis;
 
+        private bool menuActif = false;
+
 
 
         public MainWindow()
@@ -203,6 +205,7 @@ namespace Survival_Island
             hudJoueur.Visibility = Visibility.Visible;
             ile = new Ile(carteBackground);
             ile.ApparaitreIle();
+            btnAmeliorations.Visibility = Visibility.Visible;
 
 
             joueur = new Joueur(carteBackground);
@@ -330,6 +333,29 @@ namespace Survival_Island
             menuAccueil.Visibility = Visibility.Hidden;
             jouer = true;
             LancerJeu();
+        }
+
+        private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
+        {
+            if (menuActif)
+            {
+                menuActif = false;
+                spAmelio.Visibility = Visibility.Hidden;
+                btnAmeliorations.Content = "Améliorations";
+            }
+            else
+            {
+                menuActif = true;
+                spAmelio.Visibility= Visibility.Visible;
+                btnAmeliorations.Content = "Fermer";
+                txtVieJoueurAmelio.Text = joueur.vie.ToString();
+                txtDegatsJoueurAmelio.Text = joueur.caracteristique.degats.ToString();
+                txtVitesseJoueurAmelio.Text = joueur.caracteristique.vitesse.ToString();
+                txtVieIleAmelio.Text = ile.vie.ToString();
+                txtPointAmelio.Text = joueur.pointAmelioration.ToString();
+                barreXPAmelio.Value = joueur.experience;
+                txtXPAmelio.Text = joueur.experience.ToString() + "/" + joueur.prochainNiveau.ToString();
+            }
         }
     }
 }
