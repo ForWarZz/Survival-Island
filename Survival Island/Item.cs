@@ -31,6 +31,10 @@ namespace Survival_Island
 
         public int tempsAffichepBar;
 
+        public int vieDonne {  get; set; }
+
+        public Random rdn = new Random();
+
         public Item(int positionX, int positionY, int vie ,int experience, string cheminImage, int largeur, int longeur, Canvas canvasToAdd)
         {
             
@@ -45,6 +49,16 @@ namespace Survival_Island
             this.image.Source = new BitmapImage(new Uri(cheminImage));
             this.image.Width = largeur;
             this.image.Height = longeur;
+
+            if (rdn.Next(0, 100) >= 60)
+            {
+                this.vieDonne = Constante.VIE_DONNE_MORT_ITEM;
+            }
+            else
+            {
+                this.vieDonne = 0;
+            }
+
 
             Canvas.SetLeft(this.image, positionX);
             Canvas.SetTop(this.image, positionY);
