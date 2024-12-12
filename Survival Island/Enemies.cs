@@ -14,13 +14,20 @@ namespace Survival_Island
     {
         public Image image { get; set; }
         public Vector position { get; set; }
-        public double vie { get; set; } = 50;
+        public double vie { get; set; } 
         public Canvas carte { get; set; }
 
         private DispatcherTimer minuterieTir;
         private Joueur joueur;
         private List<Boulet> projectiles;
         private double tempsDernierTir;
+
+        public ProgressBar pBar { get; set; }
+
+        public DispatcherTimer minuterieEnemiSeconde { get; set; }
+
+
+        public int tempsAffichepBar;
 
         public Ennemi(Canvas carte, Joueur joueur, Vector position)
         {
@@ -29,23 +36,56 @@ namespace Survival_Island
             this.position = position;
             this.projectiles = new List<Boulet>();
 
-            Initialiserimage();
-            InitialiserMinuterieTir();
-        }
-
-        private void Initialiserimage()
-        {
-            image = new Image
+            this.image = new Image
             {
                 Source = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT)),
                 Width = 50,
                 Height = 100
             };
 
-            Canvas.SetLeft(image, position.X);
-            Canvas.SetTop(image, position.Y);
-            carte.Children.Add(image);
+            Canvas.SetLeft(this.image, position.X);
+            Canvas.SetTop(this.image, position.Y);
+            carte.Children.Add(this.image); 
+            
+            InitialiserMinuterieTir();
+
+            this.vie = 50;
+
+
+            // Code de visualisation de vie
+            this.pBar = new ProgressBar();
+            Canvas.SetLeft(this.pBar, this.position.X + this.image.Height/8 );
+            Canvas.SetTop(this.pBar, this.position.Y + this.image.Width +50);
+            this.pBar.Width = this.image.Width / 2;
+            this.pBar.Height = 10;
+            this.pBar.Minimum = 0;
+            this.pBar.Maximum = vie;
+            this.pBar.Value = vie;
+            InitialiserminuterieEnemiSeconde();
+            this.pBar.Visibility = Visibility.Hidden;
+            this.tempsAffichepBar =0;
+
+            carte.Children.Add(this.pBar);
+
         }
+
+        private void InitialiserminuterieEnemiSeconde()
+        {
+            this.minuterieEnemiSeconde = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            this.minuterieEnemiSeconde.Tick += boucleTempsEnemi;
+
+            this.minuterieEnemiSeconde.Start();
+        }
+
+        private void boucleTempsEnemi(object? sender, EventArgs e)
+        {
+            this.tempsAffichepBar += 1;
+        }
+
+       
 
         private void InitialiserMinuterieTir()
         {
@@ -61,6 +101,12 @@ namespace Survival_Island
         {
             DeplacerProjectiles();
             VerifierCollisionsAvecJoueur();
+
+            if (this.tempsAffichepBar > Constante.TEMPS_AFFICHE_PBAR)
+            {
+                this.pBar.Visibility = Visibility.Hidden;
+            }
+
         }
 
         private void Tirer(object? sender, EventArgs e)
@@ -126,7 +172,7 @@ namespace Survival_Island
 
                 if (joueurRect.IntersectsWith(bouletRect))
                 {
-                    joueur.caracteristique.vie -= 10; // Infliger des dégâts au joueur
+                    joueur.caracteristique.vie -= Constante.DEGATS_ENEMIS; // Infliger des dégâts au joueur
 
                     carte.Children.Remove(boulet.boulet);
                     projectiles.RemoveAt(i);
@@ -145,12 +191,17 @@ namespace Survival_Island
         public void RecevoirDegats(double degats)
         {
             vie -= degats;
+            this.tempsAffichepBar = 0;
+            this.pBar.Value = vie;
 
             if (vie <= 0)
             {
+                carte.Children.Remove(this.pBar);
                 carte.Children.Remove(image);
                 minuterieTir.Stop();
             }
+            this.pBar.Visibility = Visibility.Visible;
+
         }
     }
 }

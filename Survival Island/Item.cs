@@ -7,6 +7,9 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 namespace Survival_Island
 {
     internal class Item
@@ -16,14 +19,24 @@ namespace Survival_Island
         public string cheminImage { get; set; }
         public int positionX { get; set; }
         public int positionY { get; set; }
-        public int vie { get; set; } = 90;
+        public double vie { get; set; } = 90;
         public int experience { get; set; } = 30;
         public int largeur { get; set; }
         public int longeur { get; set; }
         public Canvas canvasToAdd { get; set; }
 
+        public ProgressBar pBar {get; set;}
+
+        public DispatcherTimer minuterieItemSeconde {get; set;}
+
+        public int tempsAffichepBar;
+
         public Item(int positionX, int positionY, int vie ,int experience, string cheminImage, int largeur, int longeur, Canvas canvasToAdd)
         {
+            
+
+            this.tempsAffichepBar = 0;
+            
             this.image = new Image();
             this.positionX = positionX;
             this.positionY = positionX;
@@ -39,6 +52,19 @@ namespace Survival_Island
             this.canvasToAdd = canvasToAdd;
             canvasToAdd.Children.Add(this.image);
 
+            // Code de visualisation de vie
+            this.pBar = new ProgressBar();
+            Canvas.SetLeft(this.pBar, positionX +this.image.Height / 4);
+            Canvas.SetTop(this.pBar, positionY + this.image.Width);
+            canvasToAdd.Children.Add(this.pBar);
+            this.pBar.Width = this.image.Width / 2;
+            this.pBar.Height = 10;
+            this.pBar.Minimum = 0;
+            this.pBar.Maximum = vie;
+            this.pBar.Value = vie;
+            InitialiserminuterieItemSeconde();
+            this.pBar.Visibility = Visibility.Hidden;
+
 
         }
 
@@ -49,14 +75,35 @@ namespace Survival_Island
             Canvas.SetTop(this.image, positionY);
         }
 
-        public int prendDesDegats(int degats)
+        public double prendDesDegats(double degats)
         {
             this.vie -= degats;
             if (this.vie <= 0)
             {
+                this.canvasToAdd.Children.Remove(this.pBar);
                 this.canvasToAdd.Children.Remove(this.image);
             }
+            this.pBar.Visibility = Visibility.Visible;
+            this.pBar.Value = vie;
+            this.tempsAffichepBar = 0;
             return vie;
+
+        }
+
+        private void InitialiserminuterieItemSeconde()
+        {
+            this.minuterieItemSeconde = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            this.minuterieItemSeconde.Tick += boucleTempsItem;
+            
+            this.minuterieItemSeconde.Start();
+        }
+
+        private void boucleTempsItem(object? sender, EventArgs e)
+        {
+            this.tempsAffichepBar += 1;
         }
     }
 }
