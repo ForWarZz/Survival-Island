@@ -90,7 +90,7 @@ namespace Survival_Island
                 int objetLargeur = (int)(bitmapTresor.Width * multiplicateur);
                 int objetHauteur = (int)(bitmapTresor.Height * multiplicateur);
 
-                Objet objet = new Objet(carte, bitmapTresor, objetLargeur, objetHauteur, Constante.BASE_COFFRE_VIE, Constante.BASE_COFFRE_EXPERIENCE);
+                Objet objet = new Objet(carte, bitmapTresor, objetLargeur, objetHauteur, Constante.BASE_COFFRE_VIE, Constante.BASE_COFFRE_EXPERIENCE, true);
                 objet.Apparaitre(posX, posY);
 
                 objetsBonus.Add(objet);
@@ -164,47 +164,6 @@ namespace Survival_Island
 
             return true;
         }
-
-
-
-
-        /*        private void InitEnemies()
-                {
-                    listeEnnemis = new List<Ennemi>();
-
-                    for (int i = 0; i < 5; i++) // Ajouter 5 ennemis
-                    {
-                        double posX = rnd.Next(0, (int)carte.Width);
-                        double posY = rnd.Next(0, (int)carte.Height);
-                        Vector position = new Vector(posX, posY);
-
-                        Ennemi ennemi = new Ennemi(carte, joueur, position);
-                        listeEnnemis.Add(ennemi);
-                    }
-
-                }*/
-        /*        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation)
-                {
-                    int posX,posY,longCoteImage, longListeChemin = listeCheminAjout.Length;
-                    int indChemin;
-                    int nbitem = listeItem.Count;
-
-                    for (int i =nbitem ; i < nbitem+nbItemAjout; i++)
-                    {
-                        longCoteImage=random.Next(longCoteImageMin, longCoteImageMax);
-                        posX = random.Next(posXmin,posXmax);
-                        posY = random.Next(posYmin,posYmax);
-                        indChemin = random.Next(0,longListeChemin);
-
-                        listeItem.Add( new Item(posX, posY, 90,30, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carte));
-
-                        if (rotation)
-                        {
-                            listeItem[i].image.RenderTransform = new RotateTransform(random.Next(0, 361), longCoteImage, longCoteImage);
-                        }
-                    }
-                }*/
-
 
         private void InitBoucleJeu()
         {
@@ -304,8 +263,8 @@ namespace Survival_Island
             cameraX = Math.Max(0, Math.Min(cameraX, carte.Width - Fenetre.ActualWidth));
             cameraY = Math.Max(0, Math.Min(cameraY, carte.Height - Fenetre.ActualHeight));
 
-            double bateauX = Canvas.GetLeft(joueur.element);
-            double bateauY = Canvas.GetTop(joueur.element);
+            double bateauX = Canvas.GetLeft(joueur.canvaElement);
+            double bateauY = Canvas.GetTop(joueur.canvaElement);
 
             // Appliquer le décalage au Canvas (monde)
             Canvas.SetLeft(carte, -cameraX);
@@ -328,17 +287,17 @@ namespace Survival_Island
         /*
                 private void DeplaceMonde(double x, double y)
                 {
-                    foreach (UIElement element in carte.Children)
+                    foreach (UIElement canvaElement in carte.Children)
                     {
                         // Ignorer le joueur et autres éléments ne devant pas bouger
-                        if (element == joueur.element)
+                        if (canvaElement == joueur.canvaElement)
                             continue;
 
-                        double positionX = Canvas.GetLeft(element);
-                        Canvas.SetLeft(element, positionX + x);
+                        double positionX = Canvas.GetLeft(canvaElement);
+                        Canvas.SetLeft(canvaElement, positionX + x);
 
-                        double positionY = Canvas.GetTop(element);
-                        Canvas.SetTop(element, positionY + y);
+                        double positionY = Canvas.GetTop(canvaElement);
+                        Canvas.SetTop(canvaElement, positionY + y);
                     }
                 }*/
 
@@ -348,20 +307,20 @@ namespace Survival_Island
             for (int i = 0; i < boulets.Count; i++)
             {
                 Boulet boulet = boulets[i];
-                double bouletX = Canvas.GetLeft(boulet.element);
-                double bouletY = Canvas.GetTop(boulet.element);
+                double bouletX = Canvas.GetLeft(boulet.canvaElement);
+                double bouletY = Canvas.GetTop(boulet.canvaElement);
 
                 bouletX += boulet.direction.X * Constante.VITESSE_BOULET; // Vitesse du boulet
                 bouletY += boulet.direction.Y * Constante.VITESSE_BOULET;
 
-                Canvas.SetLeft(boulet.element, bouletX);
-                Canvas.SetTop(boulet.element, bouletY);
+                Canvas.SetLeft(boulet.canvaElement, bouletX);
+                Canvas.SetTop(boulet.canvaElement, bouletY);
 
                 // Supprimer le boulet si hors écran
                 if (bouletX < 0 || bouletY < 0 ||
-                    bouletX > carte.Width + boulet.element.Width || bouletY > carte.Height + boulet.element.Width)
+                    bouletX > carte.Width + boulet.canvaElement.Width || bouletY > carte.Height + boulet.canvaElement.Width)
                 {
-                    carte.Children.Remove(boulet.element);
+                    carte.Children.Remove(boulet.canvaElement);
                     boulets.RemoveAt(i);
                 }
             }

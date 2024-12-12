@@ -11,23 +11,23 @@ namespace Survival_Island.carte
 {
     internal class Objet : Collision
     {
-        public int vie { get; set; }
+        public int vie { get; private set; }
         public int experience { get; set; }
 
-        public Objet(Canvas carte, BitmapImage bitmapImage, int largeur, int hauteur, int vie, int experience) : base(carte)
+        public Objet(Canvas carte, BitmapImage bitmapImage, int largeur, int hauteur, int vie, int experience, bool statique) : base(carte, statique)
         {
             this.carte = carte;
             this.vie = vie;
             this.experience = experience;
 
-            element = new Image();
-            ((Image)element).Source = bitmapImage;
-            element.Width = largeur;
-            element.Height = hauteur;
+            canvaElement = new Image();
+            ((Image)canvaElement).Source = bitmapImage;
+            canvaElement.Width = largeur;
+            canvaElement.Height = hauteur;
         }
 
-        public Objet(Canvas carte, BitmapImage bitmapImage, int vie, int experience) :
-            this(carte, bitmapImage, (int)bitmapImage.Width, (int)bitmapImage.Height, vie, experience)
+        public Objet(Canvas carte, BitmapImage bitmapImage, int vie, int experience, bool statique) :
+            this(carte, bitmapImage, (int)bitmapImage.Width, (int)bitmapImage.Height, vie, experience, statique)
         { }
 
         public bool InfligerDegats(int degats)

@@ -15,14 +15,14 @@ namespace Survival_Island
     {
         public Vector direction { get; set; }
 
-        public Boulet(Canvas carte, Vector direction): base(carte)
+        public Boulet(Canvas carte, Vector direction): base(carte, false)
         {
             Ellipse bouletEllipse = new Ellipse();
             bouletEllipse.Width = Constante.TAILLE_BOULET;
             bouletEllipse.Height = Constante.TAILLE_BOULET;
             bouletEllipse.Fill = Brushes.Black;
 
-            element = bouletEllipse;
+            canvaElement = bouletEllipse;
             this.direction = direction;
         }
     }

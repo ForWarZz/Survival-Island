@@ -9,9 +9,9 @@ namespace Survival_Island.carte
 {
     internal class Obstacle : Collision
     {
-        public Obstacle(Canvas carte, Image image) : base(carte)
+        public Obstacle(Canvas carte, Image image) : base(carte, true)
         {
-            element = image;
+            canvaElement = image;
         }
     }
 }

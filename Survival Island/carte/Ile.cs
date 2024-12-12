@@ -17,10 +17,10 @@ namespace Survival_Island.carte
 
         private BitmapImage bitmapIle, bitmapIleFaible;
 
-        public int vieMax = Constante.ILE_VIE_MAX;
-        public int vie = Constante.ILE_VIE_MAX;
+        public int vieMax { get; set; } = Constante.ILE_VIE_MAX;
+        public int vie { get; private set; } = Constante.ILE_VIE_MAX;
 
-        public Ile(Canvas carte, ProgressBar progressBar, TextBlock valeurProgressBar): base(carte)
+        public Ile(Canvas carte, ProgressBar progressBar, TextBlock valeurProgressBar): base(carte, true)
         {
             this.carte = carte;
             this.progressBar = progressBar;
@@ -28,10 +28,10 @@ namespace Survival_Island.carte
 
             InitBitmaps();
 
-            element = new Image();
-            ((Image) element).Source = bitmapIle;
-            element.Width = bitmapIle.PixelWidth;
-            element.Height = bitmapIle.PixelHeight;
+            canvaElement = new Image();
+            ((Image) canvaElement).Source = bitmapIle;
+            canvaElement.Width = bitmapIle.PixelWidth;
+            canvaElement.Height = bitmapIle.PixelHeight;
 
             UpdateHUD();
         }
@@ -42,21 +42,18 @@ namespace Survival_Island.carte
             bitmapIleFaible = new BitmapImage(new Uri(Chemin.IMAGE_ILEC));
         }
 
-        public override void Apparaitre()
+        public void Apparaitre()
         {
-            double centerX = carte.Width / 2 - element.Width / 2;
-            double centerY = carte.Height / 2 - element.Height / 2;
+            double centerX = carte.Width / 2 - canvaElement.Width / 2;
+            double centerY = carte.Height / 2 - canvaElement.Height / 2;
 
-            Canvas.SetLeft(element, centerX);
-            Canvas.SetTop(element, centerY);
-
-            carte.Children.Add(element);
+            Apparaitre(centerX, centerY);
         }
 
         public void InfligerDegats(int degats)
         {
             vie -= degats;
-            Image image = (Image)element;
+            Image image = (Image)canvaElement;
 
             if (vie <= vieMax / 2 && image.Source != bitmapIleFaible)
                 image.Source = bitmapIleFaible;

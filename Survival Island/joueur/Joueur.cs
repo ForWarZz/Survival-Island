@@ -16,15 +16,16 @@ using System.Windows.Threading;
 
 namespace Survival_Island.joueur
 {
-    internal class Joueur: Collision
+    internal class Joueur : Collision
     {
-        public int vie { get; set; } = Constante.JOUEUR_VIE_MAX;
+        public int vie { get; private set; } = Constante.JOUEUR_VIE_MAX;
 
         public NavireCaracteristique caracteristique { get; set; }
-        public double tempsDernierBoulet = 0;
+        public double tempsDernierBoulet { get; set; } = 0;
+        public bool canonActif { get; set; }
+        public bool deplacement { get; set; }
 
-        public bool canonActif, deplacement;
-        public Vector orientation;
+        public Vector orientation { get; private set; }
 
         private MainWindow fenetre;
 
@@ -40,7 +41,7 @@ namespace Survival_Island.joueur
 
         private double cameraX, cameraY;
 
-        public Joueur(Canvas carte, MainWindow fenetre, List<Boulet> boulets): base(carte)
+        public Joueur(Canvas carte, MainWindow fenetre, List<Boulet> boulets): base(carte, false)
         {
             this.fenetre = fenetre;
             this.boulets = boulets;
@@ -50,10 +51,10 @@ namespace Survival_Island.joueur
 
             InitBitmaps();
 
-            element = new Image();
-            ((Image) element).Source = bitmapBateau;
-            element.Width = Constante.LARGEUR_NAVIRE;
-            element.Height = Constante.HAUTEUR_NAVIRE;
+            canvaElement = new Image();
+            ((Image) canvaElement).Source = bitmapBateau;
+            canvaElement.Width = Constante.LARGEUR_NAVIRE;
+            canvaElement.Height = Constante.HAUTEUR_NAVIRE;
 
             caracteristique = new NavireCaracteristique();
 
@@ -73,24 +74,21 @@ namespace Survival_Island.joueur
             rotationTemps.Tick += AnimationRotation;
         }
 
-        public override void Apparaitre()
+        public void Apparaitre()
         {
-            double centreEcranX = (carte.Width - element.Width) / 2;
-            double centreEcranY = (carte.Height - element.Height) / 2;
+            double centreEcranX = (carte.Width - canvaElement.Width) / 2;
+            double centreEcranY = (carte.Height - canvaElement.Height) / 2;
 
-            Canvas.SetLeft(element, centreEcranX);
-            Canvas.SetTop(element, centreEcranY);
+            canvaElement.RenderTransform = new RotateTransform(0, canvaElement.Width / 2, canvaElement.Height / 2);
 
-            element.RenderTransform = new RotateTransform(0, element.Width / 2, element.Height / 2);
-            carte.Children.Add(element);
-
+            Apparaitre(centreEcranX, centreEcranY);
             InitCamera();
         }
 
         public void UpdateOrientation(Point position)
         {
-            double centreBateauX = Canvas.GetLeft(element) + element.Width / 2;
-            double centreBateauY = Canvas.GetTop(element) + element.Height / 2;
+            double centreBateauX = positionX + canvaElement.Width / 2;
+            double centreBateauY = positionY + canvaElement.Height / 2;
 
             double deltaX = position.X - centreBateauX;
             double deltaY = position.Y - centreBateauY;
@@ -103,6 +101,7 @@ namespace Survival_Island.joueur
             }
         }
 
+        // Animation de la rotation du bateau: TODO - A refaire/améliorer pour plus de fluidité et meilleur UX
         private void AnimationRotation(object? sender, EventArgs e)
         {
             double diffAngle = angleCible - angleActuel;
@@ -125,20 +124,20 @@ namespace Survival_Island.joueur
             orientation = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
             orientation.Normalize();
 
-            element.RenderTransform = new RotateTransform(angleActuel, element.Width / 2, element.Height / 2);
+            canvaElement.RenderTransform = new RotateTransform(angleActuel, canvaElement.Width / 2, canvaElement.Height / 2);
         }
 
         public void TirerBoulet()
         {
-            double centreBateauX = Canvas.GetLeft(element) + element.Width / 2;
-            double centreBateauY = Canvas.GetTop(element) + element.Height / 2;
+            double centreBateauX = positionX + canvaElement.Width / 2;
+            double centreBateauY = positionY + canvaElement.Height / 2;
 
             if (tempsDernierBoulet > 0) return;
             tempsDernierBoulet = caracteristique.tempsRechargementCanon;
 
             // On créer un nouveau boulet
             Boulet boulet = new Boulet(carte, orientation);
-            boulet.Apparaitre(centreBateauX - boulet.element.Width / 2, centreBateauY - boulet.element.Height / 2);
+            boulet.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2, centreBateauY - boulet.canvaElement.Height / 2);
 
             boulets.Add(boulet);
         }
@@ -172,56 +171,49 @@ namespace Survival_Island.joueur
 
         /*public void DeplaceBateau(double deltaX, double deltaY)
         {
-            double posX = Canvas.GetLeft(element);
-            double posY = Canvas.GetTop(element);
+            double posX = Canvas.GetLeft(canvaElement);
+            double posY = Canvas.GetTop(canvaElement);
 
             posX += deltaX;
             posY += deltaY;
 
-            double maxX = carte.Width - element.Width;
-            double maxY = carte.Height - element.Height;
+            double maxX = carte.Width - canvaElement.Width;
+            double maxY = carte.Height - canvaElement.Height;
 
             Console.WriteLine("Carte X : " + maxX);
             Console.WriteLine("Carte Y : " + maxY);
             Console.WriteLine("Pos X : " + posX + " Pos Y : " + posY);
 
             if (posX < maxX && posX > 0)
-                Canvas.SetLeft(element, posX);
+                Canvas.SetLeft(canvaElement, posX);
 
             if (posY < maxY && posY > 0) 
-                Canvas.SetTop(element, posY);
+                Canvas.SetTop(canvaElement, posY);
         }*/
 
         public void DeplaceBateau(double deltaX, double deltaY)
         {
-            double posX = Canvas.GetLeft(element);
-            double posY = Canvas.GetTop(element);
+            double nouvellePosX = positionX + deltaX;
+            double nouvellePosY = positionY + deltaY;
 
-            posX += deltaX;
-            posY += deltaY;
-
-            double maxX = carte.Width - element.Width;
-            double maxY = carte.Height - element.Height;
+            double maxX = carte.Width - canvaElement.Width;
+            double maxY = carte.Height - canvaElement.Height;
 
             // Empêcher le bateau de sortir des limites de la carte
-            posX = Math.Max(0, Math.Min(posX, maxX));
-            posY = Math.Max(0, Math.Min(posY, maxY));
+            positionX = Math.Max(0, Math.Min(nouvellePosX, maxX));
+            positionY = Math.Max(0, Math.Min(nouvellePosY, maxY));
 
-            Canvas.SetLeft(element, posX);
-            Canvas.SetTop(element, posY);
-
-            DeplaceCameraVersBateau(posX, posY);
+            DeplaceCameraVers(positionX, positionY);
         }
 
-        private void DeplaceCameraVersBateau(double bateauX, double bateauY)
+        private void DeplaceCameraVers(double positionX, double positionY)
         {
-            // Dimensions du centre de la fenêtre
             double centreFenetreX = fenetre.ActualWidth / 2;
             double centreFenetreY = fenetre.ActualHeight / 2;
 
             // Calcul de la nouvelle position de la caméra pour centrer le bateau
-            cameraX = bateauX - centreFenetreX + (element.Width / 2);
-            cameraY = bateauY - centreFenetreY + (element.Height / 2);
+            cameraX = positionX - centreFenetreX + (canvaElement.Width / 2);
+            cameraY = positionY - centreFenetreY + (canvaElement.Height / 2);
 
             // Empêcher la caméra de sortir des limites de la carte
             cameraX = Math.Max(0, Math.Min(cameraX, carte.Width - fenetre.ActualWidth));
@@ -232,6 +224,7 @@ namespace Survival_Island.joueur
             Canvas.SetTop(carte, -cameraY);
         }
 
+        // Initialisation de la caméra pour centrer le bateau au début
         private void InitCamera()
         {
             cameraX = carte.Width / 2 - fenetre.ActualWidth / 2;
@@ -239,8 +232,6 @@ namespace Survival_Island.joueur
 
             Canvas.SetLeft(carte, -cameraX);
             Canvas.SetTop(carte, -cameraY);
-
-            Console.WriteLine("Camera X: " + cameraX + ", Camera Y: " + cameraY);
         }
 
         public void InfligerDegats(int degats)

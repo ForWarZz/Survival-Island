@@ -10,30 +10,74 @@ namespace Survival_Island.carte
 {
     internal class Collision
     {
-        public FrameworkElement element { get; set; }
-        protected Canvas carte { get; set; }
+        public FrameworkElement canvaElement { get; protected set; }
 
-        public Collision(Canvas carte)
+        protected Canvas carte;
+
+        private bool estStatique;
+        private double posX;
+        private double posY;
+        private Rect rect;
+
+
+        public Collision(Canvas carte, bool estStatique)
         {
             this.carte = carte;
+            this.estStatique = estStatique;
         }
 
-        public Collision()
-        { }
+        public double positionX
+        {
+            get
+            {
+                if (estStatique)
+                    return posX;
+                else
+                    return Canvas.GetLeft(canvaElement);
+            }
+            set
+            {
+                if (estStatique)
+                    posX = value;
+
+                Canvas.SetLeft(canvaElement, value);
+            }
+        }
+
+        public double positionY
+        {
+            get { 
+                if (estStatique)
+                    return posY;
+                else
+                    return Canvas.GetTop(canvaElement);
+            }
+            set { 
+                if (estStatique)
+                    posY = value;
+
+                 Canvas.SetTop(canvaElement, value); 
+            }
+        }
+
+        public Rect collisionRectangle
+        {
+            get
+            {
+                if (estStatique)
+                    return rect;
+                return new Rect(positionX, positionY, canvaElement.Width, canvaElement.Height);
+            }
+        }
 
         public bool EnCollisionAvec(Collision objetCollision)
         {
-            return Rect().IntersectsWith(objetCollision.Rect());
+            return collisionRectangle.IntersectsWith(objetCollision.collisionRectangle);
         }
 
         public bool EnCollisionAvec(Rect rect)
         {
-            return Rect().IntersectsWith(rect);
-        }
-
-        public Rect Rect()
-        {
-            return new Rect(Canvas.GetLeft(element), Canvas.GetTop(element), element.Width, element.Height);
+            return collisionRectangle.IntersectsWith(rect);
         }
 
         public virtual void Apparaitre(double x, double y)
@@ -41,18 +85,18 @@ namespace Survival_Island.carte
             if (carte == null)
                 throw new Exception("La carte n'est pas définie");
 
-            Canvas.SetLeft(element, x);
-            Canvas.SetTop(element, y);
+            if (estStatique)
+            {
+                positionX = x;
+                positionY = y;
 
-            carte.Children.Add(element);
-        }
+                rect = new Rect(x, y, canvaElement.Width, canvaElement.Height);
+            }
 
-        public virtual void Apparaitre()
-        {
-            if (carte == null)
-                throw new Exception("La carte n'est pas définie");
+            Canvas.SetLeft(canvaElement, x);
+            Canvas.SetTop(canvaElement, y);
 
-            carte.Children.Add(element);
+            carte.Children.Add(canvaElement);
         }
 
         public virtual void Disparaitre()
@@ -60,7 +104,7 @@ namespace Survival_Island.carte
             if (carte == null)
                 throw new Exception("La carte n'est pas définie");
 
-            carte.Children.Remove(element);
+            carte.Children.Remove(canvaElement);
         }
     }
 }
