@@ -236,6 +236,7 @@ namespace Survival_Island.joueur
                         if (item.prendDesDegats(caracteristique.degats) == true)
                         {
                             this.AddExperience(item.experience);
+                            this.vie += item.vieDonne;
                         }
 
                         carte.Children.Remove(boulet.boulet);
