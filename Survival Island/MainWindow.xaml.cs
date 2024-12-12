@@ -88,7 +88,7 @@ namespace Survival_Island
             }
 
         }
-        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation)
+        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation, int vie)
         {
             int posX,posY,longCoteImage, longListeChemin = listeCheminAjout.Length;
             int indChemin;
@@ -102,7 +102,7 @@ namespace Survival_Island
                 indChemin = random.Next(0,longListeChemin);
                 Console.WriteLine("Add item, " + listeCheminAjout[indChemin] +" pos :"+posX+posY+longCoteImage);
 
-                listeItem.Add( new Item(posX, posY, 90,30, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carteBackground));
+                listeItem.Add( new Item(posX, posY, vie,30, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carteBackground));
 
                 if (rotation)
                 {
@@ -133,6 +133,16 @@ namespace Survival_Island
                 ennemi.MettreAJour();
             }
             joueur.CheckCollisionsBouletsJoueur(listeEnnemis, listeItem);
+
+            for (int i = 0;i<listeItem.Count ;i++)
+            {
+
+                if (listeItem[i].tempsAffichepBar >=3 )
+                {
+                    listeItem[i].pBar.Visibility = Visibility.Hidden;
+
+                }
+            }
         }
 
         private void CheckDeplacement()
@@ -203,9 +213,10 @@ namespace Survival_Island
 
             //Fonction de test des items.
 
-            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 50, 70, false);
-            AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 50, 70, false,Constante.VIE_TRESOR);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true,Constante.VIE_CAILLOUX);
             InitEnemies();
+
         }
 
         private void DeplaceMonde(double x, double y)

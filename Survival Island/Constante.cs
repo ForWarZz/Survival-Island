@@ -18,13 +18,22 @@ namespace Survival_Island
 
         public const int VITESSE_BOULET = 10;
 
-        public const int TOLERANCE_PRECISION = 40;
+        public const int TOLERANCE_PRECISION = 20;
 
         public const double ILE_VIE_MAX = 1000;
 
         public const int NOMBRE_CAILLOUX_CARTE = 20;
 
-        public const int TEMPS_ROTATION_NAVIRE = 20;    // Millisecondes
+        public const int TEMPS_ROTATION_NAVIRE = 10;    // Millisecondes
         public const int TOLERANCE_ANGLE_ROTATION = 5;  // En degré
+
+        public const int VIE_TRESOR = 80;    
+        public const int VIE_CAILLOUX = 99999;
+
+
+        public const int TEMPS_AFFICHE_PBAR = 3;
+
+        public const int DEGATS_ENEMIS = 10;
+
     }
 }
