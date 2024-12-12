@@ -154,10 +154,19 @@
 
         <StackPanel x:Name="spAmelio" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,87" Height="350" Width="330" Background="#33000000">
             <TextBlock x:Name="txtAmelio" Text="Améliorations" TextAlignment="Center" Background="#FFC15911" Foreground="White" VerticalAlignment="Top" Height="50" FontSize="22" TextWrapping="Wrap"/>
-            <StackPanel Height="75" Orientation="Horizontal">
-                <TextBlock HorizontalAlignment="Left" Text="Vie du bateau" VerticalAlignment="Center" Height="15" />
-                <TextBlock HorizontalAlignment="Right" />
-                <Button HorizontalAlignment="Right" />
+            <StackPanel Height="60" Orientation="Horizontal">
+                <StackPanel Width="200">
+                    <TextBlock Text="Progression avant prochain niveau :" HorizontalAlignment="Center"/>
+                    <ProgressBar x:Name="barreXP" Height="20" Width="150" />
+                    <TextBlock x:Name="txtXP" HorizontalAlignment="Center" />
+                </StackPanel>
+                <TextBlock Text="Points : " VerticalAlignment="Center" FontSize="9" Margin="20,0,0,0"/>
+                <Ellipse Width="50" Height="50" Stroke="Black" Margin="10,0,0,0" Fill="Black" />
+            </StackPanel>
+            <StackPanel Height="60" Orientation="Horizontal">
+                <TextBlock Text="Vie du bateau : " Height="25" Margin="50,0,0,0" FontSize="20" HorizontalAlignment="Left" />
+                <TextBlock Text="" Height="25" Width="50"/>
+                <Button Content="+" Width="50" />
             </StackPanel>
         </StackPanel>
     </Grid>
