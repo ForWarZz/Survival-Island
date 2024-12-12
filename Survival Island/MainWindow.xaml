@@ -9,7 +9,6 @@
     Title="Survival Island"
     Width="1740"
     Height="778"
-    MinWidth="400"
     KeyDown="Fenetre_KeyDown"
     KeyUp="Fenetre_KeyUp"
     MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
@@ -21,8 +20,6 @@
         <Canvas x:Name="camera">
             <Canvas
                 x:Name="carte"
-                Width="4000"
-                Height="4000"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" />
         </Canvas>

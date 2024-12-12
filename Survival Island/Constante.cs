@@ -8,6 +8,8 @@ namespace Survival_Island
 {
     internal class Constante
     {
+        public const int NOMBRE_CARREAUX_MER = 64;
+
         public const int JOUEUR_VIE_MAX = 100;
         public const int JOUEUR_VITESSE = 5;
         public const int JOUEUR_DEGATS = 20;

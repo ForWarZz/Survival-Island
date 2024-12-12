@@ -106,7 +106,7 @@ namespace Survival_Island
                 Canvas.SetTop(boulet.boulet, bouletY);
 
                 // Supprimer les projectiles hors écran
-                if (bouletX < 0 || bouletY < 0 || bouletX > carte.ActualWidth || bouletY > carte.ActualHeight)
+                if (bouletX < 0 || bouletY < 0 || bouletX > carte.Width || bouletY > carte.Height)
                 {
                     carte.Children.Remove(boulet.boulet);
                     projectiles.RemoveAt(i);

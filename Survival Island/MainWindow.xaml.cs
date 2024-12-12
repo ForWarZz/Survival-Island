@@ -54,7 +54,6 @@ namespace Survival_Island
             InitializeComponent();
 
             InitBitmaps();
-            InitCarteSize();
             InitCarte();
         }
 
@@ -68,7 +67,7 @@ namespace Survival_Island
 
         private void GenererBonus(object? sender, EventArgs e)
         {
-            int nbBonus = random.Next(1, 4);
+            int nbBonus = random.Next(0, 4);
 
             for (int i = 0; i < nbBonus; i++)
             {
@@ -95,8 +94,6 @@ namespace Survival_Island
                 objet.Apparaitre(posX, posY);
 
                 objetsBonus.Add(objet);
-
-                Console.WriteLine("Pos X: " + posX + " pos y: " + posY);
             }
         }
 
@@ -106,7 +103,6 @@ namespace Survival_Island
 
             for (int i = 0; i < obstacles.Length; i++)
             {
-                Console.WriteLine("Creating rocher " + i);
                 Image rocher = new Image();
                 BitmapImage randomRocher = bitmapRochers[random.Next(0, bitmapRochers.Length)];
 
@@ -124,7 +120,7 @@ namespace Survival_Island
                 do
                 { 
                     posX = random.Next(0, (int)(carte.Width - rocher.Width));
-                    posY = random.Next(0, (int)(carte.Height - rocher.Height));
+                    posY = random.Next(0, (int)(carte.Width - rocher.Height));
 
                     Rect rect = new Rect(posX, posY, rocher.Width, rocher.Height);
 
@@ -135,8 +131,6 @@ namespace Survival_Island
                 // Création et ajout de l'obstacle à la carte
                 Obstacle obstacle = new Obstacle(carte, rocher);
                 obstacle.Apparaitre(posX, posY);
-
-                Console.WriteLine("Rocher " + i + " created at " + posX + ", " + posY);
 
                 obstacles[i] = obstacle;
             }
@@ -220,18 +214,10 @@ namespace Survival_Island
         private void Jeu(object? sender, EventArgs e)
         {
             CheckDeplacement();
+            DeplacerBoulets();
 
             if (joueur.canonActif)
                 joueur.TirerBoulet();
-
-            DeplacerBoulets();
-
-/*            foreach (var ennemi in listeEnnemis)
-            {
-                ennemi.MettreAJour();
-            }
-
-            joueur.CheckCollisions(listeEnnemis);*/
         }
 
         private void CheckDeplacement()
@@ -241,7 +227,7 @@ namespace Survival_Island
             if (joueur.deplacement)
             {
                 Vector orientation = joueur.orientation;
-                DeplaceCamera(orientation.X * vitesse, orientation.Y * vitesse);   // On inverse le vecteur pour déplacer le monde dans le sens opposé
+                joueur.DeplaceBateau(orientation.X * vitesse, orientation.Y * vitesse);
             }
         }
 
@@ -257,21 +243,18 @@ namespace Survival_Island
             bitmapTresor = new BitmapImage(new Uri(Chemin.IMAGE_TRESOR));
         }
 
-        private void InitCarteSize()
-        {
-            IM_MER_LARG = (int)carte.Width / (int)bitmapMer.Width;
-            IM_MER_HAUT = (int)carte.Height / (int)bitmapMer.Height;
-            NOMBRE_IMAGE_MER = IM_MER_HAUT * IM_MER_LARG;
-
-            mer = new Image[NOMBRE_IMAGE_MER];
-        }
-
         private void InitCarte()
         {
+            mer = new Image[Constante.NOMBRE_CARREAUX_MER];
+            carte.Width = mer.Length * bitmapMer.Width;
+            carte.Height = mer.Length * bitmapMer.Height;
+
+            Console.WriteLine("Mer length : " + mer.Length + " taille mer : " + bitmapMer.Width);
+
             /// Initialisation de la mer en fond
-            for (int i = 0; i < IM_MER_HAUT; i++)
+            for (int i = 0; i < mer.Length; i++)
             {
-                for (int j = 0; j < IM_MER_LARG; j++)
+                for (int j = 0; j < mer.Length; j++)
                 {
                     mer[i] = new Image();
                     mer[i].Source = bitmapMer;
@@ -293,12 +276,10 @@ namespace Survival_Island
             boulets = new List<Boulet>();
             objetsBonus = new List<Objet>();
 
-            InitCamera();
-
             ile = new Ile(carte, progressVieIle, txtVieIle);
             ile.Apparaitre();
 
-            joueur = new Joueur(carte, progressVieNavire, txtVieNavire, boulets);
+            joueur = new Joueur(carte, this, boulets);
             joueur.Apparaitre();
 
             InitRochers();
@@ -314,7 +295,7 @@ namespace Survival_Island
             /*InitEnemies();*/
         }
 
-        private void DeplaceCamera(double deltaX, double deltaY)
+/*        private void DeplaceCamera(double deltaX, double deltaY)
         {
             cameraX += deltaX;
             cameraY += deltaY;
@@ -323,19 +304,17 @@ namespace Survival_Island
             cameraX = Math.Max(0, Math.Min(cameraX, carte.Width - Fenetre.ActualWidth));
             cameraY = Math.Max(0, Math.Min(cameraY, carte.Height - Fenetre.ActualHeight));
 
+            double bateauX = Canvas.GetLeft(joueur.element);
+            double bateauY = Canvas.GetTop(joueur.element);
+
             // Appliquer le décalage au Canvas (monde)
             Canvas.SetLeft(carte, -cameraX);
             Canvas.SetTop(carte, -cameraY);
 
-            double bateauX = Canvas.GetLeft(joueur.element);
-            double bateauY = Canvas.GetTop(joueur.element);
+            joueur.DeplaceBateau(deltaX, deltaY);
+        }*/
 
-            // Appliquer le décalage au joueur
-            Canvas.SetLeft(joueur.element, bateauX + deltaX);
-            Canvas.SetTop(joueur.element, bateauY + deltaY);
-        }
-
-        private void InitCamera()
+/*        private void InitCamera()
         {
             cameraX = carte.Width / 2 - Fenetre.ActualWidth / 2;
             cameraY = carte.Height / 2 - Fenetre.ActualHeight / 2;
@@ -344,7 +323,7 @@ namespace Survival_Island
             Canvas.SetTop(carte, -cameraY);
 
             Console.WriteLine("Camera X: " + cameraX + ", Camera Y: " + cameraY);
-        }
+        }*/
 
         /*
                 private void DeplaceMonde(double x, double y)
@@ -380,7 +359,7 @@ namespace Survival_Island
 
                 // Supprimer le boulet si hors écran
                 if (bouletX < 0 || bouletY < 0 ||
-                    bouletX > carte.ActualWidth + boulet.element.Width || bouletY > carte.ActualHeight + boulet.element.Width)
+                    bouletX > carte.Width + boulet.element.Width || bouletY > carte.Height + boulet.element.Width)
                 {
                     carte.Children.Remove(boulet.element);
                     boulets.RemoveAt(i);
