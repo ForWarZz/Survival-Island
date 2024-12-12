@@ -88,7 +88,7 @@ namespace Survival_Island
             }
 
         }
-        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation, int vie)
+        private void AjoutItems(List<Item> listeItem, int nbItemAjout, string[] listeCheminAjout ,int posXmin, int posXmax, int posYmin, int posYmax, int longCoteImageMin, int longCoteImageMax, bool rotation, int vie, int experience)
         {
             int posX,posY,longCoteImage, longListeChemin = listeCheminAjout.Length;
             int indChemin;
@@ -100,9 +100,8 @@ namespace Survival_Island
                 posX = random.Next(posXmin,posXmax);
                 posY = random.Next(posYmin,posYmax);
                 indChemin = random.Next(0,longListeChemin);
-                Console.WriteLine("Add item, " + listeCheminAjout[indChemin] +" pos :"+posX+posY+longCoteImage);
 
-                listeItem.Add( new Item(posX, posY, vie,30, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carteBackground));
+                listeItem.Add( new Item(posX, posY, vie,experience, listeCheminAjout[indChemin],longCoteImage,longCoteImage,carteBackground));
 
                 if (rotation)
                 {
@@ -213,8 +212,8 @@ namespace Survival_Island
 
             //Fonction de test des items.
 
-            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 50, 70, false,Constante.VIE_TRESOR);
-            AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true,Constante.VIE_CAILLOUX);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_TRESOR], 0, 4000, 0, 4000, 50, 70, false,Constante.VIE_TRESOR, Constante.XP_TRESOR);
+            AjoutItems(listeItem, 70, [Chemin.IMAGE_ROCHER1, Chemin.IMAGE_ROCHER2, Chemin.IMAGE_ROCHER3], 0, 4000, 0, 4000, 50, 200, true,Constante.VIE_CAILLOUX, Constante.XP_CAILLOUX);
             InitEnemies();
 
         }
