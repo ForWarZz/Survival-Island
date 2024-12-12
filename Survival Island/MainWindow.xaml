@@ -18,20 +18,31 @@
     mc:Ignorable="d">
 
     <Window.Resources>
-        <Style
-            x:Key="BoutonRond"
-            TargetType="Button">
+        <Style x:Key="BoutonArrondi" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border
-                         Background="{TemplateBinding Background}"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="{TemplateBinding BorderThickness}"
-                         CornerRadius="10">
-                            <ContentPresenter 
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"></ContentPresenter>
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BoutonRond" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="50">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -45,8 +56,7 @@
             Width="4000"
             Height="4000"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" >
-        </Canvas>
+            VerticalAlignment="Center" />
 
 
         <StackPanel
@@ -142,31 +152,91 @@
         </StackPanel>
 
 
-        <Button  
-                x:Name="btnAmeliorations"
-                Style="{StaticResource BoutonRond}"
-                Height="50"
-                Background="#FFC15911"
-                BorderBrush="#FFC15911"
-                Content="Améliorations"
-                FontSize="18"
-                Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,32" Width="330"/>
+        <Button
+            x:Name="btnAmeliorations"
+            Width="330"
+            Height="50"
+            Margin="0,0,50,32"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Background="#FFC15911"
+            BorderBrush="#FFC15911"
+            Content="Améliorations"
+            FontSize="18"
+            Foreground="White"
+            Style="{StaticResource BoutonArrondi}" />
 
-        <StackPanel x:Name="spAmelio" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,87" Height="350" Width="330" Background="#33000000">
-            <TextBlock x:Name="txtAmelio" Text="Améliorations" TextAlignment="Center" Background="#FFC15911" Foreground="White" VerticalAlignment="Top" Height="50" FontSize="22" TextWrapping="Wrap"/>
+        <StackPanel
+            x:Name="spAmelio"
+            Width="330"
+            Height="350"
+            Margin="0,0,50,87"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Background="#33000000">
+            <TextBlock
+                x:Name="txtAmelio"
+                Height="50"
+                VerticalAlignment="Top"
+                Background="#FFC15911"
+                FontSize="22"
+                Foreground="White"
+                Text="Améliorations"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
             <StackPanel Height="60" Orientation="Horizontal">
                 <StackPanel Width="200">
-                    <TextBlock Text="Progression avant prochain niveau :" HorizontalAlignment="Center"/>
-                    <ProgressBar x:Name="barreXP" Height="20" Width="150" />
-                    <TextBlock x:Name="txtXP" HorizontalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Center" Text="Progression avant prochain niveau :" />
+                    <ProgressBar
+                        x:Name="barreXP"
+                        Width="150"
+                        Height="20"
+                        Margin="0,5,0,0" />
+                    <TextBlock
+                        x:Name="txtXP"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="9" />
                 </StackPanel>
-                <TextBlock Text="Points : " VerticalAlignment="Center" FontSize="9" Margin="20,0,0,0"/>
-                <Ellipse Width="50" Height="50" Stroke="Black" Margin="10,0,0,0" Fill="Black" />
+                <TextBlock
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="9"
+                    Text="Points : " />
+                <Grid Margin="10,0,0,0">
+                    <Ellipse
+                        Width="50"
+                        Height="50"
+                        VerticalAlignment="Center"
+                        Fill="Black"
+                        Stroke="Black" />
+                    <TextBlock
+                        x:Name="txtPointAmelio"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Text="" />
+                </Grid>
             </StackPanel>
             <StackPanel Height="60" Orientation="Horizontal">
-                <TextBlock Text="Vie du bateau : " Height="25" Margin="50,0,0,0" FontSize="20" HorizontalAlignment="Left" />
-                <TextBlock Text="" Height="25" Width="50"/>
-                <Button Content="+" Width="50" />
+                <TextBlock
+                    Height="25"
+                    Margin="50,0,0,0"
+                    FontSize="20"
+                    Text="Vie du bateau : " />
+                <TextBlock
+                    x:Name="txtVieJoueur"
+                    Width="50"
+                    Height="25"
+                    FontSize="20"
+                    Text="" />
+                <Button
+                    Width="50"
+                    Height="50"
+                    Content="+"
+                    Style="{StaticResource BoutonRond}" />
             </StackPanel>
         </StackPanel>
     </Grid>
