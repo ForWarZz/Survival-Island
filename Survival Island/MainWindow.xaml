@@ -9,8 +9,6 @@
     Title="Survival Island"
     Width="1740"
     Height="778"
-    MinWidth="400"
-    MinHeight="1000"
     KeyDown="Fenetre_KeyDown"
     KeyUp="Fenetre_KeyUp"
     MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
@@ -18,13 +16,38 @@
     MouseMove="Fenetre_MouseMove"
     WindowState="Maximized"
     mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style
+            x:Key="BoutonRond"
+            TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                         Background="{TemplateBinding Background}"
+                         BorderBrush="{TemplateBinding BorderBrush}"
+                         BorderThickness="{TemplateBinding BorderThickness}"
+                         CornerRadius="10">
+                            <ContentPresenter 
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Canvas
             x:Name="carteBackground"
             Width="4000"
             Height="4000"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" />
+            VerticalAlignment="Center" >
+        </Canvas>
+
 
         <StackPanel
             x:Name="hudJoueur"
@@ -110,12 +133,32 @@
                 x:Name="btnFermerJeu"
                 Height="40"
                 Margin="0,60,0,0"
-                Background="#FFC15911"
+                Background="#FFBE5911"
                 BorderBrush="#FFC15911"
                 Click="btnFermerJeu_Click"
                 Content="Retour au bureau"
                 FontSize="18"
                 Foreground="White" />
+        </StackPanel>
+
+
+        <Button  
+                x:Name="btnAmeliorations"
+                Style="{StaticResource BoutonRond}"
+                Height="50"
+                Background="#FFC15911"
+                BorderBrush="#FFC15911"
+                Content="Améliorations"
+                FontSize="18"
+                Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,32" Width="330"/>
+
+        <StackPanel x:Name="spAmelio" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,50,87" Height="350" Width="330" Background="#33000000">
+            <TextBlock x:Name="txtAmelio" Text="Améliorations" TextAlignment="Center" Background="#FFC15911" Foreground="White" VerticalAlignment="Top" Height="50" FontSize="22" TextWrapping="Wrap"/>
+            <StackPanel Height="75" Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Left" Text="Vie du bateau" VerticalAlignment="Center" Height="15" />
+                <TextBlock HorizontalAlignment="Right" />
+                <Button HorizontalAlignment="Right" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

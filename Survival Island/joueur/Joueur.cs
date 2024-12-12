@@ -21,6 +21,7 @@ namespace Survival_Island.joueur
 
         public int vie {  get; set; }
         public int vieMax { get; set; }
+
         private Canvas carte;
 
         private DispatcherTimer rotationTemps;
@@ -32,6 +33,7 @@ namespace Survival_Island.joueur
         private List<Boulet> boulets = new List<Boulet>();
         private double tempsDernierBoulet = 0;
         private int vieDeBase = 100;
+        private int pointAmelioration = 0;
 
         public Joueur(Canvas carte)
         {
