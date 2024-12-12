@@ -69,7 +69,7 @@ namespace Survival_Island.Outils.Entites
                 carte.Children.Remove(barreDeVie);
         }
 
-        public bool InfligerDegats(int degats)
+        public virtual bool InfligerDegats(int degats)
         {
             vie -= degats;
             if (vie < 0) vie = 0;
@@ -84,6 +84,11 @@ namespace Survival_Island.Outils.Entites
 
             return false;
         }
-    }
 
+        public virtual void AjouterVie(int vie)
+        {
+            this.vie = Math.Min(vieMax, this.vie + vie);
+            MettreAJourBarreDeVie();
+        }
+    }
 }

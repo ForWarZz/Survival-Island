@@ -37,11 +37,12 @@ namespace Survival_Island.Outils
         public const int BASE_COFFRE_LARGEUR = 70;
         public const int BASE_COFFRE_HAUTEUR = 50;
 
-        public const int BORNE_MIN_APPARITION_COFFRE = 2;
-        public const int BORNE_MAX_APPARITION_COFFRE = 10;
+        public const int BORNE_MIN_APPARITION_COFFRE = 0;
+        public const int BORNE_MAX_APPARITION_COFFRE = 5;
+        public const int MAX_COFFRE_SIMULTANE = 10;
         public const double MULTIPLICATEUR_TAILLE_COFFRE = 0.5;
 
-        public static readonly TimeSpan APPARITION_COFFRE_INTERVAL = TimeSpan.FromSeconds(10);
+        public static readonly TimeSpan APPARITION_COFFRE_INTERVAL = TimeSpan.FromMinutes(2);
 
         public const int HAUTEUR_BARRE_VIE = 10;
     }

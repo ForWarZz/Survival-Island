@@ -201,9 +201,10 @@ namespace Survival_Island
 
         private void GenererBonus(object? sender, EventArgs e)
         {
-            int nbBonus = random.Next(Constante.BORNE_MIN_APPARITION_COFFRE, Constante.BORNE_MAX_APPARITION_COFFRE);
+            int randomQuantite = random.Next(Constante.BORNE_MIN_APPARITION_COFFRE, Constante.BORNE_MAX_APPARITION_COFFRE);
+            int nbBonusAajouter = Math.Min(randomQuantite, Constante.BORNE_MAX_APPARITION_COFFRE - objetsBonus.Count);
 
-            for (int i = 0; i < nbBonus; i++)
+            for (int i = 0; i < nbBonusAajouter; i++)
             {
                 bool positionValide = true;
                 double posX, posY;
@@ -222,9 +223,21 @@ namespace Survival_Island
                 int objetLargeur = (int)(Constante.BASE_COFFRE_LARGEUR * multiplicateur);
                 int objetHauteur = (int)(Constante.BASE_COFFRE_HAUTEUR * multiplicateur);
 
-                ObjetRecompense objet = new ObjetRecompense(carte, bitmapTresor, objetLargeur, objetHauteur, 
-                    Constante.BASE_COFFRE_EXPERIENCE, TypeRecompense.EXPERIENCE, Constante.BASE_COFFRE_VIE, true);
+                TypeRecompense typeRecompense = (TypeRecompense)random.Next(0, Enum.GetValues(typeof(TypeRecompense)).Length);
 
+                int valeurRecompense = 0;
+                switch (typeRecompense)
+                {
+                    case TypeRecompense.VIE:
+                        valeurRecompense = (int)(Constante.BASE_COFFRE_VIE * multiplicateur);
+                        break;
+                    case TypeRecompense.EXPERIENCE:
+                        valeurRecompense = (int)(Constante.BASE_COFFRE_EXPERIENCE * multiplicateur);
+                        break;
+                }
+
+                ObjetRecompense objet = new ObjetRecompense
+                    (carte, bitmapTresor, objetLargeur, objetHauteur, valeurRecompense, typeRecompense, Constante.BASE_COFFRE_VIE, true);
                 objet.Apparaitre(posX, posY);
                 objetsBonus.Add(objet);
             }
@@ -322,7 +335,7 @@ namespace Survival_Island
                             switch (objetBonus.type)
                             {
                                 case TypeRecompense.VIE:
-                                    joueur.AjouterVie(objetBonus.valeurRecompense);
+                                    boulet.tireur.AjouterVie(objetBonus.valeurRecompense);
                                     break;
                                 case TypeRecompense.EXPERIENCE:
                                     joueur.AjouterExperience(objetBonus.valeurRecompense);

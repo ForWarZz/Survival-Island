@@ -105,29 +105,23 @@ namespace Survival_Island.Joueurs
             tempsDernierTir = tempsRechargementCanon;
 
             // On créer un nouveau boulet
-            Boulet boulet = new Boulet(carte, orientation);
+            Boulet boulet = new Boulet(carte, orientation, this);
             boulet.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2, centreBateauY - boulet.canvaElement.Height / 2);
 
             moteurJeu.boulets.Add(boulet);
         }
 
-        public new bool InfligerDegats(int degats)
+        public override bool InfligerDegats(int degats)
         {
-            vie -= degats;
-
-            if (vie <= 0)
-            {
-                Disparaitre();
-                return true;
-            }
-
+            bool detruit = base.InfligerDegats(degats);
             ActualiserHUD();
-            return false;
+
+            return detruit;
         }
 
-        public void AjouterVie(int vie)
+        public override void AjouterVie(int vie)
         {
-            this.vie = Math.Min(vieMax, this.vie + vie);
+            base.AjouterVie(vie);
             ActualiserHUD();
         }
 
