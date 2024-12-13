@@ -133,6 +133,8 @@ namespace Survival_Island.Joueurs
             {
                 NiveauSuivant();
             }
+
+            ActualiserMenuAmelioration();
         }
 
         private void NiveauSuivant()
@@ -140,9 +142,7 @@ namespace Survival_Island.Joueurs
             pointsAmeliorations++;
 
             experience = 0;
-            experienceMax *= (int)Constante.MULTIPLICATEUR_NIVEAU;
-
-            ActualiserMenuAmelioration();
+            experienceMax = (int)(experienceMax * Constante.MULTIPLICATEUR_NIVEAU);
         }
 
         public void ActualiserHUD()
