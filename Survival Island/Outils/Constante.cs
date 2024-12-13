@@ -45,5 +45,10 @@ namespace Survival_Island.Outils
         public static readonly TimeSpan APPARITION_COFFRE_INTERVAL = TimeSpan.FromMinutes(2);
 
         public const int HAUTEUR_BARRE_VIE = 10;
+
+
+        public static readonly TimeSpan VITESSE_ACCELERATION = TimeSpan.FromMilliseconds(16);
+
+        public const double  VITESSE_MAX = 5;
     }
 }

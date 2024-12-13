@@ -27,12 +27,16 @@ namespace Survival_Island
         private void Fenetre_KeyUp(object sender, KeyEventArgs e)
         {
             if (jouer && e.Key == Key.Z)
+            {
+
                 moteurJeu.JoueurDeplace(false);
+            }
         }
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
             if (jouer && e.Key == Key.Z)
+            
                 moteurJeu.JoueurDeplace(true);
         }
 
