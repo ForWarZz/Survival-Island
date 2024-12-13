@@ -51,7 +51,7 @@ namespace Survival_Island.carte
             Apparaitre(centerX, centerY);
         }
 
-        public bool InfligerDegats(int degats)
+        public override bool InfligerDegats(int degats)
         {
             bool detruit = base.InfligerDegats(degats);
             ActualiserHUD();

@@ -48,7 +48,6 @@ namespace Survival_Island
         public MoteurJeu(MainWindow fenetre)
         {
             this.fenetre = fenetre;
-
             carte = fenetre.carte;
 
             random = new Random();
