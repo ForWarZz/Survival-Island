@@ -79,7 +79,10 @@ namespace Survival_Island.carte
             {
                 vieMax += Constante.AMELIO_VIE_ILE;
                 vie += Constante.AMELIO_VIE_ILE;
+
                 moteurJeu.joueur.pointsAmeliorations--;
+                moteurJeu.joueur.ActualiserHUD();
+
                 ActualiserHUD();
             }
         }

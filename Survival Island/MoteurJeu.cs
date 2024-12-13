@@ -48,11 +48,10 @@ namespace Survival_Island
         public MoteurJeu(MainWindow fenetre)
         {
             this.fenetre = fenetre;
+
             carte = fenetre.carte;
-
             random = new Random();
-
-            this.tempsEnDeplacement = 0;
+            tempsEnDeplacement = 0;
 
             boulets = new List<Boulet>();
             objetsBonus = new List<ObjetRecompense>();
