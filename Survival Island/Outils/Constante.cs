@@ -50,5 +50,7 @@ namespace Survival_Island.Outils
         public static readonly TimeSpan VITESSE_ACCELERATION = TimeSpan.FromMilliseconds(16);
 
         public const double  VITESSE_MAX = 5;
+
+        public const int ACCELERATION = 30;
     }
 }
