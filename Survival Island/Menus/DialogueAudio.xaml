@@ -1,0 +1,21 @@
+﻿<Window x:Class="Survival_Island.DialogueAudio"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Survival_Island"
+        mc:Ignorable="d"
+        Title="Menu Audio" Height="200" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="100">
+            <StackPanel Height="50" Orientation="Horizontal">
+                <TextBlock Text="Musique :" VerticalAlignment="Center"></TextBlock>
+                <Slider x:Name="SlideMusique" VerticalAlignment="Center" Width="130" Margin="10,0,0,0"></Slider>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="50">
+                <TextBlock Text="Son :" VerticalAlignment="Center" />
+                <Slider x:Name="SlideSon" VerticalAlignment="Center" Margin="37,0,0,0" Width="130"></Slider>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

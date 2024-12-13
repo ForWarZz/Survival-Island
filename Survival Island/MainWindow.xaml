@@ -14,8 +14,7 @@
     MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
     MouseLeftButtonUp="Fenetre_MouseLeftButtonUp"
     MouseMove="Fenetre_MouseMove"
-    WindowState="Maximized"
-    mc:Ignorable="d">
+    mc:Ignorable="d" WindowState="Maximized">
 
     <Window.Resources>
         <Style x:Key="BoutonArrondi" TargetType="Button">
@@ -32,11 +31,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="LightCyan"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="BoutonRond" TargetType="Button">
             <Setter Property="Template">
@@ -52,22 +46,25 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="DarkGoldenrod"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </Window.Resources>
 
     <Grid>
+
         <Canvas x:Name="camera">
             <Canvas
-                x:Name="carte"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" />
+            x:Name="carte"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
         </Canvas>
 
+        <Menu Height="20" VerticalAlignment="Top" Background="White">
+            <MenuItem Header="Paramètres" Background="White">
+                <MenuItem x:Name="MenuSon" Header="Son..." Click="MenuSon_Click"></MenuItem>
+                <MenuItem x:Name="MenuChangerBateau" Header="Changer Bateau..." Click="MenuChangerBateau_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="MenuQuitter" Header="Quitter" Click="MenuQuitter_Click"></MenuItem>
+        </Menu>
 
         <StackPanel
             x:Name="hudJoueur"

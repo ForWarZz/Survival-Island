@@ -90,5 +90,33 @@ namespace Survival_Island
             jouer = true;
             moteurJeu.InitJeu();
         }
+
+        private void MenuQuitter_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Êtes vous sûr de vouloir quitter le jeu ?", "Fermer le jeu", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+                Application.Current.Shutdown();
+        }
+
+        private void MenuSon_Click(object sender, RoutedEventArgs e)
+        {
+            DialogueAudio dialog = new DialogueAudio();
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                double VolumeMusique = dialog.SlideMusique.Value;
+                double VolumeSon = dialog.SlideSon.Value;
+            }
+        }
+
+        private void MenuChangerBateau_Click(object sender, RoutedEventArgs e)
+        {
+            DialogueChangerBateau dialog = new DialogueChangerBateau();
+            bool? result = dialog.ShowDialog();
+            /// faire système pour changer le skin
+
+        }
     }
 }
