@@ -103,6 +103,7 @@ public abstract class Bateau : EntiteAvecVie
 
         canvaElement.RenderTransform = new RotateTransform(angleActuel, canvaElement.Width / 2, canvaElement.Height / 2);
     }
+
     protected void InitRotationTemps()
     {
         rotationTemps = new DispatcherTimer();

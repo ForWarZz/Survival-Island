@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace Survival_Island.Outils.Entites
 {
@@ -70,6 +72,17 @@ namespace Survival_Island.Outils.Entites
                     return rect;
                 return new Rect(positionX, positionY, canvaElement.Width, canvaElement.Height);
             }
+
+            set
+            {
+                rect = value;
+                MatrixTransform transform = (MatrixTransform)canvaElement.RenderTransform;
+
+                if (transform != null)
+                {
+                    rect = transform.TransformBounds(rect);
+                }
+            }
         }
 
         public bool EnCollisionAvec(EntiteBase objetCollision)
@@ -88,7 +101,7 @@ namespace Survival_Island.Outils.Entites
                 throw new Exception("La carte n'est pas définie");
 
             if (estStatique)
-                rect = new Rect(x, y, canvaElement.Width, canvaElement.Height);
+                collisionRectangle = new Rect(x, y, canvaElement.Width, canvaElement.Height);
 
             positionX = x;
             positionY = y;
@@ -103,7 +116,5 @@ namespace Survival_Island.Outils.Entites
 
             carte.Children.Remove(canvaElement);
         }
-
-        /*        public abstract void CollisionAvec(Collision objetCollision);*/
     }
 }
