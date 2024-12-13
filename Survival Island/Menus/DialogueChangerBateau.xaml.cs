@@ -19,9 +19,14 @@ namespace Survival_Island
     /// </summary>
     public partial class DialogueChangerBateau : Window
     {
+        private int numBateau;
+        private BitmapImage[] images;
         public DialogueChangerBateau()
         {
             InitializeComponent();
+        }
+        public void InitImages()
+        {
         }
     }
 }

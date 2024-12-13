@@ -10,5 +10,35 @@
     Height="450"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <StackPanel
+            Width="306"
+            Height="215"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <Button x:Name="btnGauche"
+                Width="20"
+                Height="30"
+                Margin="70,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="&lt;" />
+            <Image x:Name="imgBateau"
+                Width="66"
+                Height="113"
+                Margin="30,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="/Images/Bateaux/bateau_rouge.png"
+                Stretch="Fill" />
+            <Button x:Name="btnDroite"
+                Width="20"
+                Height="30"
+                Margin="30,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Content="&gt;" />
+        </StackPanel>
+    </Grid>
 </Window>
