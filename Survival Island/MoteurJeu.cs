@@ -339,6 +339,8 @@ namespace Survival_Island
                                     joueur.AjouterExperience(objetBonus.valeurRecompense);
                                     break;
                             }
+
+                            objetsBonus.RemoveAt(j);
                         }
 
                         boulet.Disparaitre();
