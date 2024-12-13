@@ -15,9 +15,9 @@
     <None Remove="Images\bateau_rouge.png" />
     <None Remove="Images\bateau_vert.png" />
     <None Remove="Images\boulet_canon.png" />
-    <None Remove="images\CarteJeu\Rochers\rocher_1.png" />
-    <None Remove="images\CarteJeu\Rochers\rocher_2.png" />
-    <None Remove="images\CarteJeu\Rochers\rocher_3.png" />
+    <None Remove="Images\CarteJeu\Rochers\rocher_1.png" />
+    <None Remove="Images\CarteJeu\Rochers\rocher_2.png" />
+    <None Remove="Images\CarteJeu\Rochers\rocher_3.png" />
     <None Remove="Images\ile.png" />
     <None Remove="Images\ile_cassee.png" />
     <None Remove="Images\logo.png" />
@@ -39,28 +39,28 @@
     <Resource Include="Images\Bateaux\boulet_canon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\Iles\ile.png">
+    <Resource Include="Images\CarteJeu\Iles\ile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\Iles\ile_cassee.png">
+    <Resource Include="Images\CarteJeu\Iles\ile_cassee.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\Rochers\rocher_1.png">
+    <Resource Include="Images\CarteJeu\Rochers\rocher_1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\Rochers\rocher_2.png">
+    <Resource Include="Images\CarteJeu\Rochers\rocher_2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\Rochers\rocher_3.png">
+    <Resource Include="Images\CarteJeu\Rochers\rocher_3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\mer.png">
+    <Resource Include="Images\CarteJeu\mer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\CarteJeu\tresor.png">
+    <Resource Include="Images\CarteJeu\tresor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
