@@ -44,6 +44,7 @@ namespace Survival_Island
         public int tempsEnDeplacement { get; set; }
 
 
+        public bool GodMod = false;
         public MoteurJeu(MainWindow fenetre)
         {
             this.fenetre = fenetre;
@@ -189,6 +190,11 @@ namespace Survival_Island
 
             if (joueur.canonActif)
                 joueur.TirerBoulet();
+
+            if (GodMod)
+            {
+                joueur.AjouterExperience(10000);
+            }
         }
 
         private void CheckDeplacement()

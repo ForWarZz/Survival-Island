@@ -24,14 +24,18 @@ namespace Survival_Island.Joueurs
 
         public int pointsAmeliorations { get; private set; }
 
+        public string modeBateu { get; private set; }
+
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) : 
             base(carte, moteurJeu, bitmapImage, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
         {
             fenetre = moteurJeu.fenetre;
-
+            niveau = 0;
             pointsAmeliorations = 0;
             experience = 0;
             experienceMax = Constante.JOUEUR_EXPERIENCE_MAX_N1;
+
+            modeBateu = "classic";
 
             ActualiserHUD();
             ActualiserMenuAmelioration();
@@ -103,12 +107,36 @@ namespace Survival_Island.Joueurs
             if (tempsDernierTir > 0)
                 return;
             tempsDernierTir = tempsRechargementCanon;
+            if (modeBateu == "classic")
+            {
+                // On créer un nouveau boulet
+                Boulet boulet = new Boulet(carte, orientation, this);
+                boulet.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2, centreBateauY - boulet.canvaElement.Height / 2);
 
-            // On créer un nouveau boulet
-            Boulet boulet = new Boulet(carte, orientation, this);
-            boulet.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2, centreBateauY - boulet.canvaElement.Height / 2);
+                moteurJeu.boulets.Add(boulet);
+            }
+            else if (
+                modeBateu == "double")
+            {
 
-            moteurJeu.boulets.Add(boulet);
+                // On créer un nouveau boulet
+                Boulet boulet = new Boulet(carte, orientation, this);
+                boulet.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2-8, centreBateauY - boulet.canvaElement.Height / 2);
+                moteurJeu.boulets.Add(boulet);
+
+                Boulet boulet1 = new Boulet(carte, orientation, this);
+                boulet1.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2 + 8, centreBateauY - boulet.canvaElement.Height / 2);
+                moteurJeu.boulets.Add(boulet1);
+
+                Boulet boulet2 = new Boulet(carte, orientation, this);
+                boulet2.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2 , centreBateauY - boulet.canvaElement.Height / 2  -8);
+                moteurJeu.boulets.Add(boulet2);
+
+                Boulet boulet3 = new Boulet(carte, orientation, this);
+                boulet3.Apparaitre(centreBateauX - boulet.canvaElement.Width / 2 , centreBateauY - boulet.canvaElement.Height / 2 +8);
+                moteurJeu.boulets.Add(boulet3);
+
+            }
         }
 
         public override bool InfligerDegats(int degats)
@@ -140,6 +168,13 @@ namespace Survival_Island.Joueurs
         private void NiveauSuivant()
         {
             pointsAmeliorations++;
+
+            niveau += 1;
+            if (niveau == 5)
+            {
+                MessageBox.Show("Chose a class");
+                modeBateu = "double";
+            }
 
             experience = 0;
             experienceMax = (int)(experienceMax * Constante.MULTIPLICATEUR_NIVEAU);

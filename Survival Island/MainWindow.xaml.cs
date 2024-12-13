@@ -38,6 +38,11 @@ namespace Survival_Island
             if (jouer && e.Key == Key.Z)
             
                 moteurJeu.JoueurDeplace(true);
+            if (jouer && e.Key == Key.G)
+            {
+                Console.WriteLine("God mod");
+                moteurJeu.GodMod = true;
+            }
         }
 
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
