@@ -240,7 +240,7 @@
                     Width="50"
                     Height="50"
                     Content="+"
-                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="22,0,0,0" />
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="22,0,0,0" Click="btnVieBateauAmelio_Click" />
             </StackPanel>
             <StackPanel Height="60" Orientation="Horizontal">
                 <TextBlock
@@ -257,7 +257,7 @@
                     Width="50"
                     Height="50"
                     Content="+"
-                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="2,0,0,0" />
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="2,0,0,0" Click="btnDegatsBateauAmelio_Click" />
             </StackPanel>
             <StackPanel Height="60" Orientation="Horizontal">
                 <TextBlock
@@ -275,17 +275,17 @@
                     Width="50"
                     Height="50"
                     Content="+"
-                    Style="{StaticResource BoutonRond}" Background="#19000000" />
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Click="btnVitesseBateauAmelio_Click" />
             </StackPanel>
             <StackPanel Height="60" Orientation="Horizontal">
                 <TextBlock
                     Height="25"
-                    Margin="50,0,0,0"
+                    Margin="30,0,0,0"
                     FontSize="20"
                     Text="Vie de l'île: " />
                 <TextBlock
                     x:Name="txtVieIleAmelio"
-                    Width="50"
+                    Width="70"
                     Height="25"
                     FontSize="20"
                     Text="" />
@@ -293,7 +293,7 @@
                     Width="50"
                     Height="50"
                     Content="+"
-                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="39,0,0,0" />
+                    Style="{StaticResource BoutonRond}" Background="#19000000" Margin="39,0,0,0" Click="btnVieIleAmelio_Click" />
             </StackPanel>
         </StackPanel>
     </Grid>

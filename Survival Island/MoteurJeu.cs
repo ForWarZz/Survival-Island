@@ -28,7 +28,7 @@ namespace Survival_Island
 
         private DispatcherTimer objetBonusMinuteur;
 
-        private Joueur joueur;
+        public Joueur joueur;
         private Random random;
 
         private bool incrementTempsEnDeplacement=false;
@@ -94,7 +94,7 @@ namespace Survival_Island
 
         private void InitIle()
         {
-            ile = new Ile(carte, fenetre);
+            ile = new Ile(carte, fenetre, this);
             ile.Apparaitre();
         }
 

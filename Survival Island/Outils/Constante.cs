@@ -11,8 +11,11 @@ namespace Survival_Island.Outils
         public const int NOMBRE_CARREAUX_MER = 40;
 
         public const int JOUEUR_VIE_MAX = 100;
+        public const int AMELIO_VIE_MAX = 100;
         public const int JOUEUR_VITESSE = 5;
+        public const int AMELIO_VITESSE = 5;
         public const int JOUEUR_DEGATS = 20;
+        public const int AMELIO_DEGATS = 20;
         public const double JOUEUR_RECHARGEMENT_CANON = 1;
 
         public const int JOUEUR_EXPERIENCE_MAX_N1 = 100;
@@ -25,6 +28,7 @@ namespace Survival_Island.Outils
         public const int TAILLE_BOULET = 10;
 
         public const int ILE_VIE_MAX = 1000;
+        public const int AMELIO_VIE_ILE = 1000;
 
         public const int NOMBRE_ROCHERS_CARTE = 20;
         public const double MULTIPILICATEUR_TAILLE_ROCHER = 0.5;

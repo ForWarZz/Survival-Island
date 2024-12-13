@@ -127,5 +127,25 @@ namespace Survival_Island
             /// faire système pour changer le skin
 
         }
+
+        private void btnVieBateauAmelio_Click(object sender, RoutedEventArgs e)
+        {
+            moteurJeu.joueur.AmelioVie();
+        }
+
+        private void btnDegatsBateauAmelio_Click(object sender, RoutedEventArgs e)
+        {
+            moteurJeu.joueur.AmelioDegats();
+        }
+
+        private void btnVitesseBateauAmelio_Click(object sender, RoutedEventArgs e)
+        {
+            moteurJeu.joueur.AmelioVitesse();
+        }
+
+        private void btnVieIleAmelio_Click(object sender, RoutedEventArgs e)
+        {
+            moteurJeu.ile.AmelioVie();
+        }
     }
 }

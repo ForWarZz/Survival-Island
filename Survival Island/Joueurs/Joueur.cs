@@ -22,7 +22,7 @@ namespace Survival_Island.Joueurs
         public int experience { get; private set; }
         public int experienceMax { get; private set; }
 
-        public int pointsAmeliorations { get; private set; }
+        public int pointsAmeliorations { get; set; }
 
         public string modeBateu { get; private set; }
 
@@ -185,6 +185,7 @@ namespace Survival_Island.Joueurs
             fenetre.barreVieJoueur.Value = vie;
             fenetre.barreVieJoueur.Maximum = vieMax;
             fenetre.txtVieJoueur.Text = vie + "/" + vieMax + " PV";
+            ActualiserMenuAmelioration();
         }
 
         public void ActualiserMenuAmelioration()
@@ -195,10 +196,37 @@ namespace Survival_Island.Joueurs
             fenetre.barreXPAmelio.Value = experience;
             fenetre.txtXPAmelio.Text = experience + "/" + experienceMax + " XP";
 
-            fenetre.txtVieJoueurAmelio.Text = vie.ToString();
+            fenetre.txtVieJoueurAmelio.Text = vieMax.ToString();
             fenetre.txtDegatsJoueurAmelio.Text = degats.ToString();
             fenetre.txtVitesseJoueurAmelio.Text = vitesse.ToString();
-            fenetre.txtVieIleAmelio.Text = moteurJeu.ile.vie.ToString();
+        }
+
+        public void AmelioVie()
+        {
+            if (pointsAmeliorations > 0)
+            {
+                vieMax += Constante.AMELIO_VIE_MAX;
+                pointsAmeliorations--;
+                ActualiserHUD();
+            }
+        }
+        public void AmelioVitesse()
+        {
+            if (pointsAmeliorations > 0)
+            {
+                vitesse += Constante.AMELIO_VITESSE;
+                pointsAmeliorations--;
+                ActualiserHUD();
+            }
+        }
+        public void AmelioDegats()
+        {
+            if (pointsAmeliorations > 0)
+            {
+                degats += Constante.AMELIO_DEGATS;
+                pointsAmeliorations--;
+                ActualiserHUD();
+            }
         }
     }
 }

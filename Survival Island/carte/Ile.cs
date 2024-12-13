@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,19 +13,19 @@ using Survival_Island.Outils.Entites;
 
 namespace Survival_Island.carte
 {
-    public class Ile: EntiteBase
+    public class Ile: EntiteAvecVie
     {
         private MainWindow fenetre;
 
         private BitmapImage bitmapIle, bitmapIleFaible;
 
-        public int vieMax { get; set; } = Constante.ILE_VIE_MAX;
-        public int vie { get; private set; } = Constante.ILE_VIE_MAX;
+        private MoteurJeu moteurJeu;
 
-        public Ile(Canvas carte, MainWindow fenetre): base(carte, true)
+        public Ile(Canvas carte, MainWindow fenetre, MoteurJeu moteurJeu): base(carte, true, false, Constante.ILE_VIE_MAX)
         {
             this.carte = carte;
             this.fenetre = fenetre;
+            this.moteurJeu = moteurJeu;
 
             InitBitmaps();
 
@@ -52,20 +53,10 @@ namespace Survival_Island.carte
 
         public bool InfligerDegats(int degats)
         {
-            vie -= degats;
-            Image image = (Image)canvaElement;
+            bool detruit = base.InfligerDegats(degats);
+            ActualiserHUD();
 
-            if (vie <= vieMax / 2 && image.Source != bitmapIleFaible)
-                image.Source = bitmapIleFaible;
-
-            if (vie <= 0)
-            {
-                return true;
-            }
-
-             ActualiserHUD();
-
-            return false;
+            return detruit;
         }
 
         public void ActualiserHUD()
@@ -74,6 +65,23 @@ namespace Survival_Island.carte
             fenetre.barreVieIle.Maximum = vieMax;
 
             fenetre.txtVieIle.Text = vie + "/" + vieMax + " PV";
+
+            ActualiserMenuAmelioration();
+        }
+        public void ActualiserMenuAmelioration()
+        {
+            fenetre.txtVieIleAmelio.Text = vie.ToString();
+        }
+
+        public void AmelioVie()
+        {
+            if (moteurJeu.joueur.pointsAmeliorations > 0)
+            {
+                vieMax += Constante.AMELIO_VIE_ILE;
+                vie += Constante.AMELIO_VIE_ILE;
+                moteurJeu.joueur.pointsAmeliorations--;
+                ActualiserHUD();
+            }
         }
     }
 }
