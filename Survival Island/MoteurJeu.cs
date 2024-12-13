@@ -208,10 +208,11 @@ namespace Survival_Island
             {
                 incrementTempsEnDeplacement = true;
                 double decel = (vitesse / Constante.ACCELERATION) * tempsEnDeplacement;
-                if ( decel > 0)
+                if (decel > 0)
                     vitesse = decel;
             }
-            if ( tempsEnDeplacement>0)
+
+            if (tempsEnDeplacement > 0)
             {
                 Vector orientation = joueur.orientation;
                 joueur.Deplacer(orientation.X * vitesse, orientation.Y * vitesse);
