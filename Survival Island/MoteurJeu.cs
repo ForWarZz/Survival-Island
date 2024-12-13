@@ -31,11 +31,17 @@ namespace Survival_Island
         private Joueur joueur;
         private Random random;
 
+        private bool incrementTempsEnDeplacement=false;
+
         public List<Boulet> boulets { get; }
         public Obstacle[] obstacles { get; }
         public List<ObjetRecompense> objetsBonus { get; }
 
         public Ile ile { get; private set; }
+
+        public DispatcherTimer MinuteurDeplacement;
+
+        public int tempsEnDeplacement { get; set; }
 
         public MoteurJeu(MainWindow fenetre)
         {
@@ -44,6 +50,8 @@ namespace Survival_Island
             carte = fenetre.carte;
 
             random = new Random();
+
+            this.tempsEnDeplacement = 0;
 
             boulets = new List<Boulet>();
             objetsBonus = new List<ObjetRecompense>();
@@ -65,6 +73,8 @@ namespace Survival_Island
 
             InitBonusMinuteur();
             InitBoucleJeu();
+
+            InitMinuteurDeplacement();
         }
 
         private void InitBitmaps()
@@ -183,11 +193,46 @@ namespace Survival_Island
         private void CheckDeplacement()
         {
             double vitesse = joueur.vitesse;
-
             if (joueur.deplacement)
+            {
+                double accel = (vitesse / 50) * tempsEnDeplacement;
+                if ( accel < Constante.VITESSE_MAX)
+                    incrementTempsEnDeplacement = true;
+                else
+                    incrementTempsEnDeplacement = false;
+                vitesse = accel;
+
+            }
+            else
+            {
+                incrementTempsEnDeplacement = true;
+                double decel = (vitesse / 50) * tempsEnDeplacement;
+                if ( decel > 0)
+                    vitesse = decel;
+            }
+            if ( tempsEnDeplacement>0)
             {
                 Vector orientation = joueur.orientation;
                 joueur.Deplacer(orientation.X * vitesse, orientation.Y * vitesse);
+            }
+        }
+
+        private void InitMinuteurDeplacement()
+        {
+            MinuteurDeplacement = new DispatcherTimer();
+            MinuteurDeplacement.Interval = Constante.VITESSE_ACCELERATION;
+            MinuteurDeplacement.Tick += MinutDeplacement;
+            MinuteurDeplacement.Start();
+        }
+
+        private void MinutDeplacement(object? sender, EventArgs e)
+        {
+            if (incrementTempsEnDeplacement)
+            {
+                if (joueur.deplacement)
+                    tempsEnDeplacement += 1;
+                else if (tempsEnDeplacement > 0)
+                    tempsEnDeplacement -= 1;
             }
         }
 
