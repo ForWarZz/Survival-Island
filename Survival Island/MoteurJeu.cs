@@ -43,6 +43,7 @@ namespace Survival_Island
 
         public int tempsEnDeplacement { get; set; }
 
+
         public MoteurJeu(MainWindow fenetre)
         {
             this.fenetre = fenetre;
@@ -195,7 +196,7 @@ namespace Survival_Island
             double vitesse = joueur.vitesse;
             if (joueur.deplacement)
             {
-                double accel = (vitesse / 50) * tempsEnDeplacement;
+                double accel = (vitesse / Constante.ACCELERATION) * tempsEnDeplacement;
                 if ( accel < Constante.VITESSE_MAX)
                     incrementTempsEnDeplacement = true;
                 else
@@ -206,7 +207,7 @@ namespace Survival_Island
             else
             {
                 incrementTempsEnDeplacement = true;
-                double decel = (vitesse / 50) * tempsEnDeplacement;
+                double decel = (vitesse / Constante.ACCELERATION) * tempsEnDeplacement;
                 if ( decel > 0)
                     vitesse = decel;
             }
