@@ -20,7 +20,7 @@
     <None Remove="images\carte_jeu\rochers\rocher_3.png" />
     <None Remove="Images\ile.png" />
     <None Remove="Images\ile_cassee.png" />
-    <None Remove="Images\logo.png" />
+    <None Remove="images\logo.png" />
     <None Remove="Images\mer.png" />
     <None Remove="Images\rocher_1.png" />
     <None Remove="Images\rocher_2.png" />
@@ -45,10 +45,7 @@
     <Resource Include="Images\carte_jeu\iles\ile_cassee.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\carte_jeu\rochers\rocher_1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\carte_jeu\rochers\rocher_2.png">
+    <Resource Include="Images\carte_jeu\rochers\rocher_1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\carte_jeu\rochers\rocher_3.png">
@@ -61,6 +58,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\carte_jeu\tresor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
