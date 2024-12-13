@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Xml.Linq;
+using System.Windows.Shapes;
+using CollisionDetection;
 
 namespace Survival_Island.Outils.Entites
 {
     public abstract class EntiteBase
     {
         public FrameworkElement canvaElement { get; protected set; }
-
         protected Canvas carte;
-
         private bool estStatique;
         private double posX;
         private double posY;
-        private Rect rect;
-
+        private double angleRotation; // Ajouter une variable pour la rotation
+        private Collision collision;
 
         public EntiteBase(Canvas carte, bool estStatique)
         {
@@ -28,7 +23,7 @@ namespace Survival_Island.Outils.Entites
             this.estStatique = estStatique;
         }
 
-        public double positionX
+        public double PositionX
         {
             get
             {
@@ -46,7 +41,7 @@ namespace Survival_Island.Outils.Entites
             }
         }
 
-        public double positionY
+        public double PositionY
         {
             get
             {
@@ -64,35 +59,28 @@ namespace Survival_Island.Outils.Entites
             }
         }
 
-        public Rect collisionRectangle
+        // Ajouter l'angle de rotation pour la collision
+        public double Rotation
+        {
+            get { return angleRotation; }
+            set { angleRotation = value; }
+        }
+
+        public Collision CollisionRectangle
         {
             get
             {
                 if (estStatique)
-                    return rect;
-                return new Rect(positionX, positionY, canvaElement.Width, canvaElement.Height);
-            }
+                    return collision;
 
-            set
-            {
-                rect = value;
-                MatrixTransform transform = canvaElement.RenderTransform as MatrixTransform;
-
-                if (transform != null)
-                {
-                    rect = transform.TransformBounds(rect);
-                }
+                // Utiliser le constructeur de Collision avec l'angle de rotation
+                return new Collision(new Rect(PositionX, PositionY, canvaElement.Width, canvaElement.Height), angleRotation);
             }
         }
 
         public bool EnCollisionAvec(EntiteBase objetCollision)
         {
-            return collisionRectangle.IntersectsWith(objetCollision.collisionRectangle);
-        }
-
-        public bool EnCollisionAvec(Rect rect)
-        {
-            return collisionRectangle.IntersectsWith(rect);
+            return CollisionRectangle.IntersectsWith(objetCollision.CollisionRectangle);
         }
 
         public virtual void Apparaitre(double x, double y)
@@ -100,11 +88,11 @@ namespace Survival_Island.Outils.Entites
             if (carte == null)
                 throw new Exception("La carte n'est pas définie");
 
-            if (estStatique)
-                collisionRectangle = new Rect(x, y, canvaElement.Width, canvaElement.Height);
+            PositionX = x;
+            PositionY = y;
 
-            positionX = x;
-            positionY = y;
+            // Créer une collision dynamique avec la rotation
+            collision = new Collision(new Rect(x, y, canvaElement.Width, canvaElement.Height), angleRotation);
 
             carte.Children.Add(canvaElement);
         }
@@ -115,6 +103,21 @@ namespace Survival_Island.Outils.Entites
                 throw new Exception("La carte n'est pas définie");
 
             carte.Children.Remove(canvaElement);
+        }
+
+        public void AfficherCollision()
+        {
+            // Afficher la collision sous forme de polygone
+            PointCollection points = new PointCollection(CollisionRectangle.Points);
+            Polygon polygon = new Polygon
+            {
+                Stroke = Brushes.Red,
+                StrokeThickness = 2,
+                Fill = Brushes.Transparent,
+                Points = points
+            };
+
+            carte.Children.Add(polygon);
         }
     }
 }

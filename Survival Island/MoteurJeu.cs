@@ -358,7 +358,7 @@ namespace Survival_Island
                 {
                     if (boulet.EnCollisionAvec(obstacle))
                     {
-                        Console.WriteLine("Collision avec un obstacle: X=" + obstacle.positionX + " Y=" + obstacle.positionY);
+                        Console.WriteLine("Collision avec un obstacle: X=" + obstacle.PositionX + " Y=" + obstacle.PositionY);
 
                         boulet.Disparaitre();
                         boulets.RemoveAt(i);
@@ -376,7 +376,7 @@ namespace Survival_Island
                     ObjetRecompense objetBonus = objetsBonus[j];
                     if (boulet.EnCollisionAvec(objetBonus))
                     {
-                        Console.WriteLine("Collision avec un objet bonus: X=" + objetBonus.positionX + " Y=" + objetBonus.positionY);
+                        Console.WriteLine("Collision avec un objet bonus: X=" + objetBonus.PositionX + " Y=" + objetBonus.PositionY);
                         bool estDetruit = objetBonus.InfligerDegats(joueur.degats);
 
                         if (estDetruit && boulet.tireur is Joueur)

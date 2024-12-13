@@ -49,8 +49,8 @@ namespace Survival_Island.Joueurs
 
         public override void ChangerOrientation(Point position)
         {
-            double centreBateauX = positionX + canvaElement.Width / 2;
-            double centreBateauY = positionY + canvaElement.Height / 2;
+            double centreBateauX = PositionX + canvaElement.Width / 2;
+            double centreBateauY = PositionY + canvaElement.Height / 2;
 
             double deltaX = position.X - centreBateauX;
             double deltaY = position.Y - centreBateauY;
@@ -65,8 +65,8 @@ namespace Survival_Island.Joueurs
 
         public override void Deplacer(double deltaX, double deltaY)
         {
-            double nouvellePosX = positionX + deltaX;
-            double nouvellePosY = positionY + deltaY;
+            double nouvellePosX = PositionX + deltaX;
+            double nouvellePosY = PositionY + deltaY;
 
             double maxX = carte.Width - canvaElement.Width;
             double maxY = carte.Height - canvaElement.Height;
@@ -74,11 +74,13 @@ namespace Survival_Island.Joueurs
             if (!PeutAllerVers(nouvellePosX, nouvellePosY))
                 return;
 
-            // Empêcher le bateau de sortir des limites de la carte
-            positionX = Math.Max(0, Math.Min(nouvellePosX, maxX));
-            positionY = Math.Max(0, Math.Min(nouvellePosY, maxY));
+            AfficherCollision();
 
-            DeplaceCameraVers(positionX, positionY);
+            // Empêcher le bateau de sortir des limites de la carte
+            PositionX = Math.Max(0, Math.Min(nouvellePosX, maxX));
+            PositionY = Math.Max(0, Math.Min(nouvellePosY, maxY));
+
+            DeplaceCameraVers(PositionX, PositionY);
         }
 
         private void DeplaceCameraVers(double positionX, double positionY)
@@ -101,8 +103,8 @@ namespace Survival_Island.Joueurs
 
         public override void TirerBoulet()
         {
-            double centreBateauX = positionX + canvaElement.Width / 2;
-            double centreBateauY = positionY + canvaElement.Height / 2;
+            double centreBateauX = PositionX + canvaElement.Width / 2;
+            double centreBateauY = PositionY + canvaElement.Height / 2;
 
             if (tempsDernierTir > 0)
                 return;
