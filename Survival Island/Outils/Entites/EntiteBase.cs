@@ -76,7 +76,7 @@ namespace Survival_Island.Outils.Entites
             set
             {
                 rect = value;
-                MatrixTransform transform = (MatrixTransform)canvaElement.RenderTransform;
+                MatrixTransform transform = canvaElement.RenderTransform as MatrixTransform;
 
                 if (transform != null)
                 {
