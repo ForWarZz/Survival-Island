@@ -68,7 +68,7 @@ namespace Survival_Island.Entites.Base
                 if (estStatique)
                     return collision;
 
-                return new Collision(new Rect(PositionX, PositionY, canvaElement.Width, canvaElement.Height), AngleRotation());
+                return new Collision(PositionX, PositionY, canvaElement.Width, canvaElement.Height, AngleRotation());
             }
         }
 
@@ -100,7 +100,8 @@ namespace Survival_Island.Entites.Base
             PositionX = x;
             PositionY = y;
 
-            collision = new Collision(new Rect(x, y, canvaElement.Width, canvaElement.Height), AngleRotation());
+            collision = new Collision(x, y, canvaElement.Width, canvaElement.Height, AngleRotation());
+            collision.AfficherCollision(carte);
 
             carte.Children.Add(canvaElement);
         }
