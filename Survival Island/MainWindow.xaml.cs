@@ -1,7 +1,5 @@
 ﻿using System.Windows.Input;
 using System.Windows;
-using Survival_Island.carte;
-using Survival_Island.Joueurs;
 
 namespace Survival_Island
 {

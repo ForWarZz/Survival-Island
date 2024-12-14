@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Survival_Island.Outils.Entites
+namespace Survival_Island.Entites.Base
 {
     public abstract class EntiteBase
     {

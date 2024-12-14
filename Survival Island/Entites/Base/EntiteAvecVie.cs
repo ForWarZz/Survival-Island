@@ -5,16 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using Survival_Island.Outils;
 
-namespace Survival_Island.Outils.Entites
+namespace Survival_Island.Entites.Base
 {
-    public abstract class EntiteAvecVie : EntiteBase, IDetruisable
+    public abstract class EntiteAvecVie : EntiteBase
     {
         public int vie { get; set; }
         public int vieMax { get; set; }
 
         public ProgressBar barreDeVie { get; set; }
-        
+
         private bool barreVieVisible;
 
         public EntiteAvecVie(Canvas carte, bool estStatique, bool barreVieVisible, int vieMax) : base(carte, estStatique)

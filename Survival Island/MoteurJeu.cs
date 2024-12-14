@@ -8,12 +8,11 @@ using System.Windows.Threading;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Media;
-using Survival_Island.Joueurs;
-using Survival_Island.carte.objets;
-using Survival_Island.carte;
 using Survival_Island.Outils;
-using Survival_Island.Carte.Objets;
-using Survival_Island.Outils.Entites;
+using Survival_Island.Entites.Base;
+using Survival_Island.Entites.Navire;
+using Survival_Island.Entites.Objets;
+using Survival_Island.Entites;
 
 namespace Survival_Island
 {

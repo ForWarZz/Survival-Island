@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using Survival_Island.Entites.Base;
 using Survival_Island.Outils;
-using Survival_Island.Outils.Entites;
 
-namespace Survival_Island.carte
+namespace Survival_Island.Entites
 {
-    public class Ile: EntiteAvecVie
+    public class Ile : EntiteAvecVie
     {
         private MainWindow fenetre;
 
@@ -21,7 +21,7 @@ namespace Survival_Island.carte
 
         private MoteurJeu moteurJeu;
 
-        public Ile(Canvas carte, MainWindow fenetre, MoteurJeu moteurJeu): base(carte, true, false, Constante.ILE_VIE_MAX)
+        public Ile(Canvas carte, MainWindow fenetre, MoteurJeu moteurJeu) : base(carte, true, false, Constante.ILE_VIE_MAX)
         {
             this.carte = carte;
             this.fenetre = fenetre;
@@ -30,7 +30,7 @@ namespace Survival_Island.carte
             InitBitmaps();
 
             canvaElement = new Image();
-            ((Image) canvaElement).Source = bitmapIle;
+            ((Image)canvaElement).Source = bitmapIle;
             canvaElement.Width = bitmapIle.PixelWidth;
             canvaElement.Height = bitmapIle.PixelHeight;
 
@@ -54,6 +54,9 @@ namespace Survival_Island.carte
         public override bool InfligerDegats(int degats)
         {
             bool detruit = base.InfligerDegats(degats);
+
+            if (vie <= vieMax / 2)
+                ((Image)canvaElement).Source = bitmapIleFaible;
             ActualiserHUD();
 
             return detruit;

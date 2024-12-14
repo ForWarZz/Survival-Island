@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Survival_Island.Carte.Objets;
+using Survival_Island.Entites.Base;
 using Survival_Island.Outils;
-using Survival_Island.Outils.Entites;
 
-namespace Survival_Island.carte.objets
+namespace Survival_Island.Entites.Objets
 {
     public class ObjetRecompense : EntiteAvecVie
     {

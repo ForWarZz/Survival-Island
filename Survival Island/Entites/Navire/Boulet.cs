@@ -7,10 +7,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Survival_Island.Entites.Base;
 using Survival_Island.Outils;
-using Survival_Island.Outils.Entites;
 
-namespace Survival_Island.Joueurs
+namespace Survival_Island.Entites.Navire
 {
     public class Boulet : EntiteBase
     {
