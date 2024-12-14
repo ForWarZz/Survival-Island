@@ -59,7 +59,7 @@ namespace Survival_Island.Entites.Navire
         protected bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
         {
             Collision nouvelleCollision = new Collision(new Rect(nouvellePosX, nouvellePosY, canvaElement.Width, canvaElement.Height), AngleRotation());
-            nouvelleCollision.AfficherCollision(carte);
+            // nouvelleCollision.AfficherCollision(carte);
 
             if (moteurJeu.ile.EnCollisionAvec(nouvelleCollision))
                 return false;

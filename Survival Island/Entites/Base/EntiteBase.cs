@@ -101,7 +101,7 @@ namespace Survival_Island.Entites.Base
             PositionY = y;
 
             collision = new Collision(x, y, canvaElement.Width, canvaElement.Height, AngleRotation());
-            collision.AfficherCollision(carte);
+            // collision.AfficherCollision(carte);
 
             carte.Children.Add(canvaElement);
         }
