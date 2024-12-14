@@ -74,8 +74,6 @@ namespace Survival_Island.Joueurs
             if (!PeutAllerVers(nouvellePosX, nouvellePosY))
                 return;
 
-            AfficherCollision();
-
             // Empêcher le bateau de sortir des limites de la carte
             PositionX = Math.Max(0, Math.Min(nouvellePosX, maxX));
             PositionY = Math.Max(0, Math.Min(nouvellePosY, maxY));

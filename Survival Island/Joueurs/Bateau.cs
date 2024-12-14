@@ -56,7 +56,7 @@ public abstract class Bateau : EntiteAvecVie
 
     protected bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
     {
-        Rect nouvelleCollision = new Rect(nouvellePosX, nouvellePosY, canvaElement.Width, canvaElement.Height);
+        Collision nouvelleCollision = new Collision(new Rect(nouvellePosX, nouvellePosY, canvaElement.Width, canvaElement.Height), AngleRotation());
 
         if (moteurJeu.ile.EnCollisionAvec(nouvelleCollision))
             return false;

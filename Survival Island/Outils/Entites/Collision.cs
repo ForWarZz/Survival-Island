@@ -2,20 +2,14 @@
 using System.Windows;
 using System.Collections.Generic;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace Survival_Island.Outils.Entites
 {
     public class Collision
     {
         private Point p1, p2, p3, p4;
-
-        public Collision(Point p1, Point p2, Point p3, Point p4)
-        {
-            this.p1 = p1;
-            this.p2 = p2;
-            this.p3 = p3;
-            this.p4 = p4;
-        }
 
         public Collision(Rect rect, double angle)
         {
@@ -27,6 +21,12 @@ namespace Survival_Island.Outils.Entites
             p3 = transformer.Transform(new Point(rect.X + rect.Width, rect.Y + rect.Height));
             p4 = transformer.Transform(new Point(rect.X, rect.Y + rect.Height));
         }
+
+        public Collision(double posX, double posY, double largeur, double hauteur, double angle) : this(new Rect(posX, posY, largeur, hauteur), angle)
+        { }
+
+        public Collision(double posX, double posY, double largeur, double hauteur) : this(new Rect(posX, posY, largeur, hauteur), 0)
+        { }
 
         private bool LignesIntersectent(Point A1, Point A2, Point B1, Point B2)
         {
@@ -75,6 +75,16 @@ namespace Survival_Island.Outils.Entites
             }
 
             return false;
+        }
+
+        public void AfficherCollision(Canvas carte)
+        {
+            Polygon debugRectangle = new Polygon();
+            debugRectangle.Points = new PointCollection([p1, p2, p3, p4]);
+            debugRectangle.Stroke = Brushes.Red;
+            debugRectangle.StrokeThickness = 1;
+
+            carte.Children.Add(debugRectangle);
         }
     }
 }

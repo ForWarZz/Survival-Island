@@ -13,6 +13,7 @@ using Survival_Island.carte.objets;
 using Survival_Island.carte;
 using Survival_Island.Outils;
 using Survival_Island.Carte.Objets;
+using Survival_Island.Outils.Entites;
 
 namespace Survival_Island
 {
@@ -106,9 +107,9 @@ namespace Survival_Island
                 posX = random.Next(0, (int)(carte.Width - Constante.LARGEUR_NAVIRE));
                 posY = random.Next(0, (int)(carte.Height - Constante.HAUTEUR_NAVIRE));
 
-                Rect rect = new Rect(posX, posY, Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE);
+                Collision collision = new Collision(posX, posY, Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE);
 
-                positionValide = CheckPositionValide(rect);
+                positionValide = CheckPositionValide(collision);
             } while (!positionValide);
 
             joueur = new Joueur(carte, this, bitmapBateau);
@@ -122,10 +123,13 @@ namespace Survival_Island
                 Image rocher = new Image();
                 BitmapImage randomRocher = bitmapRochers[random.Next(0, bitmapRochers.Length)];
 
+                double angleRotation = random.Next(0, 361);
+                double multiplicateurTaille = 0.5 + random.NextDouble();
+
                 rocher.Source = randomRocher;
-                rocher.Width = randomRocher.Width * (0.5 + random.NextDouble());
-                rocher.Height = randomRocher.Height * (0.5 + random.NextDouble());
-                rocher.RenderTransform = new RotateTransform(random.Next(0, 361), rocher.Width / 2, rocher.Height / 2);
+                rocher.Width = randomRocher.Width * multiplicateurTaille;
+                rocher.Height = randomRocher.Height * multiplicateurTaille;
+                rocher.RenderTransform = new RotateTransform(angleRotation, rocher.Width / 2, rocher.Height / 2);
 
                 double posX, posY;
                 bool positionValide;
@@ -135,9 +139,9 @@ namespace Survival_Island
                     posX = random.Next(0, (int)(carte.Width - rocher.Width));
                     posY = random.Next(0, (int)(carte.Width - rocher.Height));
 
-                    Rect rect = new Rect(posX, posY, rocher.Width, rocher.Height);
+                    Collision collision = new Collision(posX, posY, rocher.Width, rocher.Height, angleRotation);
 
-                    positionValide = CheckPositionValide(rect);
+                    positionValide = CheckPositionValide(collision);
                 } while (!positionValide);
 
                 Obstacle obstacle = new Obstacle(carte, rocher);
@@ -265,9 +269,9 @@ namespace Survival_Island
                     posX = random.Next(0, (int)(carte.Width - Constante.BASE_COFFRE_LARGEUR));
                     posY = random.Next(0, (int)(carte.Height - Constante.BASE_COFFRE_HAUTEUR));
 
-                    Rect rect = new Rect(posX, posY, Constante.BASE_COFFRE_LARGEUR, Constante.BASE_COFFRE_HAUTEUR);
+                    Collision collision = new Collision(posX, posY, Constante.BASE_COFFRE_LARGEUR, Constante.BASE_COFFRE_HAUTEUR);
 
-                    positionValide = CheckPositionValide(rect);
+                    positionValide = CheckPositionValide(collision);
                 } while (!positionValide);
 
                 double multiplicateur = Constante.MULTIPLICATEUR_TAILLE_COFFRE + random.NextDouble();
@@ -294,16 +298,16 @@ namespace Survival_Island
             }
         }
 
-        private bool CheckPositionValide(Rect rect)
+        private bool CheckPositionValide(Collision collision)
         {
-            if (ile.EnCollisionAvec(rect))
+            if (ile.EnCollisionAvec(collision))
             {
                 return false;
             }
 
             foreach (Obstacle obstacleDejaPresent in obstacles)
             {
-                if (obstacleDejaPresent != null && obstacleDejaPresent.EnCollisionAvec(rect))
+                if (obstacleDejaPresent != null && obstacleDejaPresent.EnCollisionAvec(collision))
                 {
                     return false;
                 }
@@ -311,7 +315,7 @@ namespace Survival_Island
 
             foreach (ObjetRecompense objetsBonusDejaPresent in objetsBonus)
             {
-                if (objetsBonusDejaPresent != null && objetsBonusDejaPresent.EnCollisionAvec(rect))
+                if (objetsBonusDejaPresent != null && objetsBonusDejaPresent.EnCollisionAvec(collision))
                 {
                     return false;
                 }

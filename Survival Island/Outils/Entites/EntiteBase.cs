@@ -3,18 +3,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using CollisionDetection;
 
 namespace Survival_Island.Outils.Entites
 {
     public abstract class EntiteBase
     {
         public FrameworkElement canvaElement { get; protected set; }
+
         protected Canvas carte;
+
         private bool estStatique;
+
         private double posX;
         private double posY;
-        private double angleRotation; // Ajouter une variable pour la rotation
+
         private Collision collision;
 
         public EntiteBase(Canvas carte, bool estStatique)
@@ -59,13 +61,6 @@ namespace Survival_Island.Outils.Entites
             }
         }
 
-        // Ajouter l'angle de rotation pour la collision
-        public double Rotation
-        {
-            get { return angleRotation; }
-            set { angleRotation = value; }
-        }
-
         public Collision CollisionRectangle
         {
             get
@@ -73,14 +68,28 @@ namespace Survival_Island.Outils.Entites
                 if (estStatique)
                     return collision;
 
-                // Utiliser le constructeur de Collision avec l'angle de rotation
-                return new Collision(new Rect(PositionX, PositionY, canvaElement.Width, canvaElement.Height), angleRotation);
+                return new Collision(new Rect(PositionX, PositionY, canvaElement.Width, canvaElement.Height), AngleRotation());
             }
         }
 
         public bool EnCollisionAvec(EntiteBase objetCollision)
         {
-            return CollisionRectangle.IntersectsWith(objetCollision.CollisionRectangle);
+            return EnCollisionAvec(objetCollision.CollisionRectangle);
+        }
+
+        public bool EnCollisionAvec(Collision collision)
+        {
+            return CollisionRectangle.EnCollisionAvec(collision);
+        }
+
+        public bool EnCollisionAvec(Rect rect)
+        {
+            return EnCollisionAvec(rect, 0);
+        }
+
+        public bool EnCollisionAvec(Rect rect, double angle)
+        {
+            return CollisionRectangle.EnCollisionAvec(new Collision(rect, angle));
         }
 
         public virtual void Apparaitre(double x, double y)
@@ -91,8 +100,7 @@ namespace Survival_Island.Outils.Entites
             PositionX = x;
             PositionY = y;
 
-            // Créer une collision dynamique avec la rotation
-            collision = new Collision(new Rect(x, y, canvaElement.Width, canvaElement.Height), angleRotation);
+            collision = new Collision(new Rect(x, y, canvaElement.Width, canvaElement.Height), AngleRotation());
 
             carte.Children.Add(canvaElement);
         }
@@ -105,19 +113,15 @@ namespace Survival_Island.Outils.Entites
             carte.Children.Remove(canvaElement);
         }
 
-        public void AfficherCollision()
+        public double AngleRotation()
         {
-            // Afficher la collision sous forme de polygone
-            PointCollection points = new PointCollection(CollisionRectangle.Points);
-            Polygon polygon = new Polygon
-            {
-                Stroke = Brushes.Red,
-                StrokeThickness = 2,
-                Fill = Brushes.Transparent,
-                Points = points
-            };
+            double angle = 0;
 
-            carte.Children.Add(polygon);
+            Transform transformer = canvaElement.RenderTransform;
+            if (transformer != null && transformer is RotateTransform)
+                angle = ((RotateTransform)transformer).Angle;
+
+            return angle;
         }
     }
 }
