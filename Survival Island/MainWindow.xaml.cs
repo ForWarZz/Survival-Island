@@ -27,14 +27,14 @@ namespace Survival_Island
             if (jouer && e.Key == Key.Z)
             {
 
-                moteurJeu.Joueur.deplacement = false;
+                moteurJeu.Joueur.Deplacement = false;
             }
         }
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
             if (jouer && e.Key == Key.Z)
-                moteurJeu.Joueur.deplacement = true;
+                moteurJeu.Joueur.Deplacement = true;
 
             if (jouer && e.Key == Key.G)
             {
@@ -46,13 +46,13 @@ namespace Survival_Island
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-                moteurJeu.Joueur.canonActif = true;
+                moteurJeu.Joueur.CanonActif = true;
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-                moteurJeu.Joueur.canonActif &= false;
+                moteurJeu.Joueur.CanonActif &= false;
         }
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)

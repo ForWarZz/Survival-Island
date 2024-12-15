@@ -9,8 +9,8 @@ namespace Survival_Island.Entites.Navire
 {
     public class Boulet : EntiteBase
     {
-        public Vector direction { get; set; }
-        public Bateau tireur { get; set; }
+        public Vector Direction { get; private set; }
+        public Bateau Tireur { get; private set; }
 
         public Boulet(Canvas carte, Vector direction, Bateau tireur) : base(carte, false)
         {
@@ -21,8 +21,8 @@ namespace Survival_Island.Entites.Navire
 
             CanvaElement = bouletEllipse;
 
-            this.direction = direction;
-            this.tireur = tireur;
+            Direction = direction;
+            Tireur = tireur;
         }
     }
 }

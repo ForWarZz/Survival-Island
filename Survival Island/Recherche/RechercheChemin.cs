@@ -14,42 +14,43 @@ namespace Survival_Island.Recherche
         public List<Cellule> TrouverChemin(double aPosX, double aPosY, double bPosX, double bPosY)
         {
             Cellule pointDepart = Grille.ObtenirCellule(aPosX, aPosY);
-            Cellule pointArrivee = Grille.ObtenirCellule(bPosX, bPosY);
+            Cellule? pointArrivee = Grille.ObtenirCellule(bPosX, bPosY);
 
-            List<Cellule> ouvertes = new List<Cellule>();
-            List<Cellule> fermees = new List<Cellule>();
-            ouvertes.Add(pointDepart);
+            if (pointArrivee.EstOccupee())
+            {
+                pointArrivee = TrouverCelluleAccessibleLaPlusProche(pointArrivee);
+                if (pointArrivee == null)
+                    return new List<Cellule>();
+            }
+
+            PriorityQueue<Cellule, double> ouvertes = new PriorityQueue<Cellule, double>();
+            HashSet<Cellule> fermees = new HashSet<Cellule>();
+
+            ouvertes.Enqueue(pointDepart, 0);
+            pointDepart.CoutG = 0;
+            pointDepart.CoutH = Distance(pointDepart, pointArrivee);
 
             while (ouvertes.Count > 0)
             {
-                Cellule meilleurCout = ouvertes.OrderBy(c => c.CoutF).First();
-
+                Cellule meilleurCout = ouvertes.Dequeue();
                 if (meilleurCout == pointArrivee)
-                {
-                    Console.WriteLine("Chemin trouvé");
                     return ConstruireChemin(pointArrivee);
-                }
 
-                ouvertes.Remove(meilleurCout);
                 fermees.Add(meilleurCout);
 
-                List<Cellule> voisins = Grille.ObtenirVoisins(meilleurCout);
-
-                foreach (Cellule voisin in voisins)
+                foreach (Cellule voisin in Grille.ObtenirVoisins(meilleurCout))
                 {
                     if (fermees.Contains(voisin) || voisin.EstOccupee())
                         continue;
 
-                    double nouveauCoutG = meilleurCout.CoutG + Distance(meilleurCout, voisin);
-
-                    if (nouveauCoutG < voisin.CoutG || !ouvertes.Contains(voisin))
+                    double tentativeG = meilleurCout.CoutG + Distance(meilleurCout, voisin);
+                    if (tentativeG < voisin.CoutG || !ouvertes.UnorderedItems.Any(x => x.Element == voisin))
                     {
-                        voisin.CoutG = nouveauCoutG;
+                        voisin.CoutG = tentativeG;
                         voisin.CoutH = Distance(voisin, pointArrivee);
                         voisin.Parent = meilleurCout;
 
-                        if (!ouvertes.Contains(voisin))
-                            ouvertes.Add(voisin);
+                        ouvertes.Enqueue(voisin, voisin.CoutF);
                     }
                 }
             }
@@ -57,10 +58,75 @@ namespace Survival_Island.Recherche
             return [];
         }
 
+        private Cellule? TrouverCelluleAccessibleLaPlusProche(Cellule celluleCible)
+        {
+            // Recherche en largeur pour trouver la cellule accessible la plus proche
+            Queue<Cellule> aExplorer = new Queue<Cellule>();
+            HashSet<Cellule> visitees = new HashSet<Cellule>();
+
+            aExplorer.Enqueue(celluleCible);
+
+            while (aExplorer.Count > 0)
+            {
+                Cellule actuelle = aExplorer.Dequeue();
+
+                if (!visitees.Contains(actuelle))
+                {
+                    visitees.Add(actuelle);
+
+                    if (!actuelle.EstOccupee())
+                        return actuelle;
+
+                    foreach (Cellule voisin in Grille.ObtenirVoisins(actuelle))
+                    {
+                        if (!visitees.Contains(voisin))
+                        {
+                            aExplorer.Enqueue(voisin);
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public void AfficherChemin(List<Cellule> cellulesChemin)
+        {
+            int lignes = Grille.AStarGrille.GetLength(0);
+            int colonnes = Grille.AStarGrille.GetLength(1);
+
+            char[,] grilleVisuelle = new char[lignes, colonnes];
+
+            for (int i = 0; i < lignes; i++)
+            {
+                for (int j = 0; j < colonnes; j++)
+                {
+                    grilleVisuelle[i, j] = Grille.AStarGrille[i, j].EstOccupee() ? '.' : '#';
+                }
+            }
+
+            foreach (Cellule cellule in cellulesChemin)
+            {
+                grilleVisuelle[cellule.GrillePosX, cellule.GrillePosY] = '*';
+            }
+
+            // Afficher la grille dans la console
+            for (int i = 0; i < lignes; i++)
+            {
+                for (int j = 0; j < colonnes; j++)
+                {
+                    Console.Write(grilleVisuelle[i, j] + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
         private List<Cellule> ConstruireChemin(Cellule cellule)
         {
             List<Cellule> chemin = new List<Cellule>();
             Cellule current = cellule;
+
             while (current != null)
             {
                 chemin.Add(current);
@@ -73,7 +139,7 @@ namespace Survival_Island.Recherche
 
         private int Distance(Cellule a, Cellule b)
         {
-            return Math.Abs(a.GrillePosX - b.GrillePosX) + Math.Abs(a.GrillePosY - b.GrillePosY);
+            return (int)(Math.Pow(a.GrillePosX - b.GrillePosX, 2) + Math.Pow(a.GrillePosY - b.GrillePosY, 2));
         }
     }
 }

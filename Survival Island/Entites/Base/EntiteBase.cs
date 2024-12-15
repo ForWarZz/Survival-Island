@@ -8,7 +8,7 @@ namespace Survival_Island.Entites.Base
     {
         public FrameworkElement CanvaElement { get; protected set; }
 
-        protected Canvas carte;
+        protected Canvas Carte { get; }
 
         private bool estStatique;
 
@@ -18,7 +18,7 @@ namespace Survival_Island.Entites.Base
 
         public EntiteBase(Canvas carte, bool estStatique)
         {
-            this.carte = carte;
+            Carte = carte;
             this.estStatique = estStatique;
         }
 
@@ -91,7 +91,7 @@ namespace Survival_Island.Entites.Base
 
         public virtual void Apparaitre(double x, double y)
         {
-            if (carte == null)
+            if (Carte == null)
                 throw new Exception("La carte n'est pas définie");
 
             PositionX = x;
@@ -100,15 +100,15 @@ namespace Survival_Island.Entites.Base
             collision = new Collision(x, y, CanvaElement.Width, CanvaElement.Height, AngleRotation());
             // collision.AfficherCollision(carte);
 
-            carte.Children.Add(CanvaElement);
+            Carte.Children.Add(CanvaElement);
         }
 
         public virtual void Disparaitre()
         {
-            if (carte == null)
+            if (Carte == null)
                 throw new Exception("La carte n'est pas définie");
 
-            carte.Children.Remove(CanvaElement);
+            Carte.Children.Remove(CanvaElement);
         }
 
         public double AngleRotation()

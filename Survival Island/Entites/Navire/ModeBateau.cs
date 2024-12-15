@@ -25,7 +25,7 @@ namespace Survival_Island.Entites.Navire
 
         public override void Tirer(double posX, double posY)
         {
-            Boulet boulet = new Boulet(carte, tireur.orientation, tireur);
+            Boulet boulet = new Boulet(carte, tireur.Orientation, tireur);
             boulet.Apparaitre(posX, posY);
             boulets.Add(boulet);
         }
@@ -38,11 +38,11 @@ namespace Survival_Island.Entites.Navire
 
         public override void Tirer(double posX, double posY)
         {
-            Boulet boulet1 = new Boulet(carte, tireur.orientation, tireur);
+            Boulet boulet1 = new Boulet(carte, tireur.Orientation, tireur);
             boulet1.Apparaitre(posX - 8, posY);
             boulets.Add(boulet1);
 
-            Boulet boulet2 = new Boulet(carte, tireur.orientation, tireur);
+            Boulet boulet2 = new Boulet(carte, tireur.Orientation, tireur);
             boulet2.Apparaitre(posX + 8, posY);
             boulets.Add(boulet2);
         }

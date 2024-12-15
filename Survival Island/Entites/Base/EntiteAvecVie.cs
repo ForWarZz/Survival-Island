@@ -4,19 +4,19 @@ using System.Windows.Controls;
 
 namespace Survival_Island.Entites.Base
 {
-    public abstract class EntiteAvecVie : EntiteBase
+    public class EntiteAvecVie : EntiteBase
     {
-        public int vie { get; set; }
-        public int vieMax { get; set; }
+        public int Vie { get; set; }
+        public int VieMax { get; set; }
 
-        public ProgressBar barreDeVie { get; set; }
+        public ProgressBar BarreDeVie { get; private set; }
 
         private bool barreVieVisible;
 
         public EntiteAvecVie(Canvas carte, bool estStatique, bool barreVieVisible, int vieMax) : base(carte, estStatique)
         {
-            this.vieMax = vieMax;
-            vie = vieMax;
+            VieMax = vieMax;
+            Vie = vieMax;
 
             this.barreVieVisible = barreVieVisible;
         }
@@ -24,16 +24,16 @@ namespace Survival_Island.Entites.Base
         public void AfficherBarreDeVie(bool afficher)
         {
             if (barreVieVisible)
-                barreDeVie.Visibility = afficher ? Visibility.Visible : Visibility.Hidden;
+                BarreDeVie.Visibility = afficher ? Visibility.Visible : Visibility.Hidden;
         }
 
-        public void MettreAJourBarreDeVie()
+        private void MettreAJourBarreDeVie()
         {
             if (barreVieVisible)
             {
-                barreDeVie.Visibility = Visibility.Visible;
-                barreDeVie.Maximum = vieMax;
-                barreDeVie.Value = vie;
+                BarreDeVie.Visibility = Visibility.Visible;
+                BarreDeVie.Maximum = VieMax;
+                BarreDeVie.Value = Vie;
             }
         }
 
@@ -43,18 +43,20 @@ namespace Survival_Island.Entites.Base
 
             if (barreVieVisible)
             {
-                barreDeVie = new ProgressBar();
+                BarreDeVie = new ProgressBar();
 
-                barreDeVie.Visibility = Visibility.Hidden;
-                barreDeVie.Width = CanvaElement.Width / 2;
-                barreDeVie.Height = Constante.HAUTEUR_BARRE_VIE;
-                barreDeVie.Minimum = 0;
+                BarreDeVie.Visibility = Visibility.Hidden;
+                BarreDeVie.Width = CanvaElement.Width / 2;
+                BarreDeVie.Height = Constante.HAUTEUR_BARRE_VIE;
+                BarreDeVie.Minimum = 0;
 
-                carte.Children.Add(barreDeVie);
+                Carte.Children.Add(BarreDeVie);
 
-                Canvas.SetLeft(barreDeVie, x + (CanvaElement.Width - barreDeVie.Width) / 2);
-                Canvas.SetTop(barreDeVie, y + CanvaElement.Height);
+                Canvas.SetLeft(BarreDeVie, x + (CanvaElement.Width - BarreDeVie.Width) / 2);
+                Canvas.SetTop(BarreDeVie, y + CanvaElement.Height);
             }
+
+            MettreAJour();
         }
 
         public override void Disparaitre()
@@ -62,17 +64,17 @@ namespace Survival_Island.Entites.Base
             base.Disparaitre();
 
             if (barreVieVisible)
-                carte.Children.Remove(barreDeVie);
+                Carte.Children.Remove(BarreDeVie);
         }
 
         public virtual bool InfligerDegats(int degats)
         {
-            vie -= degats;
-            if (vie < 0) vie = 0;
+            Vie -= degats;
+            if (Vie < 0) Vie = 0;
 
-            MettreAJourBarreDeVie();
+            MettreAJour();
 
-            if (vie <= 0)
+            if (Vie <= 0)
             {
                 Disparaitre();
                 return true;
@@ -83,7 +85,12 @@ namespace Survival_Island.Entites.Base
 
         public virtual void AjouterVie(int vie)
         {
-            this.vie = Math.Min(vieMax, this.vie + vie);
+            Vie = Math.Min(VieMax, Vie + vie);
+            MettreAJour();
+        }
+
+        public virtual void MettreAJour()
+        {
             MettreAJourBarreDeVie();
         }
     }

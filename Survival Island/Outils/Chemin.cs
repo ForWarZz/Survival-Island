@@ -17,6 +17,5 @@
         public const string IMAGE_ROCHER3 = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_3.png";
 
         public const string IMAGE_TRESOR = "pack://application:,,,/Images/CarteJeu/tresor.png";
-
     }
 }

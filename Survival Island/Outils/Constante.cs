@@ -2,7 +2,7 @@
 {
     internal class Constante
     {
-        public const int NOMBRE_CARREAUX_MER = 40;
+        public const int NOMBRE_CARREAUX_MER = 32;
 
         public const int JOUEUR_VIE_MAX = 100;
         public const int AMELIO_VIE_MAX = 100;
@@ -46,6 +46,6 @@
 
         public const int HAUTEUR_BARRE_VIE = 10;
 
-        public const int TAILLE_CELLULE_RECHERCHE_CHEMIN = 5;
+        public const int TAILLE_CELLULE_RECHERCHE_CHEMIN = 50;
     }
 }

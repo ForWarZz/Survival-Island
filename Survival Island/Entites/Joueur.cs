@@ -17,8 +17,6 @@ namespace Survival_Island.Entites
         public int ExperienceMax { get; private set; }
 
         public int PointsAmeliorations { get; set; }
-
-        public ModeBateau ModeBateau { get; set; }
         public bool ModeTriche { get; set; }
 
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
@@ -32,9 +30,6 @@ namespace Survival_Island.Entites
 
             ModeBateau = new ModeClassic(carte, moteurJeu.Boulets, this);
             ModeTriche = false;
-
-            ActualiserHUD();
-            ActualiserMenuAmelioration();
         }
 
         public override void Apparaitre(double posX, double posY)
@@ -56,53 +51,27 @@ namespace Survival_Island.Entites
 
         private void DeplaceCameraVers(double positionX, double positionY)
         {
-            double centreFenetreX = moteurJeu.Fenetre.ActualWidth / 2;
-            double centreFenetreY = moteurJeu.Fenetre.ActualHeight / 2;
+            double centreFenetreX = MoteurJeu.Fenetre.ActualWidth / 2;
+            double centreFenetreY = MoteurJeu.Fenetre.ActualHeight / 2;
 
             // Calcul de la nouvelle position de la caméra pour centrer le tireur
             cameraX = positionX - centreFenetreX + CanvaElement.Width / 2;
             cameraY = positionY - centreFenetreY + CanvaElement.Height / 2;
 
             // Empêcher la caméra de sortir des limites de la carte
-            cameraX = Math.Max(0, Math.Min(cameraX, carte.Width - moteurJeu.Fenetre.ActualWidth));
-            cameraY = Math.Max(0, Math.Min(cameraY, carte.Height - moteurJeu.Fenetre.ActualHeight));
+            cameraX = Math.Max(0, Math.Min(cameraX, Carte.Width - MoteurJeu.Fenetre.ActualWidth));
+            cameraY = Math.Max(0, Math.Min(cameraY, Carte.Height - MoteurJeu.Fenetre.ActualHeight));
 
             // Appliquer le déplacement du Canvas (monde)
-            Canvas.SetLeft(carte, -cameraX);
-            Canvas.SetTop(carte, -cameraY);
-        }
-
-        public override void TirerBoulet()
-        {
-            double centreBateauX = PositionX + CanvaElement.Width / 2;
-            double centreBateauY = PositionY + CanvaElement.Height / 2;
-
-            if (tempsDernierTir > 0)
-                return;
-            tempsDernierTir = tempsRechargementCanon;
-
-            ModeBateau.Tirer(centreBateauX, centreBateauY);
-        }
-
-        public override bool InfligerDegats(int degats)
-        {
-            bool detruit = base.InfligerDegats(degats);
-            ActualiserHUD();
-
-            return detruit;
-        }
-
-        public override void AjouterVie(int vie)
-        {
-            base.AjouterVie(vie);
-            ActualiserHUD();
+            Canvas.SetLeft(Carte, -cameraX);
+            Canvas.SetTop(Carte, -cameraY);
         }
 
         public void AjouterExperience(int experience)
         {
-            this.Experience += experience;
+            Experience += experience;
 
-            if (this.Experience >= ExperienceMax)
+            if (Experience >= ExperienceMax)
             {
                 NiveauSuivant();
             }
@@ -117,22 +86,22 @@ namespace Survival_Island.Entites
             Niveau += 1;
             if (Niveau == 5)
             {
-                ModeBateau = new ModeDouble(carte, moteurJeu.Boulets, this);
+                ModeBateau = new ModeDouble(Carte, MoteurJeu.Boulets, this);
             }
 
             Experience = 0;
             ExperienceMax = (int)(ExperienceMax * Constante.MULTIPLICATEUR_NIVEAU);
         }
 
-        public void ActualiserHUD()
+        private void ActualiserHUD()
         {
-            fenetre.barreVieJoueur.Value = vie;
-            fenetre.barreVieJoueur.Maximum = vieMax;
-            fenetre.txtVieJoueur.Text = vie + "/" + vieMax + " PV";
+            fenetre.barreVieJoueur.Value = Vie;
+            fenetre.barreVieJoueur.Maximum = VieMax;
+            fenetre.txtVieJoueur.Text = Vie + "/" + VieMax + " PV";
             ActualiserMenuAmelioration();
         }
 
-        public void ActualiserMenuAmelioration()
+        private void ActualiserMenuAmelioration()
         {
             fenetre.txtPointAmelio.Text = PointsAmeliorations.ToString();
 
@@ -140,36 +109,42 @@ namespace Survival_Island.Entites
             fenetre.barreXPAmelio.Value = Experience;
             fenetre.txtXPAmelio.Text = Experience + "/" + ExperienceMax + " XP";
 
-            fenetre.txtVieJoueurAmelio.Text = vieMax.ToString();
-            fenetre.txtDegatsJoueurAmelio.Text = degats.ToString();
-            fenetre.txtVitesseJoueurAmelio.Text = vitesseMax.ToString();
+            fenetre.txtVieJoueurAmelio.Text = VieMax.ToString();
+            fenetre.txtDegatsJoueurAmelio.Text = Degats.ToString();
+            fenetre.txtVitesseJoueurAmelio.Text = VitesseMax.ToString();
+        }
+
+        public override void MettreAJour()
+        {
+            base.MettreAJour();
+            ActualiserHUD();
         }
 
         public void AmelioVie()
         {
             if (PointsAmeliorations > 0)
             {
-                vieMax += Constante.AMELIO_VIE_MAX;
+                VieMax += Constante.AMELIO_VIE_MAX;
                 PointsAmeliorations--;
-                ActualiserHUD();
+                MettreAJour();
             }
         }
         public void AmelioVitesse()
         {
             if (PointsAmeliorations > 0)
             {
-                vitesseMax += Constante.AMELIO_VITESSE;
+                VitesseMax += Constante.AMELIO_VITESSE;
                 PointsAmeliorations--;
-                ActualiserHUD();
+                MettreAJour();
             }
         }
         public void AmelioDegats()
         {
             if (PointsAmeliorations > 0)
             {
-                degats += Constante.AMELIO_DEGATS;
+                Degats += Constante.AMELIO_DEGATS;
                 PointsAmeliorations--;
-                ActualiserHUD();
+                MettreAJour();
             }
         }
     }

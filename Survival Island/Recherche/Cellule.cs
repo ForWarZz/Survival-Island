@@ -7,6 +7,9 @@ namespace Survival_Island.Recherche
         public int GrillePosX { get; }
         public int GrillePosY { get; }
 
+        public int MondePosX { get; }
+        public int MondePosY { get; }
+
         public Cellule Parent { get; set; }
         public double CoutG { get; set; }
         public double CoutH { get; set; }
@@ -14,7 +17,7 @@ namespace Survival_Island.Recherche
 
         public List<EntiteBase> Entites { get; }
 
-        public Cellule(int grillePosX, int grillePosY)
+        public Cellule(int grillePosX, int grillePosY, int mondePosX, int mondePosY)
         {
             GrillePosX = grillePosX;
             GrillePosY = grillePosY;
@@ -23,6 +26,8 @@ namespace Survival_Island.Recherche
             CoutH = 0;
 
             Entites = new List<EntiteBase>();
+            MondePosX = mondePosX;
+            MondePosY = mondePosY;
         }
 
         public bool EstOccupee()

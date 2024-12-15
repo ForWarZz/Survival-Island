@@ -27,8 +27,6 @@ namespace Survival_Island
         public Joueur Joueur { get; private set; }
         private Random random;
 
-        private bool incrementTempsEnDeplacement = false;
-
         public List<Boulet> Boulets { get; }
         public Obstacle[] Obstacles { get; }
         public List<ObjetRecompense> ObjetsBonus { get; }
@@ -177,6 +175,21 @@ namespace Survival_Island
             {
                 RechercheChemin.Grille.AjouterEntiteDansGrille(obstacle);
             }
+
+            Console.WriteLine("width" + carte.Width + "x" + carte.Height);
+
+            List<Cellule> points = RechercheChemin.TrouverChemin(0.0, 0.0, carte.Width, carte.Height);
+            if (points.Count > 0)
+            {
+                Console.WriteLine("Chemin trouvé");
+            }
+            else
+            {
+                Console.WriteLine("Aucun chemin trouvé");
+            }
+
+            Console.WriteLine("Nombre cellules " + points.Count);
+            RechercheChemin.AfficherChemin(points);
         }
 
         private void InitBoucleJeu()
@@ -191,7 +204,7 @@ namespace Survival_Island
 
             CheckBouletsCollisions();
 
-            if (Joueur.canonActif)
+            if (Joueur.CanonActif)
                 Joueur.TirerBoulet();
 
             if (Joueur.ModeTriche)
@@ -286,8 +299,8 @@ namespace Survival_Island
                 double bouletX = Canvas.GetLeft(boulet.CanvaElement);
                 double bouletY = Canvas.GetTop(boulet.CanvaElement);
 
-                bouletX += boulet.direction.X * Constante.VITESSE_BOULET;
-                bouletY += boulet.direction.Y * Constante.VITESSE_BOULET;
+                bouletX += boulet.Direction.X * Constante.VITESSE_BOULET;
+                bouletY += boulet.Direction.Y * Constante.VITESSE_BOULET;
 
                 Canvas.SetLeft(boulet.CanvaElement, bouletX);
                 Canvas.SetTop(boulet.CanvaElement, bouletY);
@@ -300,9 +313,9 @@ namespace Survival_Island
                 }
             }
 
-            if (Joueur.tempsDernierTir > 0)
+            if (Joueur.TempsDernierTir > 0)
             {
-                Joueur.tempsDernierTir -= 1.0 / 60.0;
+                Joueur.TempsDernierTir -= 1.0 / 60.0;
             }
         }
 
@@ -335,17 +348,17 @@ namespace Survival_Island
                     if (boulet.EnCollisionAvec(objetBonus))
                     {
                         Console.WriteLine("Collision avec un objet bonus: X=" + objetBonus.PositionX + " Y=" + objetBonus.PositionY);
-                        bool estDetruit = objetBonus.InfligerDegats(Joueur.degats);
+                        bool estDetruit = objetBonus.InfligerDegats(Joueur.Degats);
 
-                        if (estDetruit && boulet.tireur is Joueur)
+                        if (estDetruit && boulet.Tireur is Joueur)
                         {
-                            switch (objetBonus.type)
+                            switch (objetBonus.Type)
                             {
                                 case TypeRecompense.VIE:
-                                    Joueur.AjouterVie(objetBonus.valeurRecompense);
+                                    Joueur.AjouterVie(objetBonus.ValeurRecompense);
                                     break;
                                 case TypeRecompense.EXPERIENCE:
-                                    Joueur.AjouterExperience(objetBonus.valeurRecompense);
+                                    Joueur.AjouterExperience(objetBonus.ValeurRecompense);
                                     break;
                             }
 

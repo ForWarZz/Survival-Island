@@ -7,17 +7,29 @@ namespace Survival_Island.Entites.Base
 {
     public class Collision
     {
-        private Point p1, p2, p3, p4;
+        public Point[][] Segments { get; }
+
+        private Point[] corners;
+        private Polygon? debugPolygon;
 
         public Collision(Rect rect, double angle)
         {
             Point centre = new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
             RotateTransform transformer = new RotateTransform(angle, centre.X, centre.Y);
 
-            p1 = transformer.Transform(new Point(rect.X, rect.Y));
-            p2 = transformer.Transform(new Point(rect.X + rect.Width, rect.Y));
-            p3 = transformer.Transform(new Point(rect.X + rect.Width, rect.Y + rect.Height));
-            p4 = transformer.Transform(new Point(rect.X, rect.Y + rect.Height));
+            corners = [
+                transformer.Transform(new Point(rect.X, rect.Y)),
+                transformer.Transform(new Point(rect.X + rect.Width, rect.Y)),
+                transformer.Transform(new Point(rect.X + rect.Width, rect.Y + rect.Height)),
+                transformer.Transform(new Point(rect.X, rect.Y + rect.Height))
+            ];
+
+            Segments = [
+                [ corners[0], corners[1] ],
+                [ corners[1], corners[2] ],
+                [ corners[2], corners[3] ],
+                [ corners[3], corners[0] ]
+            ];
         }
 
         public Collision(double posX, double posY, double largeur, double hauteur, double angle) : this(new Rect(posX, posY, largeur, hauteur), angle)
@@ -45,25 +57,9 @@ namespace Survival_Island.Entites.Base
 
         public bool EnCollisionAvec(Collision autreRect)
         {
-            List<Point[]> segmentsA = new List<Point[]>
+            foreach (Point[] segmentA in Segments)
             {
-                new Point[] { p1, p2 },
-                new Point[] { p2, p3 },
-                new Point[] { p3, p4 },
-                new Point[] { p4, p1 }
-            };
-
-            List<Point[]> segmentsB = new List<Point[]>
-            {
-                new Point[] { autreRect.p1, autreRect.p2 },
-                new Point[] { autreRect.p2, autreRect.p3 },
-                new Point[] { autreRect.p3, autreRect.p4 },
-                new Point[] { autreRect.p4, autreRect.p1 }
-            };
-
-            foreach (Point[] segmentA in segmentsA)
-            {
-                foreach (Point[] segmentB in segmentsB)
+                foreach (Point[] segmentB in autreRect.Segments)
                 {
                     if (LignesIntersectent(segmentA[0], segmentA[1], segmentB[0], segmentB[1]))
                     {
@@ -78,7 +74,7 @@ namespace Survival_Island.Entites.Base
         public void AfficherCollision(Canvas carte)
         {
             Polygon debugRectangle = new Polygon();
-            debugRectangle.Points = new PointCollection([p1, p2, p3, p4]);
+            debugRectangle.Points = new PointCollection(corners);
             debugRectangle.Stroke = Brushes.Red;
             debugRectangle.StrokeThickness = 1;
 

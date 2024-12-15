@@ -6,16 +6,13 @@ namespace Survival_Island.Entites.Objets
 {
     public class ObjetRecompense : EntiteAvecVie
     {
-        public int valeurRecompense { get; set; }
-        public TypeRecompense type { get; private set; }
-
-        public ProgressBar vieBar { get; set; }
+        public int ValeurRecompense { get; }
+        public TypeRecompense Type { get; }
 
         public ObjetRecompense(Canvas carte, BitmapImage bitmapImage, int largeur, int hauteur, int valeurRecompense, TypeRecompense type, int vieMax, bool statique) : base(carte, statique, true, vieMax)
         {
-            this.carte = carte;
-            this.valeurRecompense = valeurRecompense;
-            this.type = type;
+            ValeurRecompense = valeurRecompense;
+            Type = type;
 
             CanvaElement = new Image();
             ((Image)CanvaElement).Source = bitmapImage;

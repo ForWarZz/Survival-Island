@@ -11,37 +11,39 @@ namespace Survival_Island.Entites.Navire
 {
     public abstract class Bateau : EntiteAvecVie
     {
-        protected MoteurJeu moteurJeu { get; set; }
+        protected MoteurJeu MoteurJeu { get; }
 
-        public double vitesseMax { get; set; }
-        public double vitesseActuelle { get; set; }
+        public double VitesseMax { get; set; }
+        public double VitesseActuelle { get; set; }
 
-        public int degats { get; set; }
+        public int Degats { get; set; }
 
-        public double tempsRechargementCanon { get; set; }
-        public double tempsDernierTir { get; set; }
+        public double TempsRechargementCanon { get; set; }
+        public double TempsDernierTir { get; set; }
 
-        public bool deplacement { get; set; }
-        public bool canonActif { get; set; }
+        public bool Deplacement { get; set; }
+        public bool CanonActif { get; set; }
 
-        public Vector orientation { get; protected set; }
+        public Vector Orientation { get; set; }
 
-        protected double angleCible { get; set; }
-        protected double angleActuel { get; set; }
+        protected double AngleCible { get; set; }
+        protected double AngleActuel { get; set; }
 
         protected DispatcherTimer rotationTemps;
 
         protected BitmapImage bateauImage;
 
+        protected ModeBateau ModeBateau { get; set; }
+
         protected Bateau(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, bool barreVie, int vieMax, int degats, double vitesse, double tempsRechargementCanon) : base(carte, false, barreVie, vieMax)
         {
-            this.moteurJeu = moteurJeu;
+            MoteurJeu = moteurJeu;
 
-            this.degats = degats;
-            this.vitesseMax = vitesse;
-            this.tempsRechargementCanon = tempsRechargementCanon;
+            Degats = degats;
+            VitesseMax = vitesse;
+            TempsRechargementCanon = tempsRechargementCanon;
 
-            tempsDernierTir = 0;
+            TempsDernierTir = 0;
 
             CanvaElement = new Image();
             ((Image)CanvaElement).Source = bitmapBateau;
@@ -53,30 +55,24 @@ namespace Survival_Island.Entites.Navire
 
         public virtual void Deplacer()
         {
-            // Calcul de la vitesse en fonction des entrées utilisateur ou du comportement attendu
-            if (deplacement)
-            {
-                vitesseActuelle = Math.Min(vitesseActuelle + Constante.BATEAU_ACCELERATION, vitesseMax); // Accélération progressive jusqu'à la vitesse maximale
-            }
+            if (Deplacement)
+                VitesseActuelle = Math.Min(VitesseActuelle + Constante.BATEAU_ACCELERATION, VitesseMax); // Accélération progressive jusqu'à la vitesse maximale
             else
-            {
-                vitesseActuelle = Math.Max(vitesseActuelle - Constante.BATEAU_ACCELERATION, 0); // Décélération progressive jusqu'à l'arrêt
-            }
+                VitesseActuelle = Math.Max(VitesseActuelle - Constante.BATEAU_ACCELERATION, 0); // Décélération progressive jusqu'à l'arrêt
 
-            double nouvellePosX = PositionX + vitesseActuelle * orientation.X;
-            double nouvellePosY = PositionY + vitesseActuelle * orientation.Y;
+            double nouvellePosX = PositionX + VitesseActuelle * Orientation.X;
+            double nouvellePosY = PositionY + VitesseActuelle * Orientation.Y;
 
-            double maxX = carte.Width - CanvaElement.Width;
-            double maxY = carte.Height - CanvaElement.Height;
+            double maxX = Carte.Width - CanvaElement.Width;
+            double maxY = Carte.Height - CanvaElement.Height;
 
             if (PeutAllerVers(nouvellePosX, nouvellePosY))
             {
                 PositionX = Math.Max(0, Math.Min(nouvellePosX, maxX));
                 PositionY = Math.Max(0, Math.Min(nouvellePosY, maxY));
             } else
-            {
-                vitesseActuelle = 0;
-            }
+                VitesseActuelle = 0;
+            
   
         }
 
@@ -88,7 +84,7 @@ namespace Survival_Island.Entites.Navire
             double deltaX = nouvellePosition.X - centreBateauX;
             double deltaY = nouvellePosition.Y - centreBateauY;
 
-            angleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
+            AngleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
 
             if (!rotationTemps.IsEnabled)
             {
@@ -96,23 +92,33 @@ namespace Survival_Island.Entites.Navire
             }
         }
 
-        public abstract void TirerBoulet();
+        public virtual void TirerBoulet()
+        {
+            double centreBateauX = PositionX + CanvaElement.Width / 2;
+            double centreBateauY = PositionY + CanvaElement.Height / 2;
+
+            if (TempsDernierTir > 0)
+                return;
+            TempsDernierTir = TempsRechargementCanon;
+
+            ModeBateau.Tirer(centreBateauX, centreBateauY);
+        }
 
         protected bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
         {
             Collision nouvelleCollision = new Collision(new Rect(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height), AngleRotation());
             // nouvelleCollision.AfficherCollision(carte);
 
-            if (moteurJeu.Ile.EnCollisionAvec(nouvelleCollision))
+            if (MoteurJeu.Ile.EnCollisionAvec(nouvelleCollision))
                 return false;
 
-            foreach (Obstacle obstacle in moteurJeu.Obstacles)
+            foreach (Obstacle obstacle in MoteurJeu.Obstacles)
             {
                 if (obstacle.EnCollisionAvec(nouvelleCollision))
                     return false;
             }
 
-            foreach (ObjetRecompense objetBonus in moteurJeu.ObjetsBonus)
+            foreach (ObjetRecompense objetBonus in MoteurJeu.ObjetsBonus)
             {
                 if (objetBonus.EnCollisionAvec(nouvelleCollision))
                     return false;
@@ -123,7 +129,7 @@ namespace Survival_Island.Entites.Navire
 
         private void AnimationRotation(object? sender, EventArgs e)
         {
-            double diffAngle = angleCible - angleActuel;
+            double diffAngle = AngleCible - AngleActuel;
 
             if (diffAngle > 180)
                 diffAngle -= 360;
@@ -133,20 +139,20 @@ namespace Survival_Island.Entites.Navire
 
             if (Math.Abs(diffAngle) <= Constante.TOLERANCE_ANGLE_ROTATION)   // On ajoute une tolérance pour éviter les oscillations infinies
             {
-                angleActuel = angleCible;
+                AngleActuel = AngleCible;
                 rotationTemps.Stop();
             }
             else
             {
-                angleActuel += Math.Sign(diffAngle) * 5;
+                AngleActuel += Math.Sign(diffAngle) * 5;
             }
 
             // On calcule le vetceur directeur (utilisé pour le tir des boulets ou encore le mouvement)
-            double angleRad = (angleActuel + 90) * Math.PI / 180;
-            orientation = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
-            orientation.Normalize();
+            double angleRad = (AngleActuel + 90) * Math.PI / 180;
+            Orientation = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
+            Orientation.Normalize();
 
-            CanvaElement.RenderTransform = new RotateTransform(angleActuel, CanvaElement.Width / 2, CanvaElement.Height / 2);
+            CanvaElement.RenderTransform = new RotateTransform(AngleActuel, CanvaElement.Width / 2, CanvaElement.Height / 2);
         }
 
         protected void InitRotationTemps()

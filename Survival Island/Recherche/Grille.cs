@@ -4,7 +4,7 @@ namespace Survival_Island.Recherche
 {
     public class Grille
     {
-        private Cellule[,] grille;
+        public Cellule[,] AStarGrille { get; }
         private int tailleCellule;
 
         private int largeur, hauteur;
@@ -12,10 +12,10 @@ namespace Survival_Island.Recherche
         public Grille(int largeurMonde, int hauteurMonde, int tailleCellule)
         {
 
-            largeur = largeurMonde / tailleCellule;
-            hauteur = hauteurMonde / tailleCellule;
+            largeur = largeurMonde / tailleCellule + 1;
+            hauteur = hauteurMonde / tailleCellule + 1;
 
-            grille = new Cellule[largeur, hauteur];
+            AStarGrille = new Cellule[largeur, hauteur];
 
             this.tailleCellule = tailleCellule;
 
@@ -23,8 +23,7 @@ namespace Survival_Island.Recherche
             {
                 for (int j = 0; j < hauteur; j++)
                 {
-                    grille[i, j] = new Cellule(i, j);
-
+                    AStarGrille[i, j] = new Cellule(i, j, i * tailleCellule, j * tailleCellule);
                 }
             }
         }
@@ -52,7 +51,7 @@ namespace Survival_Island.Recherche
                 {
                     if (EstDansGrille(x, y))
                     {
-                        grille[x, y].Entites.Add(entite);
+                        AStarGrille[x, y].Entites.Add(entite);
                     }
                 }
             }
@@ -76,7 +75,7 @@ namespace Survival_Island.Recherche
                 {
                     if (EstDansGrille(x, y))
                     {
-                        grille[x, y].Entites.Remove(entite);
+                        AStarGrille[x, y].Entites.Remove(entite);
                     }
                 }
             }
@@ -88,9 +87,9 @@ namespace Survival_Island.Recherche
             int grilleY = (int)(posY / tailleCellule);
 
             if (!EstDansGrille(grilleX, grilleY))
-                throw new IndexOutOfRangeException("La position est hors de la grille");
+                throw new IndexOutOfRangeException("La position est hors de la grille: X=" + grilleX + " Y=" + grilleY + " TAILLE GRILLE=" + largeur);
 
-            return grille[grilleX, grilleY];
+            return AStarGrille[grilleX, grilleY];
         }
 
         public List<Cellule> ObtenirVoisins(Cellule cellule)
@@ -120,7 +119,7 @@ namespace Survival_Island.Recherche
 
                 if (EstDansGrille(voisinX, voisinY))
                 {
-                    voisins.Add(grille[voisinX, voisinY]);
+                    voisins.Add(AStarGrille[voisinX, voisinY]);
                 }
             }
 
@@ -138,7 +137,7 @@ namespace Survival_Island.Recherche
             {
                 for (int j = 0; j < hauteur; j++)
                 {
-                    bool valeur = grille[i, j].EstOccupee();
+                    bool valeur = AStarGrille[i, j].EstOccupee();
 
                     if (valeur)
                         Console.Write("X ");
