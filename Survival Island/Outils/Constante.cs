@@ -6,8 +6,8 @@
 
         public const int JOUEUR_VIE_MAX = 100;
         public const int AMELIO_VIE_MAX = 100;
-        public const int JOUEUR_VITESSE = 5;
-        public const int AMELIO_VITESSE = 5;
+        public const int JOUEUR_VITESSE = 4;
+        public const int AMELIO_VITESSE = 2;
         public const int JOUEUR_DEGATS = 20;
         public const int AMELIO_DEGATS = 20;
         public const double JOUEUR_RECHARGEMENT_CANON = 1;
@@ -46,6 +46,6 @@
 
         public const int HAUTEUR_BARRE_VIE = 10;
 
-        public const int TAILLE_CELLULE_RECHERCHE_CHEMIN = 50;
+        public const int TAILLE_CELLULE_RECHERCHE_CHEMIN = 15;
     }
 }

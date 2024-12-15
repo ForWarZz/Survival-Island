@@ -37,6 +37,12 @@ namespace Survival_Island.Entites.Base
             }
         }
 
+        public void MettreAJourPositionVie()
+        {
+            Canvas.SetLeft(BarreDeVie, PositionX + (CanvaElement.Width - BarreDeVie.Width) / 2);
+            Canvas.SetTop(BarreDeVie, PositionY + CanvaElement.Height);
+        }
+
         public override void Apparaitre(double x, double y)
         {
             base.Apparaitre(x, y);
@@ -51,9 +57,8 @@ namespace Survival_Island.Entites.Base
                 BarreDeVie.Minimum = 0;
 
                 Carte.Children.Add(BarreDeVie);
-
-                Canvas.SetLeft(BarreDeVie, x + (CanvaElement.Width - BarreDeVie.Width) / 2);
-                Canvas.SetTop(BarreDeVie, y + CanvaElement.Height);
+                
+                MettreAJourPositionVie();
             }
 
             MettreAJour();

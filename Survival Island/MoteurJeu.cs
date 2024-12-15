@@ -34,6 +34,7 @@ namespace Survival_Island
         public Ile Ile { get; private set; }
 
         public RechercheChemin RechercheChemin { get; private set; }
+        public List<Ennemi> Ennemis { get; }
 
         public MoteurJeu(MainWindow fenetre)
         {
@@ -45,6 +46,7 @@ namespace Survival_Island
             Boulets = new List<Boulet>();
             ObjetsBonus = new List<ObjetRecompense>();
             Obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
+            Ennemis = new List<Ennemi>();
 
             InitBitmaps();
             InitCarte();
@@ -88,20 +90,10 @@ namespace Survival_Island
         private void InitJoueur()
         {
             double posX, posY;
-            bool positionValide;
-
-            do
-            {
-                posX = random.Next(0, (int)(carte.Width - Constante.LARGEUR_NAVIRE));
-                posY = random.Next(0, (int)(carte.Height - Constante.HAUTEUR_NAVIRE));
-
-                Collision collision = new Collision(posX, posY, Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE);
-
-                positionValide = CheckPositionValide(collision);
-            } while (!positionValide);
+            PositionAleatoireValide(Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE, 0, out posX, out posY);
 
             Joueur = new Joueur(carte, this, bitmapBateau);
-            Joueur.Apparaitre(posX, posY);
+            Joueur.Apparaitre(100, 100);
         }
 
         private void InitRochers()
@@ -120,17 +112,7 @@ namespace Survival_Island
                 rocher.RenderTransform = new RotateTransform(angleRotation, rocher.Width / 2, rocher.Height / 2);
 
                 double posX, posY;
-                bool positionValide;
-
-                do
-                {
-                    posX = random.Next(0, (int)(carte.Width - rocher.Width));
-                    posY = random.Next(0, (int)(carte.Width - rocher.Height));
-
-                    Collision collision = new Collision(posX, posY, rocher.Width, rocher.Height, angleRotation);
-
-                    positionValide = CheckPositionValide(collision);
-                } while (!positionValide);
+                PositionAleatoireValide(rocher.Width, rocher.Height, angleRotation, out posX, out posY);
 
                 Obstacle obstacle = new Obstacle(carte, rocher);
                 obstacle.Apparaitre(posX, posY);
@@ -175,21 +157,6 @@ namespace Survival_Island
             {
                 RechercheChemin.Grille.AjouterEntiteDansGrille(obstacle);
             }
-
-            Console.WriteLine("width" + carte.Width + "x" + carte.Height);
-
-            List<Cellule> points = RechercheChemin.TrouverChemin(0.0, 0.0, carte.Width, carte.Height);
-            if (points.Count > 0)
-            {
-                Console.WriteLine("Chemin trouvé");
-            }
-            else
-            {
-                Console.WriteLine("Aucun chemin trouvé");
-            }
-
-            Console.WriteLine("Nombre cellules " + points.Count);
-            RechercheChemin.AfficherChemin(points);
         }
 
         private void InitBoucleJeu()
@@ -200,8 +167,8 @@ namespace Survival_Island
         private void Jeu(object? sender, EventArgs e)
         {
             Joueur.Deplacer();
-            DeplacerBoulets();
 
+            DeplacerBoulets();
             CheckBouletsCollisions();
 
             if (Joueur.CanonActif)
@@ -225,23 +192,13 @@ namespace Survival_Island
             int nbBonusAajouter = Math.Min(randomQuantite, Constante.BORNE_MAX_APPARITION_COFFRE - ObjetsBonus.Count);
 
             for (int i = 0; i < nbBonusAajouter; i++)
-            {
-                bool positionValide = true;
-                double posX, posY;
-
-                do
-                {
-                    posX = random.Next(0, (int)(carte.Width - Constante.BASE_COFFRE_LARGEUR));
-                    posY = random.Next(0, (int)(carte.Height - Constante.BASE_COFFRE_HAUTEUR));
-
-                    Collision collision = new Collision(posX, posY, Constante.BASE_COFFRE_LARGEUR, Constante.BASE_COFFRE_HAUTEUR);
-
-                    positionValide = CheckPositionValide(collision);
-                } while (!positionValide);
-
+            {                
                 double multiplicateur = Constante.MULTIPLICATEUR_TAILLE_COFFRE + random.NextDouble();
                 int objetLargeur = (int)(Constante.BASE_COFFRE_LARGEUR * multiplicateur);
                 int objetHauteur = (int)(Constante.BASE_COFFRE_HAUTEUR * multiplicateur);
+
+                double posX, posY;
+                PositionAleatoireValide(objetLargeur, objetHauteur, 0, out posX, out posY);
 
                 TypeRecompense typeRecompense = (TypeRecompense)random.Next(0, Enum.GetValues(typeof(TypeRecompense)).Length);
 
@@ -289,6 +246,24 @@ namespace Survival_Island
             }
 
             return true;
+        }
+
+        private void PositionAleatoireValide(double largeur, double hauteur, double angleRotation, out double posX, out double posY)
+        {
+            posX = 0;
+            posY = 0;
+
+            bool positionValide;
+
+            do
+            {
+                posX = random.Next(0, (int)(carte.Width - largeur));
+                posY = random.Next(0, (int)(carte.Width - hauteur));
+
+                Collision collision = new Collision(posX, posY, largeur, hauteur, angleRotation);
+
+                positionValide = CheckPositionValide(collision);
+            } while (!positionValide);
         }
 
         private void DeplacerBoulets()
@@ -370,6 +345,29 @@ namespace Survival_Island
                         Boulets.RemoveAt(i);
                     }
                 }
+            }
+        }
+
+        public void AjouterEnnemis(int nombreEnnemis, int vie, int degats, int vitesse, double rechargementCanon)
+        {
+            for (int i = 0; i < nombreEnnemis; i++)
+            {
+                Ennemi ennemi = new Ennemi(
+                        carte,
+                        this,
+                        bitmapBateau,
+                        vie,
+                        degats,
+                        vitesse,
+                        rechargementCanon,
+                        Ile
+                    );
+
+                double posX, posY;
+                PositionAleatoireValide(ennemi.CanvaElement.Width, ennemi.CanvaElement.Height, 0, out posX, out posY);
+
+                Ennemis.Add(ennemi);
+                ennemi.Apparaitre(posX, posY);
             }
         }
     }

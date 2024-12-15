@@ -1,19 +1,20 @@
 ﻿using Survival_Island.Entites.Base;
+using Survival_Island.Outils;
+using System.Reflection.Metadata;
 
 namespace Survival_Island.Recherche
 {
     public class Grille
     {
         public Cellule[,] AStarGrille { get; }
-        private int tailleCellule;
 
+        private int tailleCellule;
         private int largeur, hauteur;
 
-        public Grille(int largeurMonde, int hauteurMonde, int tailleCellule)
+        public Grille(double largeurMonde, double hauteurMonde, int tailleCellule)
         {
-
-            largeur = largeurMonde / tailleCellule + 1;
-            hauteur = hauteurMonde / tailleCellule + 1;
+            largeur = (int)Math.Ceiling((double)largeurMonde / tailleCellule);
+            hauteur = (int)Math.Ceiling((double)hauteurMonde / tailleCellule);
 
             AStarGrille = new Cellule[largeur, hauteur];
 
@@ -23,7 +24,16 @@ namespace Survival_Island.Recherche
             {
                 for (int j = 0; j < hauteur; j++)
                 {
-                    AStarGrille[i, j] = new Cellule(i, j, i * tailleCellule, j * tailleCellule);
+                    AStarGrille[i, j] = new Cellule(i, j, i * tailleCellule + tailleCellule / 2, j * tailleCellule + tailleCellule / 2);
+                }
+            }
+
+            for (int i = 0; i < largeur; i++)
+            {
+                for (int j = 0;  j < hauteur; j++)
+                {
+                    Cellule cellule = AStarGrille[i, j];
+                    cellule.Voisins = ObtenirVoisins(cellule);
                 }
             }
         }
@@ -35,10 +45,10 @@ namespace Survival_Island.Recherche
 
         public void AjouterEntiteDansGrille(EntiteBase entite)
         {
-            double posX = entite.PositionX;
-            double posY = entite.PositionY;
-            double largeurEntite = entite.CanvaElement.Width;
-            double hauteurEntite = entite.CanvaElement.Height;
+            double posX = entite.PositionX - Constante.LARGEUR_NAVIRE;
+            double posY = entite.PositionY - Constante.HAUTEUR_NAVIRE;
+            double largeurEntite = entite.CanvaElement.Width + Constante.LARGEUR_NAVIRE;
+            double hauteurEntite = entite.CanvaElement.Height + Constante.HAUTEUR_NAVIRE;
 
             int debutX = (int)(posX / tailleCellule);
             int debutY = (int)(posY / tailleCellule);
@@ -147,8 +157,6 @@ namespace Survival_Island.Recherche
 
                 Console.WriteLine();
             }
-
-            Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         }
     }
 }

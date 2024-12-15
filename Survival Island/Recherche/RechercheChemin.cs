@@ -1,4 +1,8 @@
 ﻿using Survival_Island.Entites.Base;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Survival_Island.Recherche
 {
@@ -6,21 +10,23 @@ namespace Survival_Island.Recherche
     {
         public Grille Grille { get; }
 
-        public RechercheChemin(int largeurMonde, int hauteurMonde, int tailleCellule)
+        public RechercheChemin(double largeurMonde, double hauteurMonde, int tailleCellule)
         {
             Grille = new Grille(largeurMonde, hauteurMonde, tailleCellule);
         }
 
-        public List<Cellule> TrouverChemin(double aPosX, double aPosY, double bPosX, double bPosY)
+        public Stack<Cellule> TrouverChemin(double aPosX, double aPosY, double bPosX, double bPosY)
         {
             Cellule pointDepart = Grille.ObtenirCellule(aPosX, aPosY);
             Cellule? pointArrivee = Grille.ObtenirCellule(bPosX, bPosY);
+
+            Console.WriteLine("Calcul du chemin en cours.");
 
             if (pointArrivee.EstOccupee())
             {
                 pointArrivee = TrouverCelluleAccessibleLaPlusProche(pointArrivee);
                 if (pointArrivee == null)
-                    return new List<Cellule>();
+                    return new Stack<Cellule>();
             }
 
             PriorityQueue<Cellule, double> ouvertes = new PriorityQueue<Cellule, double>();
@@ -34,11 +40,11 @@ namespace Survival_Island.Recherche
             {
                 Cellule meilleurCout = ouvertes.Dequeue();
                 if (meilleurCout == pointArrivee)
-                    return ConstruireChemin(pointArrivee);
+                    return ConstruireCheminAvecPile(pointArrivee);
 
                 fermees.Add(meilleurCout);
 
-                foreach (Cellule voisin in Grille.ObtenirVoisins(meilleurCout))
+                foreach (Cellule voisin in meilleurCout.Voisins)
                 {
                     if (fermees.Contains(voisin) || voisin.EstOccupee())
                         continue;
@@ -55,7 +61,22 @@ namespace Survival_Island.Recherche
                 }
             }
 
-            return [];
+            return new Stack<Cellule>();
+        }
+
+        private Stack<Cellule> ConstruireCheminAvecPile(Cellule cellule)
+        {
+            Stack<Cellule> chemin = new Stack<Cellule>();
+            Cellule current = cellule;
+
+            while (current != null)
+            {
+                chemin.Push(current);
+                current = current.Parent;
+            }
+
+            Console.WriteLine("Chemin crée.");
+            return chemin;
         }
 
         private Cellule? TrouverCelluleAccessibleLaPlusProche(Cellule celluleCible)
@@ -77,7 +98,7 @@ namespace Survival_Island.Recherche
                     if (!actuelle.EstOccupee())
                         return actuelle;
 
-                    foreach (Cellule voisin in Grille.ObtenirVoisins(actuelle))
+                    foreach (Cellule voisin in actuelle.Voisins)
                     {
                         if (!visitees.Contains(voisin))
                         {
@@ -90,7 +111,8 @@ namespace Survival_Island.Recherche
             return null;
         }
 
-        public void AfficherChemin(List<Cellule> cellulesChemin)
+        // Fonction de debug
+        public void AfficherCheminConsole(Stack<Cellule> cellulesChemin)
         {
             int lignes = Grille.AStarGrille.GetLength(0);
             int colonnes = Grille.AStarGrille.GetLength(1);
@@ -122,19 +144,21 @@ namespace Survival_Island.Recherche
             }
         }
 
-        private List<Cellule> ConstruireChemin(Cellule cellule)
+        // Fonction de debug
+        public void AfficherCheminJeu(Stack<Cellule> cellules, Canvas carte)
         {
-            List<Cellule> chemin = new List<Cellule>();
-            Cellule current = cellule;
-
-            while (current != null)
+            foreach (Cellule cellule in cellules)
             {
-                chemin.Add(current);
-                current = current.Parent;
+                Ellipse ellipse = new Ellipse();
+                ellipse.Fill = Brushes.Red;
+                ellipse.Width = 5;
+                ellipse.Height = 5;
+
+                carte.Children.Add(ellipse);
+                Canvas.SetLeft(ellipse, cellule.MondePosX - 5);
+                Canvas.SetTop(ellipse, cellule.MondePosY - 5);
             }
 
-            chemin.Reverse();
-            return chemin;
         }
 
         private int Distance(Cellule a, Cellule b)

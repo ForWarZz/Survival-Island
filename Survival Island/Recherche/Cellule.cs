@@ -11,6 +11,8 @@ namespace Survival_Island.Recherche
         public int MondePosY { get; }
 
         public Cellule Parent { get; set; }
+        public List<Cellule> Voisins { get; set; }
+
         public double CoutG { get; set; }
         public double CoutH { get; set; }
         public double CoutF { get { return CoutG + CoutH; } }
