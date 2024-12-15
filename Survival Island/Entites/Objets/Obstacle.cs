@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Survival_Island.Entites.Base;
 using System.Windows.Controls;
-using Survival_Island.Entites.Base;
 
 namespace Survival_Island.Entites.Objets
 {
@@ -12,7 +7,7 @@ namespace Survival_Island.Entites.Objets
     {
         public Obstacle(Canvas carte, Image image) : base(carte, true)
         {
-            canvaElement = image;
+            CanvaElement = image;
         }
     }
 }

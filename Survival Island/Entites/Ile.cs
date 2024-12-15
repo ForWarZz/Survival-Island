@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Survival_Island.Entites.Base;
+using Survival_Island.Outils;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Survival_Island.Entites.Base;
-using Survival_Island.Outils;
 
 namespace Survival_Island.Entites
 {
@@ -29,10 +21,10 @@ namespace Survival_Island.Entites
 
             InitBitmaps();
 
-            canvaElement = new Image();
-            ((Image)canvaElement).Source = bitmapIle;
-            canvaElement.Width = bitmapIle.PixelWidth;
-            canvaElement.Height = bitmapIle.PixelHeight;
+            CanvaElement = new Image();
+            ((Image)CanvaElement).Source = bitmapIle;
+            CanvaElement.Width = bitmapIle.PixelWidth;
+            CanvaElement.Height = bitmapIle.PixelHeight;
 
             ActualiserHUD();
         }
@@ -45,8 +37,8 @@ namespace Survival_Island.Entites
 
         public void Apparaitre()
         {
-            double centerX = carte.Width / 2 - canvaElement.Width / 2;
-            double centerY = carte.Height / 2 - canvaElement.Height / 2;
+            double centerX = carte.Width / 2 - CanvaElement.Width / 2;
+            double centerY = carte.Height / 2 - CanvaElement.Height / 2;
 
             Apparaitre(centerX, centerY);
         }
@@ -56,7 +48,7 @@ namespace Survival_Island.Entites
             bool detruit = base.InfligerDegats(degats);
 
             if (vie <= vieMax / 2)
-                ((Image)canvaElement).Source = bitmapIleFaible;
+                ((Image)CanvaElement).Source = bitmapIleFaible;
             ActualiserHUD();
 
             return detruit;
@@ -78,13 +70,13 @@ namespace Survival_Island.Entites
 
         public void AmelioVie()
         {
-            if (moteurJeu.joueur.pointsAmeliorations > 0)
+            if (moteurJeu.Joueur.PointsAmeliorations > 0)
             {
                 vieMax += Constante.AMELIO_VIE_ILE;
                 vie += Constante.AMELIO_VIE_ILE;
 
-                moteurJeu.joueur.pointsAmeliorations--;
-                moteurJeu.joueur.ActualiserHUD();
+                moteurJeu.Joueur.PointsAmeliorations--;
+                moteurJeu.Joueur.ActualiserHUD();
 
                 ActualiserHUD();
             }

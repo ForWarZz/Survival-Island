@@ -1,21 +1,18 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Survival_Island.Entites.Base
 {
     public abstract class EntiteBase
     {
-        public FrameworkElement canvaElement { get; protected set; }
+        public FrameworkElement CanvaElement { get; protected set; }
 
         protected Canvas carte;
 
         private bool estStatique;
 
-        private double posX;
-        private double posY;
+        private double posX, posY;
 
         private Collision collision;
 
@@ -32,14 +29,14 @@ namespace Survival_Island.Entites.Base
                 if (estStatique)
                     return posX;
                 else
-                    return Canvas.GetLeft(canvaElement);
+                    return Canvas.GetLeft(CanvaElement);
             }
             set
             {
                 if (estStatique)
                     posX = value;
 
-                Canvas.SetLeft(canvaElement, value);
+                Canvas.SetLeft(CanvaElement, value);
             }
         }
 
@@ -50,14 +47,14 @@ namespace Survival_Island.Entites.Base
                 if (estStatique)
                     return posY;
                 else
-                    return Canvas.GetTop(canvaElement);
+                    return Canvas.GetTop(CanvaElement);
             }
             set
             {
                 if (estStatique)
                     posY = value;
 
-                Canvas.SetTop(canvaElement, value);
+                Canvas.SetTop(CanvaElement, value);
             }
         }
 
@@ -68,7 +65,7 @@ namespace Survival_Island.Entites.Base
                 if (estStatique)
                     return collision;
 
-                return new Collision(PositionX, PositionY, canvaElement.Width, canvaElement.Height, AngleRotation());
+                return new Collision(PositionX, PositionY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
             }
         }
 
@@ -100,10 +97,10 @@ namespace Survival_Island.Entites.Base
             PositionX = x;
             PositionY = y;
 
-            collision = new Collision(x, y, canvaElement.Width, canvaElement.Height, AngleRotation());
+            collision = new Collision(x, y, CanvaElement.Width, CanvaElement.Height, AngleRotation());
             // collision.AfficherCollision(carte);
 
-            carte.Children.Add(canvaElement);
+            carte.Children.Add(CanvaElement);
         }
 
         public virtual void Disparaitre()
@@ -111,14 +108,14 @@ namespace Survival_Island.Entites.Base
             if (carte == null)
                 throw new Exception("La carte n'est pas définie");
 
-            carte.Children.Remove(canvaElement);
+            carte.Children.Remove(CanvaElement);
         }
 
         public double AngleRotation()
         {
             double angle = 0;
 
-            Transform transformer = canvaElement.RenderTransform;
+            Transform transformer = CanvaElement.RenderTransform;
             if (transformer != null && transformer is RotateTransform)
                 angle = ((RotateTransform)transformer).Angle;
 

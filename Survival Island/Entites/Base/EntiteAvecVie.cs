@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using Survival_Island.Outils;
 using System.Windows;
-using Survival_Island.Outils;
+using System.Windows.Controls;
 
 namespace Survival_Island.Entites.Base
 {
@@ -51,14 +46,14 @@ namespace Survival_Island.Entites.Base
                 barreDeVie = new ProgressBar();
 
                 barreDeVie.Visibility = Visibility.Hidden;
-                barreDeVie.Width = canvaElement.Width / 2;
+                barreDeVie.Width = CanvaElement.Width / 2;
                 barreDeVie.Height = Constante.HAUTEUR_BARRE_VIE;
                 barreDeVie.Minimum = 0;
 
                 carte.Children.Add(barreDeVie);
 
-                Canvas.SetLeft(barreDeVie, x + (canvaElement.Width - barreDeVie.Width) / 2);
-                Canvas.SetTop(barreDeVie, y + canvaElement.Height);
+                Canvas.SetLeft(barreDeVie, x + (CanvaElement.Width - barreDeVie.Width) / 2);
+                Canvas.SetTop(barreDeVie, y + CanvaElement.Height);
             }
         }
 

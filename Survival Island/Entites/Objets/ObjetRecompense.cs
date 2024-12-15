@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Survival_Island.Entites.Base;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using Survival_Island.Entites.Base;
-using Survival_Island.Outils;
 
 namespace Survival_Island.Entites.Objets
 {
@@ -24,10 +17,10 @@ namespace Survival_Island.Entites.Objets
             this.valeurRecompense = valeurRecompense;
             this.type = type;
 
-            canvaElement = new Image();
-            ((Image)canvaElement).Source = bitmapImage;
-            canvaElement.Width = largeur;
-            canvaElement.Height = hauteur;
+            CanvaElement = new Image();
+            ((Image)CanvaElement).Source = bitmapImage;
+            CanvaElement.Width = largeur;
+            CanvaElement.Height = hauteur;
         }
 
         public ObjetRecompense(Canvas carte, BitmapImage bitmapImage, int vie, int valeurRecompense, TypeRecompense type, bool statique) :

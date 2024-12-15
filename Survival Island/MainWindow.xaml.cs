@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Input;
 
 namespace Survival_Island
 {
@@ -27,38 +27,38 @@ namespace Survival_Island
             if (jouer && e.Key == Key.Z)
             {
 
-                moteurJeu.JoueurDeplace(false);
+                moteurJeu.Joueur.deplacement = false;
             }
         }
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
             if (jouer && e.Key == Key.Z)
-                moteurJeu.JoueurDeplace(true);
+                moteurJeu.Joueur.deplacement = true;
 
             if (jouer && e.Key == Key.G)
             {
                 Console.WriteLine("God mod");
-                moteurJeu.GodMod = true;
+                moteurJeu.Joueur.ModeTriche = true;
             }
         }
 
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-                moteurJeu.JoueurTire(true);
+                moteurJeu.Joueur.canonActif = true;
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-                moteurJeu.JoueurTire(false);
+                moteurJeu.Joueur.canonActif &= false;
         }
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
         {
             if (jouer)
-                moteurJeu.JoueurOriente(e.GetPosition(carte));
+                moteurJeu.Joueur.ChangerOrientation(e.GetPosition(carte));
         }
 
         // Gestions du menu d'amélioration
@@ -83,14 +83,7 @@ namespace Survival_Island
         }
 
         // Menu accueil
-        private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Êtes vous sûr de vouloir quitter le jeu ?", "Fermer le jeu", MessageBoxButton.OKCancel);
-
-            if (result == MessageBoxResult.OK)
-                Application.Current.Shutdown();
-        }
-
+        
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
             menuAccueil.Visibility = Visibility.Hidden;
@@ -98,7 +91,17 @@ namespace Survival_Island
             moteurJeu.InitJeu();
         }
 
+        private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
+        {
+            FermerJeu();
+        }
+
         private void MenuQuitter_Click(object sender, RoutedEventArgs e)
+        {
+            FermerJeu();
+        }
+
+        private void FermerJeu()
         {
             MessageBoxResult result = MessageBox.Show("Êtes vous sûr de vouloir quitter le jeu ?", "Fermer le jeu", MessageBoxButton.OKCancel);
 
@@ -128,22 +131,22 @@ namespace Survival_Island
 
         private void btnVieBateauAmelio_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.joueur.AmelioVie();
+            moteurJeu.Joueur.AmelioVie();
         }
 
         private void btnDegatsBateauAmelio_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.joueur.AmelioDegats();
+            moteurJeu.Joueur.AmelioDegats();
         }
 
         private void btnVitesseBateauAmelio_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.joueur.AmelioVitesse();
+            moteurJeu.Joueur.AmelioVitesse();
         }
 
         private void btnVieIleAmelio_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.ile.AmelioVie();
+            moteurJeu.Ile.AmelioVie();
         }
     }
 }

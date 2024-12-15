@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Media;
-using Survival_Island.Outils;
+﻿using Survival_Island.Entites;
 using Survival_Island.Entites.Base;
 using Survival_Island.Entites.Navire;
 using Survival_Island.Entites.Objets;
-using Survival_Island.Entites;
+using Survival_Island.Outils;
+using Survival_Island.Recherche;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace Survival_Island
 {
     public class MoteurJeu
     {
-        public MainWindow fenetre { get; }
+        public MainWindow Fenetre { get; }
 
         private Canvas carte;
         private Image[] mer;
@@ -28,34 +24,29 @@ namespace Survival_Island
 
         private DispatcherTimer objetBonusMinuteur;
 
-        public Joueur joueur;
+        public Joueur Joueur { get; private set; }
         private Random random;
 
-        private bool incrementTempsEnDeplacement=false;
+        private bool incrementTempsEnDeplacement = false;
 
-        public List<Boulet> boulets { get; }
-        public Obstacle[] obstacles { get; }
-        public List<ObjetRecompense> objetsBonus { get; }
+        public List<Boulet> Boulets { get; }
+        public Obstacle[] Obstacles { get; }
+        public List<ObjetRecompense> ObjetsBonus { get; }
 
-        public Ile ile { get; private set; }
+        public Ile Ile { get; private set; }
 
-        public DispatcherTimer MinuteurDeplacement;
+        public RechercheChemin RechercheChemin { get; private set; }
 
-        public int tempsEnDeplacement { get; set; }
-
-
-        public bool GodMod = false;
         public MoteurJeu(MainWindow fenetre)
         {
-            this.fenetre = fenetre;
+            Fenetre = fenetre;
 
             carte = fenetre.carte;
             random = new Random();
-            tempsEnDeplacement = 0;
 
-            boulets = new List<Boulet>();
-            objetsBonus = new List<ObjetRecompense>();
-            obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
+            Boulets = new List<Boulet>();
+            ObjetsBonus = new List<ObjetRecompense>();
+            Obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
 
             InitBitmaps();
             InitCarte();
@@ -66,15 +57,15 @@ namespace Survival_Island
             InitIle();
             InitRochers();
 
+            InitRechercheChemin();
+
             InitJoueur();
 
-            fenetre.hudJoueur.Visibility = Visibility.Visible;
-            fenetre.btnAmeliorations.Visibility = Visibility.Visible;
+            Fenetre.hudJoueur.Visibility = Visibility.Visible;
+            Fenetre.btnAmeliorations.Visibility = Visibility.Visible;
 
             InitBonusMinuteur();
             InitBoucleJeu();
-
-            InitMinuteurDeplacement();
         }
 
         private void InitBitmaps()
@@ -92,8 +83,8 @@ namespace Survival_Island
 
         private void InitIle()
         {
-            ile = new Ile(carte, fenetre, this);
-            ile.Apparaitre();
+            Ile = new Ile(carte, Fenetre, this);
+            Ile.Apparaitre();
         }
 
         private void InitJoueur()
@@ -111,13 +102,13 @@ namespace Survival_Island
                 positionValide = CheckPositionValide(collision);
             } while (!positionValide);
 
-            joueur = new Joueur(carte, this, bitmapBateau);
-            joueur.Apparaitre(posX, posY);
+            Joueur = new Joueur(carte, this, bitmapBateau);
+            Joueur.Apparaitre(posX, posY);
         }
 
         private void InitRochers()
         {
-            for (int i = 0; i < obstacles.Length; i++)
+            for (int i = 0; i < Obstacles.Length; i++)
             {
                 Image rocher = new Image();
                 BitmapImage randomRocher = bitmapRochers[random.Next(0, bitmapRochers.Length)];
@@ -146,7 +137,7 @@ namespace Survival_Island
                 Obstacle obstacle = new Obstacle(carte, rocher);
                 obstacle.Apparaitre(posX, posY);
 
-                obstacles[i] = obstacle;
+                Obstacles[i] = obstacle;
             }
         }
 
@@ -177,6 +168,17 @@ namespace Survival_Island
             }
         }
 
+        private void InitRechercheChemin()
+        {
+            RechercheChemin = new RechercheChemin((int)carte.Width, (int)carte.Height, Constante.TAILLE_CELLULE_RECHERCHE_CHEMIN);
+            RechercheChemin.Grille.AjouterEntiteDansGrille(Ile);
+
+            foreach (Obstacle obstacle in Obstacles)
+            {
+                RechercheChemin.Grille.AjouterEntiteDansGrille(obstacle);
+            }
+        }
+
         private void InitBoucleJeu()
         {
             CompositionTarget.Rendering += Jeu;
@@ -184,65 +186,16 @@ namespace Survival_Island
 
         private void Jeu(object? sender, EventArgs e)
         {
-            CheckDeplacement();
+            Joueur.Deplacer();
             DeplacerBoulets();
 
             CheckBouletsCollisions();
 
-            if (joueur.canonActif)
-                joueur.TirerBoulet();
+            if (Joueur.canonActif)
+                Joueur.TirerBoulet();
 
-            if (GodMod)
-            {
-                joueur.AjouterExperience(10000);
-            }
-        }
-
-        private void CheckDeplacement()
-        {
-            double vitesse = joueur.vitesse;
-            if (joueur.deplacement)
-            {
-                double accel = (vitesse / Constante.ACCELERATION) * tempsEnDeplacement;
-                if ( accel < Constante.VITESSE_MAX)
-                    incrementTempsEnDeplacement = true;
-                else
-                    incrementTempsEnDeplacement = false;
-                vitesse = accel;
-
-            }
-            else
-            {
-                incrementTempsEnDeplacement = true;
-                double decel = (vitesse / Constante.ACCELERATION) * tempsEnDeplacement;
-                if (decel > 0)
-                    vitesse = decel;
-            }
-
-            if (tempsEnDeplacement > 0)
-            {
-                Vector orientation = joueur.orientation;
-                joueur.Deplacer(orientation.X * vitesse, orientation.Y * vitesse);
-            }
-        }
-
-        private void InitMinuteurDeplacement()
-        {
-            MinuteurDeplacement = new DispatcherTimer();
-            MinuteurDeplacement.Interval = Constante.VITESSE_ACCELERATION;
-            MinuteurDeplacement.Tick += MinutDeplacement;
-            MinuteurDeplacement.Start();
-        }
-
-        private void MinutDeplacement(object? sender, EventArgs e)
-        {
-            if (incrementTempsEnDeplacement)
-            {
-                if (joueur.deplacement)
-                    tempsEnDeplacement += 1;
-                else if (tempsEnDeplacement > 0)
-                    tempsEnDeplacement -= 1;
-            }
+            if (Joueur.ModeTriche)
+                Joueur.AjouterExperience(10000);
         }
 
         private void InitBonusMinuteur()
@@ -256,7 +209,7 @@ namespace Survival_Island
         private void GenererBonus(object? sender, EventArgs e)
         {
             int randomQuantite = random.Next(Constante.BORNE_MIN_APPARITION_COFFRE, Constante.BORNE_MAX_APPARITION_COFFRE);
-            int nbBonusAajouter = Math.Min(randomQuantite, Constante.BORNE_MAX_APPARITION_COFFRE - objetsBonus.Count);
+            int nbBonusAajouter = Math.Min(randomQuantite, Constante.BORNE_MAX_APPARITION_COFFRE - ObjetsBonus.Count);
 
             for (int i = 0; i < nbBonusAajouter; i++)
             {
@@ -293,18 +246,20 @@ namespace Survival_Island
                 ObjetRecompense objet = new ObjetRecompense
                     (carte, bitmapTresor, objetLargeur, objetHauteur, valeurRecompense, typeRecompense, Constante.BASE_COFFRE_VIE, true);
                 objet.Apparaitre(posX, posY);
-                objetsBonus.Add(objet);
+                ObjetsBonus.Add(objet);
+
+                RechercheChemin.Grille.AjouterEntiteDansGrille(objet);
             }
         }
 
         private bool CheckPositionValide(Collision collision)
         {
-            if (ile.EnCollisionAvec(collision))
+            if (Ile.EnCollisionAvec(collision))
             {
                 return false;
             }
 
-            foreach (Obstacle obstacleDejaPresent in obstacles)
+            foreach (Obstacle obstacleDejaPresent in Obstacles)
             {
                 if (obstacleDejaPresent != null && obstacleDejaPresent.EnCollisionAvec(collision))
                 {
@@ -312,7 +267,7 @@ namespace Survival_Island
                 }
             }
 
-            foreach (ObjetRecompense objetsBonusDejaPresent in objetsBonus)
+            foreach (ObjetRecompense objetsBonusDejaPresent in ObjetsBonus)
             {
                 if (objetsBonusDejaPresent != null && objetsBonusDejaPresent.EnCollisionAvec(collision))
                 {
@@ -325,98 +280,84 @@ namespace Survival_Island
 
         private void DeplacerBoulets()
         {
-            for (int i = 0; i < boulets.Count; i++)
+            for (int i = 0; i < Boulets.Count; i++)
             {
-                Boulet boulet = boulets[i];
-                double bouletX = Canvas.GetLeft(boulet.canvaElement);
-                double bouletY = Canvas.GetTop(boulet.canvaElement);
+                Boulet boulet = Boulets[i];
+                double bouletX = Canvas.GetLeft(boulet.CanvaElement);
+                double bouletY = Canvas.GetTop(boulet.CanvaElement);
 
                 bouletX += boulet.direction.X * Constante.VITESSE_BOULET;
                 bouletY += boulet.direction.Y * Constante.VITESSE_BOULET;
 
-                Canvas.SetLeft(boulet.canvaElement, bouletX);
-                Canvas.SetTop(boulet.canvaElement, bouletY);
+                Canvas.SetLeft(boulet.CanvaElement, bouletX);
+                Canvas.SetTop(boulet.CanvaElement, bouletY);
 
                 if (bouletX < 0 || bouletY < 0 ||
-                    bouletX > carte.Width + boulet.canvaElement.Width || bouletY > carte.Height + boulet.canvaElement.Width)
+                    bouletX > carte.Width + boulet.CanvaElement.Width || bouletY > carte.Height + boulet.CanvaElement.Width)
                 {
-                    carte.Children.Remove(boulet.canvaElement);
-                    boulets.RemoveAt(i);
+                    carte.Children.Remove(boulet.CanvaElement);
+                    Boulets.RemoveAt(i);
                 }
             }
 
-            if (joueur.tempsDernierTir > 0)
+            if (Joueur.tempsDernierTir > 0)
             {
-                joueur.tempsDernierTir -= 1.0 / 60.0;
+                Joueur.tempsDernierTir -= 1.0 / 60.0;
             }
         }
 
         private void CheckBouletsCollisions()
         {
             // Collision entre les boulets et les obstacles
-            for (int i = boulets.Count - 1; i >= 0; i--)
+            for (int i = Boulets.Count - 1; i >= 0; i--)
             {
-                Boulet boulet = boulets[i];
-                foreach (Obstacle obstacle in obstacles)
+                Boulet boulet = Boulets[i];
+                foreach (Obstacle obstacle in Obstacles)
                 {
                     if (boulet.EnCollisionAvec(obstacle))
                     {
                         Console.WriteLine("Collision avec un obstacle: X=" + obstacle.PositionX + " Y=" + obstacle.PositionY);
 
                         boulet.Disparaitre();
-                        boulets.RemoveAt(i);
+                        Boulets.RemoveAt(i);
                     }
                 }
 
-                if (boulet.EnCollisionAvec(ile))
+                if (boulet.EnCollisionAvec(Ile))
                 {
                     boulet.Disparaitre();
-                    boulets.RemoveAt(i);
+                    Boulets.RemoveAt(i);
                 }
 
-                for (int j = objetsBonus.Count - 1; j >= 0; j--)
+                for (int j = ObjetsBonus.Count - 1; j >= 0; j--)
                 {
-                    ObjetRecompense objetBonus = objetsBonus[j];
+                    ObjetRecompense objetBonus = ObjetsBonus[j];
                     if (boulet.EnCollisionAvec(objetBonus))
                     {
                         Console.WriteLine("Collision avec un objet bonus: X=" + objetBonus.PositionX + " Y=" + objetBonus.PositionY);
-                        bool estDetruit = objetBonus.InfligerDegats(joueur.degats);
+                        bool estDetruit = objetBonus.InfligerDegats(Joueur.degats);
 
                         if (estDetruit && boulet.tireur is Joueur)
                         {
                             switch (objetBonus.type)
                             {
                                 case TypeRecompense.VIE:
-                                    joueur.AjouterVie(objetBonus.valeurRecompense);
+                                    Joueur.AjouterVie(objetBonus.valeurRecompense);
                                     break;
                                 case TypeRecompense.EXPERIENCE:
-                                    joueur.AjouterExperience(objetBonus.valeurRecompense);
+                                    Joueur.AjouterExperience(objetBonus.valeurRecompense);
                                     break;
                             }
 
-                            objetsBonus.RemoveAt(j);
+                            ObjetsBonus.RemoveAt(j);
+                            RechercheChemin.Grille.SupprimerEntiteDansGrille(objetBonus);
                         }
 
                         boulet.Disparaitre();
-                        boulets.RemoveAt(i);
+                        Boulets.RemoveAt(i);
                     }
                 }
             }
-        }
-
-        public void JoueurTire(bool canonActif)
-        {
-            joueur.canonActif = canonActif;
-        }
-
-        public void JoueurOriente(Point positionSouris)
-        {
-            joueur.ChangerOrientation(positionSouris);
-        }
-
-        public void JoueurDeplace(bool deplacement)
-        {
-            joueur.deplacement = deplacement;
         }
     }
 }

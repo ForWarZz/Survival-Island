@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Survival_Island.Outils
+﻿namespace Survival_Island.Outils
 {
     internal class Constante
     {
@@ -17,6 +11,8 @@ namespace Survival_Island.Outils
         public const int JOUEUR_DEGATS = 20;
         public const int AMELIO_DEGATS = 20;
         public const double JOUEUR_RECHARGEMENT_CANON = 1;
+
+        public const double BATEAU_ACCELERATION = 0.1;
 
         public const int JOUEUR_EXPERIENCE_MAX_N1 = 100;
         public const double MULTIPLICATEUR_NIVEAU = 1.5;
@@ -50,11 +46,6 @@ namespace Survival_Island.Outils
 
         public const int HAUTEUR_BARRE_VIE = 10;
 
-
-        public static readonly TimeSpan VITESSE_ACCELERATION = TimeSpan.FromMilliseconds(16);
-
-        public const double  VITESSE_MAX = 5;
-
-        public const int ACCELERATION = 30;
+        public const int TAILLE_CELLULE_RECHERCHE_CHEMIN = 5;
     }
 }

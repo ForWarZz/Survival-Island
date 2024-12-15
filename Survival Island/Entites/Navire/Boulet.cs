@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Survival_Island.Entites.Base;
+using Survival_Island.Outils;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Survival_Island.Entites.Base;
-using Survival_Island.Outils;
 
 namespace Survival_Island.Entites.Navire
 {
@@ -24,7 +19,7 @@ namespace Survival_Island.Entites.Navire
             bouletEllipse.Height = Constante.TAILLE_BOULET;
             bouletEllipse.Fill = Brushes.Black;
 
-            canvaElement = bouletEllipse;
+            CanvaElement = bouletEllipse;
 
             this.direction = direction;
             this.tireur = tireur;

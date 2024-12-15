@@ -65,4 +65,12 @@
     </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\morganbattig\source\repos\ForWarZz\Survival-Island\Survival Island\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\morganbattig\source\repos\ForWarZz\Survival-Island\Survival Island\.editorconfig" />
+  </ItemGroup>
+
 </Project>

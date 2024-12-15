@@ -1,5 +1,4 @@
-﻿using Survival_Island;
-using Survival_Island.Entites.Base;
+﻿using Survival_Island.Entites.Base;
 using Survival_Island.Entites.Objets;
 using Survival_Island.Outils;
 using System.Windows;
@@ -14,7 +13,9 @@ namespace Survival_Island.Entites.Navire
     {
         protected MoteurJeu moteurJeu { get; set; }
 
-        public double vitesse { get; set; }
+        public double vitesseMax { get; set; }
+        public double vitesseActuelle { get; set; }
+
         public int degats { get; set; }
 
         public double tempsRechargementCanon { get; set; }
@@ -37,40 +38,81 @@ namespace Survival_Island.Entites.Navire
             this.moteurJeu = moteurJeu;
 
             this.degats = degats;
-            this.vitesse = vitesse;
+            this.vitesseMax = vitesse;
             this.tempsRechargementCanon = tempsRechargementCanon;
 
             tempsDernierTir = 0;
 
-            canvaElement = new Image();
-            ((Image)canvaElement).Source = bitmapBateau;
-            canvaElement.Width = Constante.LARGEUR_NAVIRE;
-            canvaElement.Height = Constante.HAUTEUR_NAVIRE;
+            CanvaElement = new Image();
+            ((Image)CanvaElement).Source = bitmapBateau;
+            CanvaElement.Width = Constante.LARGEUR_NAVIRE;
+            CanvaElement.Height = Constante.HAUTEUR_NAVIRE;
 
             InitRotationTemps();
         }
 
-        public abstract void Deplacer(double deltaX, double deltaY);
+        public virtual void Deplacer()
+        {
+            // Calcul de la vitesse en fonction des entrées utilisateur ou du comportement attendu
+            if (deplacement)
+            {
+                vitesseActuelle = Math.Min(vitesseActuelle + Constante.BATEAU_ACCELERATION, vitesseMax); // Accélération progressive jusqu'à la vitesse maximale
+            }
+            else
+            {
+                vitesseActuelle = Math.Max(vitesseActuelle - Constante.BATEAU_ACCELERATION, 0); // Décélération progressive jusqu'à l'arrêt
+            }
 
-        public abstract void ChangerOrientation(Point nouvellePosition);
+            double nouvellePosX = PositionX + vitesseActuelle * orientation.X;
+            double nouvellePosY = PositionY + vitesseActuelle * orientation.Y;
+
+            double maxX = carte.Width - CanvaElement.Width;
+            double maxY = carte.Height - CanvaElement.Height;
+
+            if (PeutAllerVers(nouvellePosX, nouvellePosY))
+            {
+                PositionX = Math.Max(0, Math.Min(nouvellePosX, maxX));
+                PositionY = Math.Max(0, Math.Min(nouvellePosY, maxY));
+            } else
+            {
+                vitesseActuelle = 0;
+            }
+  
+        }
+
+        public virtual void ChangerOrientation(Point nouvellePosition)
+        {
+            double centreBateauX = PositionX + CanvaElement.Width / 2;
+            double centreBateauY = PositionY + CanvaElement.Height / 2;
+
+            double deltaX = nouvellePosition.X - centreBateauX;
+            double deltaY = nouvellePosition.Y - centreBateauY;
+
+            angleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
+
+            if (!rotationTemps.IsEnabled)
+            {
+                rotationTemps.Start();
+            }
+        }
 
         public abstract void TirerBoulet();
 
         protected bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
         {
-            Collision nouvelleCollision = new Collision(new Rect(nouvellePosX, nouvellePosY, canvaElement.Width, canvaElement.Height), AngleRotation());
+            Collision nouvelleCollision = new Collision(new Rect(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height), AngleRotation());
             // nouvelleCollision.AfficherCollision(carte);
 
-            if (moteurJeu.ile.EnCollisionAvec(nouvelleCollision))
+            if (moteurJeu.Ile.EnCollisionAvec(nouvelleCollision))
                 return false;
 
-            foreach (Obstacle obstacle in moteurJeu.obstacles)
+            foreach (Obstacle obstacle in moteurJeu.Obstacles)
             {
                 if (obstacle.EnCollisionAvec(nouvelleCollision))
                     return false;
             }
 
-            foreach (ObjetRecompense objetBonus in moteurJeu.objetsBonus)
+            foreach (ObjetRecompense objetBonus in moteurJeu.ObjetsBonus)
             {
                 if (objetBonus.EnCollisionAvec(nouvelleCollision))
                     return false;
@@ -104,7 +146,7 @@ namespace Survival_Island.Entites.Navire
             orientation = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
             orientation.Normalize();
 
-            canvaElement.RenderTransform = new RotateTransform(angleActuel, canvaElement.Width / 2, canvaElement.Height / 2);
+            CanvaElement.RenderTransform = new RotateTransform(angleActuel, CanvaElement.Width / 2, CanvaElement.Height / 2);
         }
 
         protected void InitRotationTemps()
