@@ -2,6 +2,8 @@
 {
     public static class Chemin
     {
+        public const string IMAGE_BATEAU_BLEU = "pack://application:,,,/Images/Bateaux/bateau_bleu.png";
+        public const string IMAGE_BATEAU_JAUNE = "pack://application:,,,/Images/Bateaux/bateau_jaune.png";
         public const string IMAGE_BATEAU_ROUGE = "pack://application:,,,/Images/Bateaux/bateau_rouge.png";
         public const string IMAGE_BATEAU_VERT = "pack://application:,,,/Images/Bateaux/bateau_vert.png";
 
