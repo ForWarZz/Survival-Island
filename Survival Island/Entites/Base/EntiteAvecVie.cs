@@ -31,7 +31,6 @@ namespace Survival_Island.Entites.Base
         {
             if (barreVieVisible)
             {
-                BarreDeVie.Visibility = Visibility.Visible;
                 BarreDeVie.Maximum = VieMax;
                 BarreDeVie.Value = Vie;
             }
@@ -77,6 +76,7 @@ namespace Survival_Island.Entites.Base
             Vie -= degats;
             if (Vie < 0) Vie = 0;
 
+            AfficherBarreDeVie(true);
             MettreAJour();
 
             if (Vie <= 0)

@@ -36,6 +36,8 @@ namespace Survival_Island
         public RechercheChemin RechercheChemin { get; private set; }
         public List<Ennemi> Ennemis { get; }
 
+        public int numBateau = 0;
+
         public MoteurJeu(MainWindow fenetre)
         {
             Fenetre = fenetre;

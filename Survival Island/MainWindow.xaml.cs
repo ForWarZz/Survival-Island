@@ -123,10 +123,9 @@ namespace Survival_Island
 
         private void MenuChangerBateau_Click(object sender, RoutedEventArgs e)
         {
-            DialogueChangerBateau dialog = new DialogueChangerBateau();
+            DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
             bool? result = dialog.ShowDialog();
-            /// faire système pour changer le skin
-
+            moteurJeu.numBateau = dialog.numBateau;
         }
 
         private void btnVieBateauAmelio_Click(object sender, RoutedEventArgs e)

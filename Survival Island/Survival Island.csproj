@@ -12,6 +12,8 @@
   <ItemGroup>
     <None Remove="Images\BateauRouge.png" />
     <None Remove="Images\BateauVert.png" />
+    <None Remove="images\bateaux\bateau_bleu.png" />
+    <None Remove="images\bateaux\bateau_jaune.png" />
     <None Remove="Images\bateau_rouge.png" />
     <None Remove="Images\bateau_vert.png" />
     <None Remove="Images\boulet_canon.png" />
@@ -30,6 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\bateaux\bateau_bleu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\bateaux\bateau_jaune.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Bateaux\bateau_rouge.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
