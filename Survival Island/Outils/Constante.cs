@@ -21,7 +21,7 @@
         public const int HAUTEUR_NAVIRE = 100;
 
         public const int VITESSE_BOULET = 10;
-        public const int TAILLE_BOULET = 10;
+        public const int TAILLE_BOULET_INIT = 10;
 
         public const int ILE_VIE_MAX = 1000;
         public const int AMELIO_VIE_ILE = 1000;

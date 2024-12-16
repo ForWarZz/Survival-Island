@@ -33,7 +33,9 @@ namespace Survival_Island.Entites.Navire
 
         protected BitmapImage bateauImage;
 
-        protected ModeBateau ModeBateau { get; set; }
+
+
+        public int taille_boulets {  get; set; }    
 
         protected Bateau(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, bool barreVie, int vieMax, int degats, double vitesse, double tempsRechargementCanon) : base(carte, false, barreVie, vieMax)
         {
@@ -49,6 +51,9 @@ namespace Survival_Island.Entites.Navire
             ((Image)CanvaElement).Source = bitmapBateau;
             CanvaElement.Width = Constante.LARGEUR_NAVIRE;
             CanvaElement.Height = Constante.HAUTEUR_NAVIRE;
+
+
+            taille_boulets = Constante.TAILLE_BOULET_INIT;
 
             InitRotationTemps();
         }
@@ -92,17 +97,7 @@ namespace Survival_Island.Entites.Navire
             }
         }
 
-        public virtual void TirerBoulet()
-        {
-            double centreBateauX = PositionX + CanvaElement.Width / 2;
-            double centreBateauY = PositionY + CanvaElement.Height / 2;
-
-            if (TempsDernierTir > 0)
-                return;
-            TempsDernierTir = TempsRechargementCanon;
-
-            ModeBateau.Tirer(centreBateauX, centreBateauY);
-        }
+        
 
         protected bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
         {
