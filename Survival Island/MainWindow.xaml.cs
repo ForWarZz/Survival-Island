@@ -81,7 +81,7 @@ namespace Survival_Island
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-                moteurJeu.Joueur.CanonActif &= false;
+                moteurJeu.Joueur.CanonActif = false;
         }
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
@@ -184,6 +184,18 @@ namespace Survival_Island
         private void btnVieIleAmelio_Click(object sender, RoutedEventArgs e)
         {
             moteurJeu.Ile.AmelioVie();
+        }
+
+        private void Fenetre_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (jouer)
+                moteurJeu.Joueur.Deplacement = true;
+        }
+
+        private void Fenetre_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (jouer)
+                moteurJeu.Joueur.Deplacement = false;
         }
     }
 }
