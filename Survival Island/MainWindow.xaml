@@ -14,8 +14,10 @@
     MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
     MouseLeftButtonUp="Fenetre_MouseLeftButtonUp"
     MouseMove="Fenetre_MouseMove"
+    MouseRightButtonDown="Fenetre_MouseRightButtonDown"
+    MouseRightButtonUp="Fenetre_MouseRightButtonUp"
     WindowState="Maximized"
-    mc:Ignorable="d" MouseRightButtonDown="Fenetre_MouseRightButtonDown" MouseRightButtonUp="Fenetre_MouseRightButtonUp">
+    mc:Ignorable="d">
 
     <Window.Resources>
         <Style x:Key="BoutonArrondi" TargetType="Button">
@@ -128,15 +130,24 @@
         <StackPanel
             x:Name="menuAccueil"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" Background="#00000000">
+            VerticalAlignment="Center"
+            Background="#00000000">
 
             <Image
                 Width="370"
                 Height="371"
-                Margin="0,0,0,80"
+                Margin="0,0,0,30"
                 Source="/images/logo.png"
                 Stretch="Fill" />
 
+            <TextBlock
+                x:Name="txtPause"
+                Margin="0,0,0,50"
+                FontFamily="Stencil"
+                FontSize="36"
+                Foreground="White"
+                Text=""
+                TextAlignment="Center" />
 
             <Button
                 x:Name="btnJouer"

@@ -121,6 +121,7 @@ namespace Survival_Island
             {
                 moteurJeu.InitJeu();
                 activePause = true;
+                txtPause.Text = "PAUSE";
             }
             Pause();
         }
