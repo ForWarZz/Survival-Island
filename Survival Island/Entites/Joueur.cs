@@ -302,7 +302,7 @@ namespace Survival_Island.Entites
         {
             if (PointsAmeliorations > 0)
             {
-                VitesseMax += Constante.AMELIO_VITESSE;
+                VitesseMax = Math.Round(VitesseMax + Constante.AMELIO_VITESSE,1);
                 PointsAmeliorations--;
                 MettreAJour();
             }

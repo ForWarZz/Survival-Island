@@ -5,11 +5,12 @@
         public const int NOMBRE_CARREAUX_MER = 32;
 
         public const int JOUEUR_VIE_MAX = 100;
-        public const int AMELIO_VIE_MAX = 100;
+        public const int AMELIO_VIE_MAX = 20;
         public const int JOUEUR_VITESSE = 4;
-        public const int AMELIO_VITESSE = 2;
+        public const int AMELIO_VITESSE_MAX = 8;
+        public const double AMELIO_VITESSE = 0.2;
         public const int JOUEUR_DEGATS = 20;
-        public const int AMELIO_DEGATS = 20;
+        public const int AMELIO_DEGATS = 2;
         public const double JOUEUR_RECHARGEMENT_CANON = 1;
 
         public const double BATEAU_ACCELERATION = 0.1;

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Survival_Island.Outils;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Survival_Island
@@ -141,6 +142,10 @@ namespace Survival_Island
         private void btnVitesseBateauAmelio_Click(object sender, RoutedEventArgs e)
         {
             moteurJeu.Joueur.AmelioVitesse();
+            if (moteurJeu.Joueur.VitesseMax >= Constante.AMELIO_VITESSE_MAX)
+            {
+                btnVitesseBateauAmelio.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnVieIleAmelio_Click(object sender, RoutedEventArgs e)
