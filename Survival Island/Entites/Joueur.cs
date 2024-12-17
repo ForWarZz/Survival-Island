@@ -318,6 +318,8 @@ namespace Survival_Island.Entites
             fenetre.txtVieJoueurAmelio.Text = VieMax.ToString();
             fenetre.txtDegatsJoueurAmelio.Text = Degats.ToString();
             fenetre.txtVitesseJoueurAmelio.Text = VitesseMax.ToString();
+
+            fenetre.txtNiveau.Text = Niveau.ToString();
         }
 
         public override void MettreAJour()
