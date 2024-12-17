@@ -148,7 +148,7 @@ namespace Survival_Island.Entites
                     this.nombreBouletsParShoot = 4;
                     this.angleBoulets = 360;
                     this.TempsRechargementCanon = 1.1;
-                    this.Degats = 15;
+                    this.Degats = (this.Degats/this.nombreBouletsParShoot)*2;
                 }
                 else if (classe == "duo")
                 {
@@ -156,7 +156,7 @@ namespace Survival_Island.Entites
                     this.nombreBouletsParShoot = 2;
                     this.angleBoulets = 0;
                     this.TempsRechargementCanon = 1.1;
-                    this.Degats = 15;
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                     this.espacementBoulets = 10;
                 }
                 else if (classe == "spread")
@@ -166,7 +166,7 @@ namespace Survival_Island.Entites
                     this.nombreBouletsParShoot = 3;
                     this.angleBoulets = 20;
                     this.TempsRechargementCanon = 1.1;
-                    this.Degats = 15;
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
 
                 }
                 this.niveauClasse = 1;
@@ -182,7 +182,7 @@ namespace Survival_Island.Entites
                         this.nombreBouletsParShoot = 8;
                         this.angleBoulets = 360;
                         this.TempsRechargementCanon = 1.3;
-                        this.Degats = 20;
+                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
 
                     }
                     else if (classe == "quatroPlus")
@@ -192,7 +192,7 @@ namespace Survival_Island.Entites
                         this.nombreBouletsParShoot = 4;
                         this.angleBoulets = 360;
                         this.TempsRechargementCanon = 0.8;
-                        this.Degats = 40;
+                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 10;
                         this.taille_boulets = 30;
 
                     }
