@@ -1,15 +1,37 @@
-﻿using System.Windows;
+﻿using Survival_Island.Entites;
+using System.Windows;
 
 namespace Survival_Island
 {
     /// <summary>
     /// Logique d'interaction pour DialogueAudio.xaml
     /// </summary>
+    /// 
+    
+
     public partial class DialogueAudio : Window
     {
-        public DialogueAudio()
+        private Joueur joueur;
+
+
+
+        public DialogueAudio(MoteurJeu moteurJeu, bool jeuLance)
         {
             InitializeComponent();
+
+            this.SlideMusique.Value = moteurJeu.mediaPlayerMusique.Volume;
+
+            if (jeuLance)
+            {
+                //this.SlideSon.Value = moteurJeu.Joueur.mediaPlayerSon.Volume;
+
+            }
+
+
+            
+
+
+
         }
     }
 }

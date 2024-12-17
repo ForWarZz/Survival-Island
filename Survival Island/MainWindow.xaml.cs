@@ -16,17 +16,27 @@ namespace Survival_Island
         private bool menuActif = false;
         private bool activePause = false;
 
+
+        public MediaPlayer mediaPlayerMusique = new MediaPlayer();
+
+        public MediaPlayer mediaPlayerSon = new MediaPlayer();
+
+
+
         public MainWindow()
         {
             InitializeComponent();
 
             moteurJeu = new MoteurJeu(this);
             jouer = false;
+
         }
 
+        
+        
         private void Pause()
         {
-            // Quand le menu est en pause, il faut cacher le hudjoueur et le bouton menu améliorations
+            // Quand le menu est en pause, cacher le hudjoueur et le bouton menu améliorations
             if (jouer)
             {
                 hudJoueur.Visibility = Visibility.Visible;
@@ -75,7 +85,11 @@ namespace Survival_Island
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
+            {
                 moteurJeu.Joueur.CanonActif = true;
+
+                
+            }
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -143,15 +157,20 @@ namespace Survival_Island
                 Application.Current.Shutdown();
         }
 
-        private void MenuSon_Click(object sender, RoutedEventArgs e)
+        private void MenuSonClick(object sender, RoutedEventArgs e)
         {
-            DialogueAudio dialog = new DialogueAudio();
+            DialogueAudio dialog = new DialogueAudio(moteurJeu, jouer);
+  
             bool? result = dialog.ShowDialog();
 
-            if (result == true)
+            if (result == false)
             {
-                double VolumeMusique = dialog.SlideMusique.Value;
-                double VolumeSon = dialog.SlideSon.Value;
+                moteurJeu.mediaPlayerMusique.Volume = dialog.SlideMusique.Value;
+                if (jouer)
+                {
+                    Console.WriteLine("Ca joue et sa console");
+                    //moteurJeu.Joueur.soundPlayerTire.Volume = dialog.SlideSon.Value;
+                }
             }
         }
 

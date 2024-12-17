@@ -1,8 +1,10 @@
 ﻿using Survival_Island.Entites.Navire;
 using Survival_Island.Outils;
+using System.Media;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -28,8 +30,11 @@ namespace Survival_Island.Entites
         private int angleBoulets;
         private int espacementBoulets;
 
+        public float volumeTire;
+
         public BitmapImage[] images;
 
+        public SoundPlayer soundPlayerTire;
 
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
             base(carte, moteurJeu, bitmapImage, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
@@ -52,8 +57,17 @@ namespace Survival_Island.Entites
 
             niveauClasse = 0;
 
+
+            string cheminSon = "pack://application:,,,/Son/shoot.wav";
+            soundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(cheminSon)).Stream);
+
+
+
+
             InitImages();
         }
+
+
 
         public void InitImages()
         {
@@ -70,11 +84,17 @@ namespace Survival_Island.Entites
             double centreBateauX = PositionX + CanvaElement.Width / 2;
             double centreBateauY = PositionY + CanvaElement.Height / 2;
 
+
+
             if (TempsDernierTir > 0)
                 return;
             TempsDernierTir = TempsRechargementCanon;
 
-            
+
+            soundPlayerTire.Play();
+
+
+
             double espaceBoulets = angleBoulets / (nombreBouletsParShoot);
 
             double angleOrientation = Math.Atan2(Orientation.Y, Orientation.X);

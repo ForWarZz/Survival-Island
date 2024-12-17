@@ -38,6 +38,9 @@ namespace Survival_Island
 
         public int numBateau = 0;
 
+        public MediaPlayer mediaPlayerMusique = new MediaPlayer();
+
+
         public MoteurJeu(MainWindow fenetre)
         {
             Fenetre = fenetre;
@@ -50,6 +53,12 @@ namespace Survival_Island
             Obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
             Ennemis = new List<Ennemi>();
 
+            string cheminMusique = "Son/MusiqueFond.mp3";
+            mediaPlayerMusique.Open(new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cheminMusique)));
+            mediaPlayerMusique.Volume = 0.2;
+            mediaPlayerMusique.MediaEnded += (sender, e) => mediaPlayerMusique.Position = TimeSpan.Zero;
+            mediaPlayerMusique.Play();
+
             InitBitmaps();
             InitCarte();
         }
@@ -59,6 +68,8 @@ namespace Survival_Island
             InitIle();
             InitRochers();
 
+            
+
             InitRechercheChemin();
 
             InitJoueur();
@@ -67,6 +78,7 @@ namespace Survival_Island
             InitBonusMinuteur();
             InitBoucleJeu();
         }
+
 
         private void InitBitmaps()
         {

@@ -28,6 +28,8 @@
     <None Remove="Images\rocher_2.png" />
     <None Remove="Images\rocher_3.png" />
     <None Remove="Images\tresor.png" />
+    <None Remove="Son\MusiqueFond.mp3" />
+    <None Remove="Son\shoot.wav" />
     <None Remove="tile_73.png" />
   </ItemGroup>
 
@@ -71,6 +73,12 @@
     <Resource Include="Images\CarteJeu\tresor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Son\shoot.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Son\MusiqueFond.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

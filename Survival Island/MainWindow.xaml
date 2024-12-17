@@ -14,8 +14,10 @@
     MouseLeftButtonDown="Fenetre_MouseLeftButtonDown"
     MouseLeftButtonUp="Fenetre_MouseLeftButtonUp"
     MouseMove="Fenetre_MouseMove"
+    MouseRightButtonDown="Fenetre_MouseRightButtonDown"
+    MouseRightButtonUp="Fenetre_MouseRightButtonUp"
     WindowState="Maximized"
-    mc:Ignorable="d" MouseRightButtonDown="Fenetre_MouseRightButtonDown" MouseRightButtonUp="Fenetre_MouseRightButtonUp">
+    mc:Ignorable="d">
 
     <Window.Resources>
         <Style x:Key="BoutonArrondi" TargetType="Button">
@@ -66,7 +68,7 @@
             <MenuItem Background="White" Header="Paramètres">
                 <MenuItem
                     x:Name="MenuSon"
-                    Click="MenuSon_Click"
+                    Click="MenuSonClick"
                     Header="Son..." />
                 <MenuItem
                     x:Name="MenuChangerBateau"
@@ -128,7 +130,8 @@
         <StackPanel
             x:Name="menuAccueil"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center" Background="#00000000">
+            VerticalAlignment="Center"
+            Background="#00000000">
 
             <Image
                 Width="370"
