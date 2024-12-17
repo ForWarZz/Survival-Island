@@ -202,19 +202,24 @@
             Margin="0,0,50,87"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            Background="#33000000"
-            Visibility="Hidden">
+            Background="#33000000" Visibility="Hidden">
             <Grid>
                 <Rectangle Height="50" Fill="#6d5445" />
-                <TextBlock
-                    x:Name="txtAmelio"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="22"
-                    Foreground="White"
-                    Text="Améliorations"
-                    TextAlignment="Center"
-                    TextWrapping="Wrap" />
+                <StackPanel>
+                    <TextBlock
+                        x:Name="txtAmelio"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="22"
+                        Foreground="White"
+                        Text="Améliorations"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Niveau :" Foreground="White" HorizontalAlignment="Center" Margin="125,0,0,0"/>
+                        <TextBlock x:Name="txtNiveau" Text="" Margin="5,0,0,0" Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
             <StackPanel Height="60" Orientation="Horizontal">
                 <StackPanel Width="200">
