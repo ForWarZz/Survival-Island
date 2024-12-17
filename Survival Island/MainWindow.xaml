@@ -128,7 +128,7 @@
         <StackPanel
             x:Name="menuAccueil"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+            VerticalAlignment="Center" Background="#00000000">
 
             <Image
                 Width="370"

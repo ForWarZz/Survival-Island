@@ -1,6 +1,7 @@
 ﻿using Survival_Island.Outils;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Survival_Island
 {
@@ -13,6 +14,7 @@ namespace Survival_Island
 
         private bool jouer;
         private bool menuActif = false;
+        private bool activePause = false;
 
         public MainWindow()
         {
@@ -20,6 +22,21 @@ namespace Survival_Island
 
             moteurJeu = new MoteurJeu(this);
             jouer = false;
+        }
+
+        private void Pause()
+        {
+            // Quand le menu est en pause, il faut cacher le hudjoueur et le bouton menu améliorations
+            if (jouer)
+            {
+                hudJoueur.Visibility = Visibility.Visible;
+                btnAmeliorations.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                hudJoueur.Visibility = Visibility.Hidden;
+                btnAmeliorations.Visibility = Visibility.Hidden;
+            }
         }
 
         // Gestion des touches et de la souris
@@ -41,6 +58,17 @@ namespace Survival_Island
             {
                 Console.WriteLine("God mod");
                 moteurJeu.Joueur.ModeTriche = true;
+            }
+            if (jouer && e.Key == Key.Escape)
+            {
+
+                menuAccueil.Visibility = Visibility.Visible;
+                menuAccueil.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#50000000");
+                btnJouer.Content = "Retour au jeu";
+
+                jouer = false ;
+                Pause();
+                moteurJeu.Joueur.Deplacement = false;
             }
         }
 
@@ -89,7 +117,12 @@ namespace Survival_Island
         {
             menuAccueil.Visibility = Visibility.Hidden;
             jouer = true;
-            moteurJeu.InitJeu();
+            if (!activePause)
+            {
+                moteurJeu.InitJeu();
+                activePause = true;
+            }
+            Pause();
         }
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
