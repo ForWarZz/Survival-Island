@@ -63,8 +63,6 @@ namespace Survival_Island
 
             InitJoueur();
 
-            Fenetre.hudJoueur.Visibility = Visibility.Visible;
-            Fenetre.btnAmeliorations.Visibility = Visibility.Visible;
 
             InitBonusMinuteur();
             InitBoucleJeu();
