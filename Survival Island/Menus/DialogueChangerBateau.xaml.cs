@@ -21,22 +21,14 @@ namespace Survival_Island
         public DialogueChangerBateau(MoteurJeu moteurJeu)
         {
             InitializeComponent();
-            InitImages();
             this.joueur = moteurJeu.Joueur;
+            this.images = joueur.images;
             imageActuelle = (BitmapImage)((Image)joueur.CanvaElement).Source;
             imgBateau.Source = imageActuelle;
             numBateau = moteurJeu.numBateau;
 
         }
-        public void InitImages()
-        {
-            BitmapImage bateauR = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
-            BitmapImage bateauB = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_BLEU));
-            BitmapImage bateauJ = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_JAUNE));
-            BitmapImage bateauV = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
-
-            images = [bateauR, bateauB, bateauJ, bateauV];
-        }
+        
         private void ChangerBateau()
         {
             imageActuelle = images[numBateau];

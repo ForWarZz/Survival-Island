@@ -28,6 +28,8 @@ namespace Survival_Island.Entites
         private int angleBoulets;
         private int espacementBoulets;
 
+        public BitmapImage[] images;
+
 
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
             base(carte, moteurJeu, bitmapImage, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
@@ -50,7 +52,17 @@ namespace Survival_Island.Entites
 
             niveauClasse = 0;
 
+            InitImages();
+        }
 
+        public void InitImages()
+        {
+            BitmapImage bateauR = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
+            BitmapImage bateauB = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_BLEU));
+            BitmapImage bateauJ = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_JAUNE));
+            BitmapImage bateauV = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
+
+            images = [bateauR, bateauB, bateauJ, bateauV];
         }
 
         public void TirerBoulet()
