@@ -135,12 +135,17 @@ namespace Survival_Island.Entites
                 fenetre.btnSpread.Click += (sender, e) => { ChoisirClasse("quatroPlus"); };
                 fenetre.btnDuo.Click += (sender, e) => { ChoisirClasse("duo"); };
             }
+
+            fenetre.btnIgnore.Click += (sender, e) => { ChoisirClasse("ignore"); };
         }
 
         private void ChoisirClasse(string classe)
         {
+
+            
+
             // Appliquer les modifications en fonction de la classe choisie
-            if (Niveau >= 5 && ModeBateau=="classique")
+            if (Niveau >= 5 && ModeBateau=="classique" && classe!="ignore")
             {
                 if (classe == "quatre")
                 {
@@ -172,7 +177,7 @@ namespace Survival_Island.Entites
                 this.niveauClasse = 1;
             }
 
-            else if (Niveau >= 15) {
+            else if (Niveau >= 15 && classe != "ignore") {
                 if (ModeBateau == "quatre")
                 {
                     if (classe == "octopus")
