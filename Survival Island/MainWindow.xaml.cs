@@ -110,6 +110,7 @@ namespace Survival_Island
         private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
         {
             moteurJeu.Joueur.nouveauNiveau = false;
+
             if (menuActif)
             {
                 menuActif = false;
@@ -123,6 +124,7 @@ namespace Survival_Island
                 menuActif = true;
                 spAmelio.Visibility = Visibility.Visible;
                 btnAmeliorations.Content = "Fermer";
+                moteurJeu.Joueur.MettreAJour();
 
                 spAmelio.Focus();
             }
