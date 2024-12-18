@@ -11,27 +11,11 @@ namespace Survival_Island
 
     public partial class DialogueAudio : Window
     {
-        private Joueur joueur;
-
-
-
-        public DialogueAudio(MoteurJeu moteurJeu, bool jeuLance)
+        public DialogueAudio(MoteurJeu moteurJeu)
         {
             InitializeComponent();
 
-            this.SlideMusique.Value = moteurJeu.MediaPlayerMusique.Volume;
-
-            if (jeuLance)
-            {
-                //this.SlideSon.Value = moteurJeu.Joueur.mediaPlayerSon.Volume;
-
-            }
-
-
-            
-
-
-
+            SlideMusique.Value = moteurJeu.GestionSons.MediaPlayerMusique.Volume;
         }
     }
 }

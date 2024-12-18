@@ -134,24 +134,15 @@ namespace Survival_Island
 
         private void MenuSonAffiche()
         {
-            DialogueAudio dialog = new DialogueAudio(moteurJeu, jouer);
-            bool? result = dialog.ShowDialog();
-
-            if (result == false)
-            {
-                moteurJeu.MediaPlayerMusique.Volume = dialog.SlideMusique.Value;
-                if (jouer)
-                {
-                    Console.WriteLine("Ca joue et sa console");
-                    //moteurJeu.Joueur.soundPlayerTire.Volume = dialog.SlideSon.Value;
-                }
-            }
+            DialogueAudio dialog = new DialogueAudio(moteurJeu);
+            dialog.ShowDialog();
         }
 
         private void MenuBateauChange()
         {
             DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
-            bool? result = dialog.ShowDialog();
+            dialog.ShowDialog();
+
             moteurJeu.NumBateau = dialog.numBateau;
         }
 
@@ -186,7 +177,7 @@ namespace Survival_Island
 
         private void btnVieIleAmelio_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.Ile.AmelioVie();
+            moteurJeu.GestionCarte.Ile.AmelioVie();
         }
 
         private void Fenetre_MouseRightButtonDown(object sender, MouseButtonEventArgs e)

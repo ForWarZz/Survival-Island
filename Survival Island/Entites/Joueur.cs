@@ -28,15 +28,15 @@ namespace Survival_Island.Entites
         public int NiveauClasse { get; set; }
         public bool NouveauNiveau { get; set; }
 
-        public int NombreTue { get; set; }
+        public int NombreCoule { get; set; }
         public int NombreMort { get; set; }
-
-        public BitmapImage[] Images { get; private set; }
 
         private DispatcherTimer minuteurReapparition;
 
-        public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
-            base(carte, moteurJeu, bitmapImage, Brushes.Black, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
+        public Joueur(MoteurJeu moteurJeu) :
+            base(moteurJeu, moteurJeu.GestionImages.BateauxJoueur[0], Brushes.Black, 
+                false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, 
+                Constante.JOUEUR_RECHARGEMENT_CANON)
         {
             fenetre = moteurJeu.Fenetre;
             Niveau = 0;
@@ -45,25 +45,14 @@ namespace Survival_Island.Entites
             ExperienceMax = Constante.JOUEUR_EXPERIENCE_MAX_N1;
 
             NombreMort = 0;
-            NombreTue = 0;
+            NombreCoule = 0;
 
             ModeTriche = false;
 
             NiveauClasse = 0;
             NouveauNiveau = false;
 
-            InitImages();
             InitReapparitionMinuteur();
-        }
-
-        public void InitImages()
-        {
-            BitmapImage bateauR = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
-            BitmapImage bateauB = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_BLEU));
-            BitmapImage bateauJ = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_JAUNE));
-            BitmapImage bateauV = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
-
-            Images = [bateauR, bateauB, bateauJ, bateauV];
         }
 
         private void InitReapparitionMinuteur()
@@ -186,7 +175,7 @@ namespace Survival_Island.Entites
         private void Reapparition(object? sender, EventArgs e)
         {
             minuteurReapparition.Stop();
-            Point nouvellePosition = MoteurJeu.GenererPositionAleatoire(CanvaElement.Width, CanvaElement.Height);
+            Point nouvellePosition = MoteurJeu.GestionCarte.GenererPositionAleatoire(CanvaElement.Width, CanvaElement.Height);
 
             Vie = VieMax;
             EstMort = false;
@@ -213,10 +202,10 @@ namespace Survival_Island.Entites
         {
             Collision nouvelleCollision = new Collision(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
 
-            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.Ile.CollisionRectangle))
+            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.GestionCarte.Ile.CollisionRectangle))
                 return false;
 
-            foreach (Obstacle obstacle in MoteurJeu.Obstacles)
+            foreach (Obstacle obstacle in MoteurJeu.GestionCarte.Obstacles)
             {
                 if (nouvelleCollision.CollisionDevantAvec(obstacle.CollisionRectangle))
                     return false;
@@ -293,7 +282,7 @@ namespace Survival_Island.Entites
             fenetre.barreVieJoueur.Maximum = VieMax;
             fenetre.txtVieJoueur.Text = Vie + "/" + VieMax + " PV";
 
-            fenetre.txtNombreTue.Text = "Ennemis tués : " + NombreTue;
+            fenetre.txtNombreTue.Text = "Ennemis tués : " + NombreCoule;
 
             ActualiserMenuAmelioration();
         }

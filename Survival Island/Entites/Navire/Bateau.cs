@@ -42,10 +42,9 @@ namespace Survival_Island.Entites.Navire
         protected int angleBoulets;
         protected int espacementBoulets;
 
-        private SoundPlayer soundPlayerTire;
         private Brush couleurBoulet;
 
-        protected Bateau(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, Brush couleurBoulet, bool barreVie, int vieMax, int degats, double vitesse, double tempsRechargementCanon) : base(carte, false, barreVie, vieMax)
+        protected Bateau(MoteurJeu moteurJeu, BitmapImage bitmapBateau, Brush couleurBoulet, bool barreVie, int vieMax, int degats, double vitesse, double tempsRechargementCanon) : base(moteurJeu.Carte, false, barreVie, vieMax)
         {
             MoteurJeu = moteurJeu;
 
@@ -61,8 +60,6 @@ namespace Survival_Island.Entites.Navire
             ((Image)CanvaElement).Source = bitmapBateau;
             CanvaElement.Width = Constante.LARGEUR_NAVIRE;
             CanvaElement.Height = Constante.HAUTEUR_NAVIRE;
-
-            soundPlayerTire = moteurJeu.SoundPlayerTire;
 
             TailleBoulets = Constante.TAILLE_BOULET_INIT;
 
@@ -158,7 +155,7 @@ namespace Survival_Island.Entites.Navire
                 return;
             TempsDernierTir = TempsRechargementCanon;
 
-            soundPlayerTire.Play();
+            MoteurJeu.GestionSons.SoundPlayerTire.Play();
 
             double espaceBoulets = angleBoulets / (nombreBouletsParShoot);
 

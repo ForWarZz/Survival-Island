@@ -12,9 +12,9 @@
   <ItemGroup>
     <None Remove="Images\BateauRouge.png" />
     <None Remove="Images\BateauVert.png" />
-    <None Remove="images\bateaux\bateau_bleu.png" />
-    <None Remove="images\bateaux\bateau_ennemi.png" />
-    <None Remove="images\bateaux\bateau_jaune.png" />
+    <None Remove="Images\Bateaux\bateau_bleu.png" />
+    <None Remove="Images\Bateaux\bateau_ennemi.png" />
+    <None Remove="Images\Bateaux\bateau_jaune.png" />
     <None Remove="Images\bateau_rouge.png" />
     <None Remove="Images\bateau_vert.png" />
     <None Remove="Images\boulet_canon.png" />
@@ -35,19 +35,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\bateaux\bateau_bleu.png">
+    <Resource Include="Images\Bateaux\Joueur\bateau_1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\bateaux\bateau_ennemi.png">
+    <Resource Include="Images\Bateaux\bateau_ennemi.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="images\bateaux\bateau_jaune.png">
+    <Resource Include="Images\Bateaux\Joueur\bateau_2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\Bateaux\bateau_rouge.png">
+    <Resource Include="Images\Bateaux\Joueur\bateau_3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\Bateaux\bateau_vert.png">
+    <Resource Include="Images\Bateaux\Joueur\bateau_4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\CarteJeu\Iles\ile.png">

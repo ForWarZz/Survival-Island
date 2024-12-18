@@ -23,17 +23,17 @@ namespace Survival_Island
             InitializeComponent();
 
             joueur = moteurJeu.Joueur;
-            images = joueur.Images;
+            images = moteurJeu.GestionImages.BateauxJoueur;
             imageActuelle = (BitmapImage)((Image)joueur.CanvaElement).Source;
             imgBateau.Source = imageActuelle;
             numBateau = moteurJeu.NumBateau;
-
         }
         
         private void ChangerBateau()
         {
             imageActuelle = images[numBateau];
             imgBateau.Source = imageActuelle;
+
             ((Image)joueur.CanvaElement).Source = imageActuelle;
         }
 
@@ -55,7 +55,7 @@ namespace Survival_Island
 
         private void btnValider_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            DialogResult = true;
         }
     }
 }

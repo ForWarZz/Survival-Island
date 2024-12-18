@@ -15,10 +15,10 @@ namespace Survival_Island
     public class GestionVagues
     {
         private MoteurJeu moteurJeu;
+        private GestionCarte gestionCarte;
         private Ile ile;
 
         private Canvas carte;
-        private BitmapImage bitmapEnnemi;
 
         public List<Ennemi> EnnemisActuels { get; set; }
 
@@ -28,13 +28,13 @@ namespace Survival_Island
         private int numeroVague;
         private bool vagueEnCours;
 
-        public GestionVagues(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapEnnemi)
+        public GestionVagues(Canvas carte, MoteurJeu moteurJeu)
         {
             this.moteurJeu = moteurJeu;
-            this.carte = carte;
-            this.bitmapEnnemi = bitmapEnnemi;
+            gestionCarte = moteurJeu.GestionCarte;
 
-            ile = moteurJeu.Ile;
+            this.carte = carte;
+            ile = gestionCarte.Ile;
 
             EnnemisActuels = new List<Ennemi>();
             Secondes = Constante.TEMPS_ENTRE_VAGUE;
@@ -112,23 +112,21 @@ namespace Survival_Island
             for (int i = 0; i < nombreEnnemis; i++)
             {
                 Ennemi ennemi = new Ennemi(
-                        carte,
                         moteurJeu,
-                        bitmapEnnemi,
                         vie,
                         degats,
                         vitesse,
                         rechargementCanon
                 );
 
-                Point position = moteurJeu.GenererPositionAleatoire(ennemi.CanvaElement.Width, ennemi.CanvaElement.Height, 0, Constante.MARGE_APPARITION_ENNEMI);
+                Point position = gestionCarte.GenererPositionAleatoire(ennemi.CanvaElement.Width, ennemi.CanvaElement.Height, 0, Constante.MARGE_APPARITION_ENNEMI);
 
                 EnnemisActuels.Add(ennemi);
                 ennemi.Apparaitre(position);
 
                 Point cible = CalculPointCibleIle(ennemi.Centre);
 
-                ennemi.DefinirCible(cible, moteurJeu.Ile.Centre);
+                ennemi.DefinirCible(cible, ile.Centre);
                 ennemi.Deplacement = true;
             }
         }

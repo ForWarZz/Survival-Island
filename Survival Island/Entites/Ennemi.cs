@@ -18,8 +18,8 @@ namespace Survival_Island.Entites
         private bool joueurDansRayon;
         private Joueur joueur;
 
-        public Ennemi(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, int vieMax, int degats, double vitesse, double tempsRechargementCanon) :
-            base(carte, moteurJeu, bitmapBateau, Brushes.Red, true, vieMax, degats, vitesse, tempsRechargementCanon)
+        public Ennemi(MoteurJeu moteurJeu, int vieMax, int degats, double vitesse, double tempsRechargementCanon) :
+            base(moteurJeu, moteurJeu.GestionImages.BateauEnnemi, Brushes.Red, true, vieMax, degats, vitesse, tempsRechargementCanon)
         {
             joueurDansRayon = false;
             joueur = MoteurJeu.Joueur;
@@ -63,7 +63,7 @@ namespace Survival_Island.Entites
         {
             Collision nouvelleCollision = new Collision(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
 
-            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.Ile.CollisionRectangle))
+            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.GestionCarte.Ile.CollisionRectangle))
                 return false;
 
             if (nouvelleCollision.EnCollisionAvec(MoteurJeu.Joueur.CollisionRectangle))

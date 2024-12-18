@@ -17,31 +17,27 @@ namespace Survival_Island
     public class MoteurJeu
     {
         public MainWindow Fenetre { get; }
+        public Canvas Carte { get; }
+
         public bool EstPause { get; private set; }
-        public bool PauseActive { get; private set; }
 
-        private Canvas carte;
-        private Image[] mer;
-
-        private BitmapImage bitmapMer, bitmapTresor, bitmapBateau, bitmapBateauEnnemi;
-        private BitmapImage[] bitmapRochers;
 
         private DispatcherTimer objetBonusMinuteur;
 
         public Joueur Joueur { get; private set; }
-        public Ile Ile { get; private set; }
-        public GestionVagues GestionVagues { get; set; }
+
+        public GestionImages GestionImages { get; }
+        public GestionSons GestionSons { get; }
+
+        public GestionVagues GestionVagues { get; private set; }
+        public GestionCarte GestionCarte { get; private set; }
 
         private Random random;
 
         public List<Boulet> Boulets { get; }
-        public Obstacle[] Obstacles { get; }
         public List<ObjetRecompense> ObjetsBonus { get; }
 
         public int NumBateau { get; set; }
-
-        public MediaPlayer MediaPlayerMusique { get; private set; }
-        public SoundPlayer SoundPlayerTire { get; private set; }
         
         private DateTime miseAJourTemps;
 
@@ -49,134 +45,49 @@ namespace Survival_Island
         {
             Fenetre = fenetre;
 
-            carte = fenetre.carte;
+            Carte = fenetre.carte;
             random = new Random();
 
             NumBateau = 0;
 
             Boulets = new List<Boulet>();
             ObjetsBonus = new List<ObjetRecompense>();
-            Obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
 
-            InitSons();
-            InitBitmaps();
-            InitCarte();
+            GestionImages = new GestionImages();
+            GestionCarte = new GestionCarte(this);
 
-            Joueur = new Joueur(carte, this, bitmapBateau);
+            GestionSons = new GestionSons();
+
+            Joueur = new Joueur(this);
         }
 
         public void InitJeu()
         {
-            InitIle();
-            InitGestionnaireVague();
+            GestionCarte.InitIle();
 
-            InitRochers();
+            GestionVagues = new GestionVagues(Carte, this);
+            GestionCarte.InitRochers();
+
             InitJoueur();
 
             InitBonusMinuteur();
             InitBoucleJeu();
 
             AfficherHUD(true);
-        }
 
-        private void InitSons()
-        {
-            MediaPlayerMusique = new MediaPlayer();
-
-            MediaPlayerMusique.Open(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Chemin.MUSIQUE_FOND)));
-            MediaPlayerMusique.Volume = 0.2;
-            MediaPlayerMusique.MediaEnded += (sender, e) => MediaPlayerMusique.Position = TimeSpan.Zero;
-            MediaPlayerMusique.Play();
-
-            SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
-        }
-
-        private void InitBitmaps()
-        {
-            bitmapMer = new BitmapImage(new Uri(Chemin.IMAGE_MER));
-            bitmapRochers = [
-                new BitmapImage(new Uri(Chemin.IMAGE_ROCHER1)),
-                new BitmapImage(new Uri(Chemin.IMAGE_ROCHER2)),
-                new BitmapImage(new Uri(Chemin.IMAGE_ROCHER3)),
-            ];
-
-            bitmapTresor = new BitmapImage(new Uri(Chemin.IMAGE_TRESOR));
-            bitmapBateau = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ROUGE));
-
-            bitmapBateauEnnemi = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_ENNEMI));
-        }
-
-        private void InitIle()
-        {
-            Ile = new Ile(carte, Fenetre, this);
-            Ile.Apparaitre();
+            GestionVagues.LancerMinuteurVague();
         }
 
         private void InitJoueur()
         {
-            Point position = GenererPositionAleatoire(Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE, 0);
+            Point position = GestionCarte.GenererPositionAleatoire(Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE, 0);
             Joueur.Apparaitre(position);
-        }
-
-        private void InitGestionnaireVague()
-        {
-            GestionVagues = new GestionVagues(carte, this, bitmapBateauEnnemi);
-            GestionVagues.LancerMinuteurVague();
-        }
-
-        private void InitRochers()
-        {
-            for (int i = 0; i < Obstacles.Length; i++)
-            {
-                Image rocher = new Image();
-                BitmapImage randomRocher = bitmapRochers[random.Next(0, bitmapRochers.Length)];
-
-                double angleRotation = random.Next(0, 361);
-                double multiplicateurTaille = Constante.MULTIPLICATEUR_TAILLE_ROCHER + random.NextDouble();
-
-                rocher.Source = randomRocher;
-                rocher.Width = randomRocher.Width * multiplicateurTaille;
-                rocher.Height = randomRocher.Height * multiplicateurTaille;
-                rocher.RenderTransform = new RotateTransform(angleRotation, rocher.Width / 2, rocher.Height / 2);
-
-                Point position = GenererPositionAleatoire(rocher.Width, rocher.Height, angleRotation);
-
-                Obstacle obstacle = new Obstacle(carte, rocher);
-                obstacle.Apparaitre(position);
-
-                Obstacles[i] = obstacle;
-            }
-        }
-
-        private void InitCarte()
-        {
-            mer = new Image[Constante.NOMBRE_CARREAUX_MER];
-            carte.Width = mer.Length * bitmapMer.Width;
-            carte.Height = mer.Length * bitmapMer.Height;
-
-            // Initialisation de la mer en fond
-            for (int i = 0; i < mer.Length; i++)
-            {
-                for (int j = 0; j < mer.Length; j++)
-                {
-                    mer[i] = new Image();
-                    mer[i].Source = bitmapMer;
-                    mer[i].Width = bitmapMer.Width;
-                    mer[i].Height = bitmapMer.Height;
-
-                    // Retire l'effet quadrilage des bords
-                    RenderOptions.SetEdgeMode(mer[i], EdgeMode.Aliased);
-
-                    Canvas.SetLeft(mer[i], j * bitmapMer.Width);
-                    Canvas.SetTop(mer[i], i * bitmapMer.Height);
-
-                    carte.Children.Add(mer[i]);
-                }
-            }
         }
 
         private void InitBoucleJeu()
         {
+            if (EstPause) return;
+
             CompositionTarget.Rendering += Jeu;
         }
 
@@ -236,7 +147,7 @@ namespace Survival_Island
                 int objetLargeur = (int)(Constante.BASE_COFFRE_LARGEUR * multiplicateur);
                 int objetHauteur = (int)(Constante.BASE_COFFRE_HAUTEUR * multiplicateur);
 
-                Point position = GenererPositionAleatoire(objetLargeur, objetHauteur, 0);
+                Point position = GestionCarte.GenererPositionAleatoire(objetLargeur, objetHauteur, 0);
 
                 int valeurExperience = (int)(Constante.BASE_COFFRE_EXPERIENCE * multiplicateur);
 
@@ -247,99 +158,10 @@ namespace Survival_Island
                 }
 
                 ObjetRecompense objet = new ObjetRecompense
-                    (carte, bitmapTresor, objetLargeur, objetHauteur, valeurExperience, valeurVie, Constante.BASE_COFFRE_VIE);
+                    (Carte, GestionImages.Tresor, objetLargeur, objetHauteur, valeurExperience, valeurVie, Constante.BASE_COFFRE_VIE);
                 objet.Apparaitre(position);
                 ObjetsBonus.Add(objet);
             }
-        }
-
-        private bool CheckPositionValide(Collision collision)
-        {
-            if (Ile.EnCollisionAvec(collision))
-            {
-                return false;
-            }
-
-            foreach (Obstacle obstacleDejaPresent in Obstacles)
-            {
-                if (obstacleDejaPresent != null && obstacleDejaPresent.EnCollisionAvec(collision))
-                {
-                    return false;
-                }
-            }
-
-            foreach (ObjetRecompense objetsBonusDejaPresent in ObjetsBonus)
-            {
-                if (objetsBonusDejaPresent != null && objetsBonusDejaPresent.EnCollisionAvec(collision))
-                {
-                    return false;
-                }
-            }
-
-            foreach (Ennemi ennemi in GestionVagues.EnnemisActuels)
-            {
-                if (ennemi.EnCollisionAvec(collision))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        public Point GenererPositionAleatoire(double largeur, double hauteur, double angleRotation = 0, int marge = 0)
-        {
-            if (marge < 0)
-                throw new ArgumentException("La marge doit être positive.");
-
-            if (marge > 0 && (marge > carte.Width || marge > carte.Height))
-                throw new ArgumentException("La marge est plus grande que la taille de la carte.");
-
-            double posX, posY;
-            bool positionValide;
-
-            int carteLargeur = (int)carte.Width;
-            int carteHauteur = (int)carte.Height;
-
-            do
-            {
-                if (marge > 0)
-                {
-                    // Générer la position sur un bord en tenant compte de la marge
-                    int bord = random.Next(0, 4); // 0 = gauche, 1 = droite, 2 = haut, 3 = bas
-
-                    switch (bord)
-                    {
-                        case 0: // Bord gauche
-                            posX = random.Next(0, marge);
-                            posY = random.Next(0, carteHauteur - (int)hauteur);
-                            break;
-                        case 1: // Bord droit
-                            posX = random.Next(carteLargeur - marge, carteLargeur - (int)largeur);
-                            posY = random.Next(0, carteHauteur - (int)hauteur);
-                            break;
-                        case 2: // Bord haut
-                            posX = random.Next(0, carteLargeur - (int)largeur);
-                            posY = random.Next(0, marge);
-                            break;
-                        default: // Bord bas
-                            posX = random.Next(0, carteLargeur - (int)largeur);
-                            posY = random.Next(carteHauteur - marge, carteHauteur - (int)hauteur);
-                            break;
-                    }
-                }
-                else
-                {
-                    posX = random.Next(0, carteLargeur - (int)largeur);
-                    posY = random.Next(0, carteHauteur - (int)hauteur);
-                }
-
-                // Vérifier la validité de la position
-                Collision collision = new Collision(posX, posY, largeur, hauteur, angleRotation);
-                positionValide = CheckPositionValide(collision);
-            } while (!positionValide);
-
-            return new Point(posX, posY);
         }
 
         private void DeplacerBoulets(double deltaTemps)
@@ -358,9 +180,9 @@ namespace Survival_Island
 
                 // Supprimer les boulets qui sortent de la carte
                 if (bouletX < 0 || bouletY < 0 ||
-                    bouletX > carte.Width + boulet.CanvaElement.Width || bouletY > carte.Height + boulet.CanvaElement.Width)
+                    bouletX > Carte.Width + boulet.CanvaElement.Width || bouletY > Carte.Height + boulet.CanvaElement.Width)
                 {
-                    carte.Children.Remove(boulet.CanvaElement);
+                    Carte.Children.Remove(boulet.CanvaElement);
                     Boulets.RemoveAt(i);
                 }
             }
@@ -377,7 +199,7 @@ namespace Survival_Island
                 Boulet boulet = Boulets[i];
 
                 // Collision entre le boulet et les obstacles
-                foreach (Obstacle obstacle in Obstacles)
+                foreach (Obstacle obstacle in GestionCarte.Obstacles)
                 {
                     if (boulet.EnCollisionAvec(obstacle))
                     {
@@ -387,11 +209,11 @@ namespace Survival_Island
                 }
 
                 // Collision boulet avec l'île
-                if (boulet.EnCollisionAvec(Ile))
+                if (boulet.EnCollisionAvec(GestionCarte.Ile))
                 {
                     if (boulet.Tireur is Ennemi)
                     {
-                        Ile.InfligerDegats(boulet.Tireur.Degats);
+                        GestionCarte.Ile.InfligerDegats(boulet.Tireur.Degats);
                     }
 
                     bouletsASupprimer.Add(boulet);
@@ -440,7 +262,7 @@ namespace Survival_Island
                             GestionVagues.EnnemisActuels.RemoveAt(j);
                             GestionVagues.MettreAJour();
 
-                            Joueur.NombreTue++;
+                            Joueur.NombreCoule++;
                             Joueur.MettreAJour();
                         }
 
@@ -466,6 +288,8 @@ namespace Survival_Island
 
             AfficherHUD(false);
 
+            Fenetre.txtNbMorts.Text = Joueur.NombreMort.ToString();
+            Fenetre.txtNbCoules.Text = Joueur.NombreCoule.ToString();
             Fenetre.spMenuFin.Visibility = Visibility.Visible;
         }
 
@@ -491,11 +315,35 @@ namespace Survival_Island
 
         public void Rejouer()
         {
-            carte.Children.Clear();
-            Boulets.Clear();
-            ObjetsBonus.Clear();
+            Carte.Children.Remove(GestionCarte.Ile.CanvaElement);
 
+            for (int i = Boulets.Count - 1; i >= 0; i--)
+            {
+                Boulets[i].Disparaitre();
+                Boulets.RemoveAt(i);
+            }
+
+            for (int i = ObjetsBonus.Count - 1; i >= 0; i--)
+            {
+                ObjetsBonus[i].Disparaitre();
+                ObjetsBonus.RemoveAt(i);
+            }
+
+            for (int i = GestionCarte.Obstacles.Length - 1; i >= 0; i--)
+            {
+                GestionCarte.Obstacles[i].Disparaitre();
+            }
+
+            for (int i = GestionVagues.EnnemisActuels.Count - 1; i >= 0; i--)
+            {
+                GestionVagues.EnnemisActuels[i].Disparaitre();
+                GestionVagues.EnnemisActuels.RemoveAt(i);
+            }
+
+            Joueur = new Joueur(this);
             InitJeu();
+
+            EstPause = false;
         }
 
         private void AfficherHUD(bool afficher)

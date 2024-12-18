@@ -2,7 +2,13 @@
 {
     internal class Constante
     {
+        public const double MUSIQUE_VOLUME = 0.2;
+
+
         public const int NOMBRE_CARREAUX_MER = 32;
+
+        public const int NOMBRE_IMG_BATEAU_JOUEUR = 4;
+        public const string EXT_IMG_BATEAU_JOUEUR = "png";
 
         public const int JOUEUR_VIE_MAX = 100;
         public const int AMELIO_VIE_MAX = 20;
@@ -32,6 +38,8 @@
         public const int AMELIO_VIE_ILE = 1000;
         public const int MARGE_ILE = 800;
 
+        public const int NOMBRE_IMG_ROCHERS = 3;
+        public const string EXT_IMG_ROCHERS = "png";
         public const int NOMBRE_ROCHERS_CARTE = 100;
         public const double MULTIPLICATEUR_TAILLE_ROCHER = 0.5;
 
