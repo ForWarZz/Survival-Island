@@ -73,7 +73,7 @@ namespace Survival_Island
 
         public void InitRochers()
         {
-            Obstacles = new Obstacle[Constante.NOMBRE_IMG_ROCHERS];
+            Obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
 
             for (int i = 0; i < Obstacles.Length; i++)
             {

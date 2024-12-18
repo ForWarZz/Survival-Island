@@ -65,10 +65,12 @@
         public const int MARGE_APPARITION_ENNEMI = 500;
         public const int TOLERANCE_CIBLE_ENNEMI = 50;
 
-        public const int TEMPS_ENTRE_VAGUE = 20;
+        public const double DISTANCE_EVASION = 50.0;
+
+        public const int TEMPS_ENTRE_VAGUE = 5;
 
         public const int VAGUE_MIN_ENNEMI = 1;
-        public const int VAGUE_MAX_ENNEMI = 5;
+        public const int VAGUE_MAX_ENNEMI = 1;
 
         public const int VIE_BASE_ENNEMI = 100;
         public const int MULTIPLICATEUR_VIE_ENNEMI = 2;

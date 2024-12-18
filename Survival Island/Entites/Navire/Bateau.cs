@@ -74,6 +74,9 @@ namespace Survival_Island.Entites.Navire
 
         public virtual void Deplacer(double deltaTemps)
         {
+            if (!Deplacement && VitesseActuelle == 0)
+                return;
+
             if (Deplacement)
                 VitesseActuelle = Math.Min(VitesseActuelle + Constante.BATEAU_ACCELERATION * deltaTemps, VitesseMax); // Accélération progressive jusqu'à la vitesse maximale
             else
@@ -95,11 +98,8 @@ namespace Survival_Island.Entites.Navire
 
         public virtual void ChangerOrientation(Point nouvellePosition)
         {
-            double centreBateauX = PositionX + CanvaElement.Width / 2;
-            double centreBateauY = PositionY + CanvaElement.Height / 2;
-
-            double deltaX = nouvellePosition.X - centreBateauX;
-            double deltaY = nouvellePosition.Y - centreBateauY;
+            double deltaX = nouvellePosition.X - Centre.X;
+            double deltaY = nouvellePosition.Y - Centre.Y;
 
             AngleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
 
