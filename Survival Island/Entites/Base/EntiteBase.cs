@@ -116,6 +116,7 @@ namespace Survival_Island.Entites.Base
             collision = new Collision(position, CanvaElement.Width, CanvaElement.Height, AngleRotation());
 
             Carte.Children.Add(CanvaElement);
+            //Console.WriteLine("DEBUG: Apparition de l'entité: X=" + PositionX + " Y=" + PositionY);
         }
 
         public virtual void Disparaitre()
@@ -124,6 +125,7 @@ namespace Survival_Island.Entites.Base
                 throw new Exception("La carte n'est pas définie");
 
             Carte.Children.Remove(CanvaElement);
+            //Console.WriteLine("DEBUG: Suppression de l'entité");
         }
 
         public double AngleRotation()

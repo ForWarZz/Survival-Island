@@ -32,6 +32,7 @@ namespace Survival_Island
         {
             if (jouer && e.Key == Key.Z)
             {
+                //Console.WriteLine("DEBUG: Z relaché");
                 moteurJeu.Joueur.Deplacement = false;
             }
         }
@@ -39,13 +40,21 @@ namespace Survival_Island
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
             if (jouer && e.Key == Key.Z)
+            {
+                //Console.WriteLine("DEBUG: Z pressé");
                 moteurJeu.Joueur.Deplacement = true;
+            }
 
             if (jouer && e.Key == Key.G)
+            {
+                //Console.WriteLine("DEBUG: Mode triche activé");
                 moteurJeu.Joueur.ModeTriche = true;
+            }
 
             if (jouer && e.Key == Key.Escape)
             {
+                //Console.WriteLine("DEBUG: Menu pause");
+
                 menuAccueil.Visibility = Visibility.Visible;
                 txtPause.Visibility = Visibility.Visible;
 
@@ -60,13 +69,19 @@ namespace Survival_Island
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
+            {
+                //Console.WriteLine("DEBUG: Activer canon joueur");
                 moteurJeu.Joueur.CanonActif = true;
+            }
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
+            {
+                //Console.WriteLine("DEBUG: Désactiver canon joueur");
                 moteurJeu.Joueur.CanonActif = false;
+            }
         }
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)

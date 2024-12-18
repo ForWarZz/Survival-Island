@@ -66,6 +66,8 @@ namespace Survival_Island
 
             if (Secondes <= 0)
             {
+                //Console.WriteLine("DEBUG: Lancement vague n." + numeroVague);
+
                 moteurJeu.Fenetre.txtStatusVague.Text = "Les ennemis arrivent. Défendez votre île !";
 
                 numeroVague++;
