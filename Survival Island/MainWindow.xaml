@@ -166,7 +166,7 @@
                 BorderBrush="#6d5445"
                 Content="Paramètres"
                 FontSize="18"
-                Foreground="White" />
+                Foreground="White" Click="btnOuvrirOptions_Click" />
             <Button
                 x:Name="btnFermerJeu"
                 Height="40"
@@ -177,6 +177,38 @@
                 Content="Retour au bureau"
                 FontSize="18"
                 Foreground="White" />
+        </StackPanel>
+
+        <StackPanel x:Name="spParametres" Background="#33000000" HorizontalAlignment="Center" VerticalAlignment="Center" Width="370" Visibility="Hidden">
+            <Grid Height="70">
+                <Rectangle Fill="#6d5445"/>
+                <TextBlock Text="PARAMETRES" 
+                           FontFamily="Stencil"
+                           FontSize="36"
+                           Foreground="White"
+                           TextAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <Button x:Name="btnAudio" Content="Réglages audio"
+                    Height="40"
+                    Margin="0,30,0,0"
+                    Background="#6d5445"
+                    BorderBrush="#6d5445"
+                    FontSize="18"
+                    Foreground="White" Click="btnAudio_Click"/>
+            <Button x:Name="btnChangeBateau" Content="Changer de bateau"
+                    Height="40"
+                    Margin="0,20,0,0"
+                    Background="#6d5445"
+                    BorderBrush="#6d5445"
+                    FontSize="18"
+                    Foreground="White" Click="btnChangeBateau_Click"/>
+            <Button Content="Retour"
+                    Height="40"
+                    Margin="0,60,0,0"
+                    Background="#6d5445"
+                    BorderBrush="#6d5445"
+                    FontSize="18"
+                    Foreground="White" Click="Button_Click"/>
         </StackPanel>
 
         <Button

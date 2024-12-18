@@ -15,6 +15,7 @@ namespace Survival_Island
         private bool jouer;
         private bool menuActif = false;
         private bool activePause = false;
+        private bool jeu = false;
 
 
         public MediaPlayer mediaPlayerMusique = new MediaPlayer();
@@ -131,6 +132,7 @@ namespace Survival_Island
         {
             menuAccueil.Visibility = Visibility.Hidden;
             jouer = true;
+            jeu = true;
             if (!activePause)
             {
                 moteurJeu.InitJeu();
@@ -142,11 +144,13 @@ namespace Survival_Island
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
         {
+            jeu = false;
             FermerJeu();
         }
 
         private void MenuQuitter_Click(object sender, RoutedEventArgs e)
         {
+            jeu = false;
             FermerJeu();
         }
 
@@ -157,11 +161,10 @@ namespace Survival_Island
             if (result == MessageBoxResult.OK)
                 Application.Current.Shutdown();
         }
-
-        private void MenuSonClick(object sender, RoutedEventArgs e)
+        private void MenuSonAffiche()
         {
             DialogueAudio dialog = new DialogueAudio(moteurJeu, jouer);
-  
+
             bool? result = dialog.ShowDialog();
 
             if (result == false)
@@ -175,11 +178,24 @@ namespace Survival_Island
             }
         }
 
+        private void MenuBateauChange()
+        {
+            if (jeu)
+            {
+                DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
+                bool? result = dialog.ShowDialog();
+                moteurJeu.numBateau = dialog.numBateau;
+            }
+        }
+
+        private void MenuSonClick(object sender, RoutedEventArgs e)
+        {
+            MenuSonAffiche();
+        }
+
         private void MenuChangerBateau_Click(object sender, RoutedEventArgs e)
         {
-            DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
-            bool? result = dialog.ShowDialog();
-            moteurJeu.numBateau = dialog.numBateau;
+            MenuBateauChange();
         }
 
         private void btnVieBateauAmelio_Click(object sender, RoutedEventArgs e)
@@ -216,6 +232,28 @@ namespace Survival_Island
         {
             if (jouer)
                 moteurJeu.Joueur.Deplacement = false;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            spParametres.Visibility = Visibility.Hidden;
+            menuAccueil.Visibility = Visibility.Visible;
+        }
+
+        private void btnOuvrirOptions_Click(object sender, RoutedEventArgs e)
+        {
+            menuAccueil.Visibility = Visibility.Hidden;
+            spParametres.Visibility = Visibility.Visible;
+        }
+
+        private void btnAudio_Click(object sender, RoutedEventArgs e)
+        {
+            MenuSonAffiche();
+        }
+
+        private void btnChangeBateau_Click(object sender, RoutedEventArgs e)
+        {
+            MenuBateauChange();
         }
     }
 }
