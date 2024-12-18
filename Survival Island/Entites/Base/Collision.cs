@@ -10,6 +10,8 @@ namespace Survival_Island.Entites.Base
         public Point[][] Segments { get; }
 
         private Point[] corners;
+
+        // Pour le débogage
         private Polygon? debugPolygon;
 
         public Collision(Rect rect, double angle = 0)
@@ -27,10 +29,10 @@ namespace Survival_Island.Entites.Base
 
             Segments =
             [
-                new Point[] { corners[0], corners[1] },
-                new Point[] { corners[1], corners[2] },
-                new Point[] { corners[2], corners[3] },
-                new Point[] { corners[3], corners[0] }
+                [corners[0], corners[1]],
+                [corners[1], corners[2]],
+                [corners[2], corners[3]],
+                [corners[3], corners[0]]
             ];
         }
 
@@ -116,6 +118,7 @@ namespace Survival_Island.Entites.Base
                    point.Y >= minY && point.Y <= maxY;
         }
 
+        // Fonction de debogugage permettant de visualier la collision box
         public void AfficherCollision(Canvas carte)
         {
             Polygon debugRectangle = new Polygon();

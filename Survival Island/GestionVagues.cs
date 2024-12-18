@@ -28,12 +28,12 @@ namespace Survival_Island
         private int numeroVague;
         private bool vagueEnCours;
 
-        public GestionVagues(Canvas carte, MoteurJeu moteurJeu)
+        public GestionVagues(MoteurJeu moteurJeu)
         {
             this.moteurJeu = moteurJeu;
             gestionCarte = moteurJeu.GestionCarte;
 
-            this.carte = carte;
+            carte = moteurJeu.Carte;
             ile = gestionCarte.Ile;
 
             EnnemisActuels = new List<Ennemi>();

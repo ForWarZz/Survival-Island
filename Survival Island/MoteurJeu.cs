@@ -65,7 +65,7 @@ namespace Survival_Island
         {
             GestionCarte.InitIle();
 
-            GestionVagues = new GestionVagues(Carte, this);
+            GestionVagues = new GestionVagues(this);
             GestionCarte.InitRochers();
 
             InitJoueur();
@@ -263,6 +263,7 @@ namespace Survival_Island
                             GestionVagues.MettreAJour();
 
                             Joueur.NombreCoule++;
+                            Joueur.AjouterExperience(Constante.RECOMPENSE_EXP_ENNEMI_TUE);
                             Joueur.MettreAJour();
                         }
 

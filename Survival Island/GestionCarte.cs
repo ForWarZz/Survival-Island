@@ -99,7 +99,7 @@ namespace Survival_Island
 
         public void InitIle()
         {
-            Ile = new Ile(carte, moteurJeu);
+            Ile = new Ile(moteurJeu);
             Ile.Apparaitre();
         }
 

@@ -31,7 +31,6 @@
                     Margin="30,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Source="/Images/Bateaux/bateau_rouge.png"
                     Stretch="Fill" />
                 <Button x:Name="btnDroite"
                     Width="20"

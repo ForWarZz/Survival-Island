@@ -18,7 +18,7 @@ namespace Survival_Island.Entites
 
         public Ellipse CercleEnnemi;
 
-        public Ile(Canvas carte, MoteurJeu moteurJeu) : base(carte, true, false, Constante.ILE_VIE_MAX)
+        public Ile(MoteurJeu moteurJeu) : base(moteurJeu.Carte, true, false, Constante.ILE_VIE_MAX)
         {
             this.moteurJeu = moteurJeu;
             fenetre = moteurJeu.Fenetre;
