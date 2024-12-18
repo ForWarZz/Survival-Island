@@ -48,7 +48,7 @@ namespace Survival_Island
         public void LancerMinuteurVague()
         {
             minuteurVague.Start();
-            moteurJeu.Fenetre.txtStatusVague.Text = "Allez cherchez des trésors, vous avez " + Secondes + "s !";
+            moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + "s !";
             moteurJeu.Fenetre.txtStatusVague.Visibility = Visibility.Visible;
         }
 
@@ -67,7 +67,7 @@ namespace Survival_Island
         private void LancerVague(object? sender, EventArgs e)
         {
             Secondes--;
-            moteurJeu.Fenetre.txtStatusVague.Text = "Allez cherchez des trésors, vous avez " + Secondes + "s !";
+            moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + "s !";
 
             if (Secondes <= 0)
             {
