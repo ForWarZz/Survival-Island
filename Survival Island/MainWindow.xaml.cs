@@ -110,21 +110,18 @@ namespace Survival_Island
         private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
         {
             moteurJeu.Joueur.nouveauNiveau = false;
+
             if (menuActif)
             {
                 menuActif = false;
                 spAmelio.Visibility = Visibility.Hidden;
                 btnAmeliorations.Content = "Améliorations";
-
-                carte.Focus();
             }
             else
             {
                 menuActif = true;
                 spAmelio.Visibility = Visibility.Visible;
                 btnAmeliorations.Content = "Fermer";
-
-                spAmelio.Focus();
             }
         }
 
