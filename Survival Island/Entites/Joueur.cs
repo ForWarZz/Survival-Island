@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Survival_Island.Entites
@@ -22,54 +23,39 @@ namespace Survival_Island.Entites
         public int PointsAmeliorations { get; set; }
         public bool ModeTriche { get; set; }
 
-        public string ModeBateau { get; set; }
-
         public int niveauClasse;
 
-        private int nombreBouletsParShoot;
-        private int angleBoulets;
-        private int espacementBoulets;
-
-        public float volumeTire;
+        public int NombreTue { get; set; }
+        public int NombreMort { get; set; }
 
         public BitmapImage[] images;
 
-        public SoundPlayer soundPlayerTire;
+        private DispatcherTimer minuteurReapparition;
 
         public bool nouveauNiveau = false;
 
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
-            base(carte, moteurJeu, bitmapImage, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
+            base(carte, moteurJeu, bitmapImage, Brushes.Black, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
         {
             fenetre = moteurJeu.Fenetre;
-            Niveau = 1;
+            Niveau = 0;
             PointsAmeliorations = 0;
             Experience = 0;
             ExperienceMax = Constante.JOUEUR_EXPERIENCE_MAX_N1;
 
+            NombreMort = 0;
+            NombreTue = 0;
 
-            ModeBateau = "classique";
             ModeTriche = false;
-
-            nombreBouletsParShoot = 1;
-
-            espacementBoulets = 0;
-
-            angleBoulets = 0;
 
             niveauClasse = 0;
 
-
-            string cheminSon = "pack://application:,,,/Son/shoot.wav";
-            soundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(cheminSon)).Stream);
-
-
-
-
             InitImages();
+
+            minuteurReapparition = new DispatcherTimer();
+            minuteurReapparition.Interval = Constante.TEMPS_REAPPARITION;
+            minuteurReapparition.Tick += Reapparition;
         }
-
-
 
         public void InitImages()
         {
@@ -79,57 +65,6 @@ namespace Survival_Island.Entites
             BitmapImage bateauV = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
 
             images = [bateauR, bateauB, bateauJ, bateauV];
-        }
-
-        public void TirerBoulet()
-        {
-            double centreBateauX = PositionX + CanvaElement.Width / 2;
-            double centreBateauY = PositionY + CanvaElement.Height / 2;
-
-
-
-            if (TempsDernierTir > 0)
-                return;
-            TempsDernierTir = TempsRechargementCanon;
-
-
-            soundPlayerTire.Play();
-
-
-
-            double espaceBoulets = angleBoulets / (nombreBouletsParShoot);
-
-            double angleOrientation = Math.Atan2(Orientation.Y, Orientation.X);
-
-            double espacementBouletsX = 0;
-            double espacementBouletsY = 0;
-
-            if (espacementBoulets > 0)
-            {
-                // Calcul du décalage en X et Y
-                espacementBouletsX = -Math.Sin(angleOrientation) * espacementBoulets;
-                espacementBouletsY = Math.Cos(angleOrientation) * espacementBoulets;
-            }
-
-
-            // Générer chaque boulet avec une direction légèrement différente
-            for (int i = 0; i < nombreBouletsParShoot; i++)
-            {
-                // Calcul de l'angle pour ce boulet
-                double offsetAngle = (i - (nombreBouletsParShoot ) / 2.0) * (espaceBoulets * Math.PI / 180.0);
-                double angleBoulet = angleOrientation + offsetAngle;
-
-                // Calcul de la direction du boulet
-                Vector directionBoulet = new Vector(Math.Cos(angleBoulet), Math.Sin(angleBoulet));
-
-                // Création et apparition du boulet
-                Boulet boulet = new Boulet(Carte, directionBoulet, this);
-                boulet.Apparaitre(centreBateauX - boulet.CanvaElement.Width / 2    +i * espacementBouletsX,
-                                    centreBateauY - boulet.CanvaElement.Height / 2 +i* espacementBouletsY);
-
-                // Ajouter le boulet au moteur du jeu
-                MoteurJeu.Boulets.Add(boulet);
-            }
         }
 
         private void AfficherMenuClasse()
@@ -163,9 +98,6 @@ namespace Survival_Island.Entites
 
         private void ChoisirClasse(string classe)
         {
-
-            
-
             // Appliquer les modifications en fonction de la classe choisie
             if (Niveau >= 5 && ModeBateau=="classique" && classe!="ignore")
             {
@@ -220,7 +152,7 @@ namespace Survival_Island.Entites
                         this.angleBoulets = 360;
                         this.TempsRechargementCanon = 0.8;
                         this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 10;
-                        this.taille_boulets = 30;
+                        this.TailleBoulets = 30;
 
                     }
 
@@ -228,38 +160,57 @@ namespace Survival_Island.Entites
                 }
             }
 
-
             // Masquer le menu de sélection de classe
             fenetre.menuClasse.Visibility = Visibility.Hidden;
-
         }
 
 
-        public override void Apparaitre(double posX, double posY)
+        public override void Apparaitre(Point position)
         {
-            base.Apparaitre(posX, posY);
-            DeplaceCameraVers(posX, posY);
+            base.Apparaitre(position);
+            DeplaceCameraVers(position);
         }
 
-        public override void Deplacer()
+        public override void PlusDeVie()
         {
+            base.PlusDeVie();
+            minuteurReapparition.Start();
+        }
+
+        private void Reapparition(object? sender, EventArgs e)
+        {
+            minuteurReapparition.Stop();
+            Point nouvellePosition = MoteurJeu.PositionAleatoireValide(CanvaElement.Width, CanvaElement.Height, 0);
+
+            Vie = VieMax;
+            EstMort = false;
+
+            MettreAJour();
+            Apparaitre(nouvellePosition);
+        }
+
+        public override void Deplacer(double deltaTemps)
+        {
+            if (EstMort)
+                return;
+
             double ancienX = PositionX;
             double ancienY = PositionY;
 
-            base.Deplacer();
+            base.Deplacer(deltaTemps);
 
             if (ancienX != PositionX || ancienY != PositionY)
-                DeplaceCameraVers(PositionX, PositionY);
+                DeplaceCameraVers(Position);
         }
 
-        private void DeplaceCameraVers(double positionX, double positionY)
+        private void DeplaceCameraVers(Point position)
         {
             double centreFenetreX = MoteurJeu.Fenetre.ActualWidth / 2;
             double centreFenetreY = MoteurJeu.Fenetre.ActualHeight / 2;
 
             // Calcul de la nouvelle position de la caméra pour centrer le tireur
-            cameraX = positionX - centreFenetreX + CanvaElement.Width / 2;
-            cameraY = positionY - centreFenetreY + CanvaElement.Height / 2;
+            cameraX = position.X - centreFenetreX + CanvaElement.Width / 2;
+            cameraY = position.Y - centreFenetreY + CanvaElement.Height / 2;
 
             // Empêcher la caméra de sortir des limites de la carte
             cameraX = Math.Max(0, Math.Min(cameraX, Carte.Width - MoteurJeu.Fenetre.ActualWidth));
@@ -295,7 +246,7 @@ namespace Survival_Island.Entites
                 AfficherMenuClasse();
             }
             else if (Niveau >= 15 && ModeBateau != "classique" ) {
-                    AfficherMenuClasse();
+                AfficherMenuClasse();
             }
 
             Experience = 0;
@@ -307,6 +258,9 @@ namespace Survival_Island.Entites
             fenetre.barreVieJoueur.Value = Vie;
             fenetre.barreVieJoueur.Maximum = VieMax;
             fenetre.txtVieJoueur.Text = Vie + "/" + VieMax + " PV";
+
+            fenetre.txtNombreTue.Text = "Ennemis tués : " + NombreTue;
+
             ActualiserMenuAmelioration();
         }
 
@@ -337,6 +291,7 @@ namespace Survival_Island.Entites
         public override void MettreAJour()
         {
             base.MettreAJour();
+
             ActualiserHUD();
         }
 

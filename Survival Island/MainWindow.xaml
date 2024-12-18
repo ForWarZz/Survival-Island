@@ -81,6 +81,28 @@
                 Header="Quitter" />
         </Menu>
 
+        <TextBlock
+            x:Name="txtStatusVague"
+            Margin="0,23,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Text="Les ennemies vont arriver. Rapprochez vous de l'île."
+            Visibility="Hidden" />
+
+        <TextBlock
+            x:Name="txtVagueActuelle"
+            Margin="25,23,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Text="Vague actuelle : 1"
+            Visibility="Hidden" />
+        <TextBlock
+            x:Name="txtNombreTue"
+            Margin="0,23,25,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="Hidden"><Run Language="fr-fr" Text="Ennemis tués" /><Run Text=" :" /><Run Text=" 0" /></TextBlock>
+
         <StackPanel
             x:Name="hudJoueur"
             Margin="20"
@@ -248,9 +270,9 @@
                 Width="20"
                 Height="20"
                 Margin="1621,695,100,47"
-                Fill="Red"
                 HorizontalAlignment="Right"
-                VerticalAlignment="Bottom" />
+                VerticalAlignment="Bottom"
+                Fill="Red" />
         </Grid>
         <StackPanel
             x:Name="spAmelio"
@@ -562,6 +584,4 @@
 
         </Grid>
     </Grid>
-
-
 </Window>

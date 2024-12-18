@@ -1,5 +1,5 @@
-﻿using Survival_Island.Entites;
-using Survival_Island.Outils;
+﻿using Survival_Island.Outils;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,13 +18,6 @@ namespace Survival_Island
         private bool activePause = false;
         private bool jeu = false;
 
-
-        public MediaPlayer mediaPlayerMusique = new MediaPlayer();
-
-        public MediaPlayer mediaPlayerSon = new MediaPlayer();
-
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -33,21 +26,25 @@ namespace Survival_Island
             jouer = false;
 
         }
-
-        
         
         private void Pause()
         {
-            // Quand le menu est en pause, cacher le hudjoueur et le bouton menu améliorations
+            // Quand le menu est en pause, cacher le hudjoueur et le bouton menu améliorations etc
             if (jouer)
             {
                 hudJoueur.Visibility = Visibility.Visible;
                 gridBoutonAmelio.Visibility = Visibility.Visible;
+
+                txtNombreTue.Visibility = Visibility.Visible;
+                txtVagueActuelle.Visibility = Visibility.Visible;
             }
             else
             {
                 hudJoueur.Visibility = Visibility.Hidden;
                 gridBoutonAmelio.Visibility = Visibility.Hidden;
+
+                txtNombreTue.Visibility = Visibility.Hidden;
+                txtVagueActuelle.Visibility = Visibility.Hidden;
             }
         }
 
@@ -68,7 +65,6 @@ namespace Survival_Island
 
             if (jouer && e.Key == Key.G)
             {
-                Console.WriteLine("God mod");
                 moteurJeu.Joueur.ModeTriche = true;
             }
             if (jouer && e.Key == Key.Escape)
@@ -78,7 +74,7 @@ namespace Survival_Island
                 menuAccueil.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#50000000");
                 btnJouer.Content = "Retour au jeu";
 
-                jouer = false ;
+                jouer = false;
                 Pause();
                 moteurJeu.Joueur.Deplacement = false;
             }
@@ -87,11 +83,7 @@ namespace Survival_Island
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-            {
                 moteurJeu.Joueur.CanonActif = true;
-
-                
-            }
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -126,7 +118,7 @@ namespace Survival_Island
         }
 
         // Menu accueil
-        
+
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
             menuAccueil.Visibility = Visibility.Hidden;
@@ -168,7 +160,7 @@ namespace Survival_Island
 
             if (result == false)
             {
-                moteurJeu.mediaPlayerMusique.Volume = dialog.SlideMusique.Value;
+                moteurJeu.MediaPlayerMusique.Volume = dialog.SlideMusique.Value;
                 if (jouer)
                 {
                     Console.WriteLine("Ca joue et sa console");
@@ -183,7 +175,7 @@ namespace Survival_Island
             {
                 DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
                 bool? result = dialog.ShowDialog();
-                moteurJeu.numBateau = dialog.numBateau;
+                moteurJeu.NumBateau = dialog.numBateau;
             }
         }
 
