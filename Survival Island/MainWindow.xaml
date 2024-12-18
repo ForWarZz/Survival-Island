@@ -164,9 +164,10 @@
                 Margin="0,20,0,0"
                 Background="#6d5445"
                 BorderBrush="#6d5445"
+                Click="btnOuvrirOptions_Click"
                 Content="Paramètres"
                 FontSize="18"
-                Foreground="White" Click="btnOuvrirOptions_Click" />
+                Foreground="White" />
             <Button
                 x:Name="btnFermerJeu"
                 Height="40"
@@ -179,54 +180,78 @@
                 Foreground="White" />
         </StackPanel>
 
-        <StackPanel x:Name="spParametres" Background="#33000000" HorizontalAlignment="Center" VerticalAlignment="Center" Width="370" Visibility="Hidden">
+        <StackPanel
+            x:Name="spParametres"
+            Width="370"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="#33000000"
+            Visibility="Hidden">
             <Grid Height="70">
-                <Rectangle Fill="#6d5445"/>
-                <TextBlock Text="PARAMETRES" 
-                           FontFamily="Stencil"
-                           FontSize="36"
-                           Foreground="White"
-                           TextAlignment="Center" VerticalAlignment="Center"/>
+                <Rectangle Fill="#6d5445" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="36"
+                    Foreground="White"
+                    Text="PARAMETRES"
+                    TextAlignment="Center" />
             </Grid>
-            <Button x:Name="btnAudio" Content="Réglages audio"
-                    Height="40"
-                    Margin="0,30,0,0"
-                    Background="#6d5445"
-                    BorderBrush="#6d5445"
-                    FontSize="18"
-                    Foreground="White" Click="btnAudio_Click"/>
-            <Button x:Name="btnChangeBateau" Content="Changer de bateau"
-                    Height="40"
-                    Margin="0,20,0,0"
-                    Background="#6d5445"
-                    BorderBrush="#6d5445"
-                    FontSize="18"
-                    Foreground="White" Click="btnChangeBateau_Click"/>
-            <Button Content="Retour"
-                    Height="40"
-                    Margin="0,60,0,0"
-                    Background="#6d5445"
-                    BorderBrush="#6d5445"
-                    FontSize="18"
-                    Foreground="White" Click="Button_Click"/>
+            <Button
+                x:Name="btnAudio"
+                Height="40"
+                Margin="0,30,0,0"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
+                Click="btnAudio_Click"
+                Content="Réglages audio"
+                FontSize="18"
+                Foreground="White" />
+            <Button
+                x:Name="btnChangeBateau"
+                Height="40"
+                Margin="0,20,0,0"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
+                Click="btnChangeBateau_Click"
+                Content="Changer de bateau"
+                FontSize="18"
+                Foreground="White" />
+            <Button
+                Height="40"
+                Margin="0,60,0,0"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
+                Click="Button_Click"
+                Content="Retour"
+                FontSize="18"
+                Foreground="White" />
         </StackPanel>
 
-        <Button
-            x:Name="btnAmeliorations"
-            Width="330"
-            Height="50"
-            Margin="0,0,50,32"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Background="#6d5445"
-            BorderBrush="#6d5445"
-            Click="btnAmeliorations_Click"
-            Content="Améliorations"
-            FontSize="18"
-            Foreground="White"
-            Style="{StaticResource BoutonArrondi}"
-            Visibility="Hidden" />
-
+        <Grid x:Name="gridBoutonAmelio" Visibility="Hidden">
+            <Button
+                x:Name="btnAmeliorations"
+                Width="330"
+                Height="50"
+                Margin="0,0,50,32"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="#6d5445"
+                BorderBrush="#6d5445"
+                Click="btnAmeliorations_Click"
+                Content="Améliorations"
+                FontSize="18"
+                Foreground="White"
+                Style="{StaticResource BoutonArrondi}" />
+            <Ellipse
+                x:Name="ellipseNouveauNiveau"
+                Width="20"
+                Height="20"
+                Margin="1621,695,100,47"
+                Fill="Red"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom" />
+        </Grid>
         <StackPanel
             x:Name="spAmelio"
             Width="330"
@@ -234,7 +259,8 @@
             Margin="0,0,50,87"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            Background="#33000000" Visibility="Hidden">
+            Background="#33000000"
+            Visibility="Hidden">
             <Grid>
                 <Rectangle Height="50" Fill="#6d5445" />
                 <StackPanel>
@@ -248,8 +274,16 @@
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Niveau :" Foreground="White" HorizontalAlignment="Center" Margin="125,0,0,0"/>
-                        <TextBlock x:Name="txtNiveau" Text="" Margin="5,0,0,0" Foreground="White"/>
+                        <TextBlock
+                            Margin="125,0,0,0"
+                            HorizontalAlignment="Center"
+                            Foreground="White"
+                            Text="Niveau :" />
+                        <TextBlock
+                            x:Name="txtNiveau"
+                            Margin="5,0,0,0"
+                            Foreground="White"
+                            Text="" />
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -378,40 +412,111 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel x:Name="spMenuFin" 
-                    HorizontalAlignment="Center"
-                    Background="#33000000" Width="370" VerticalAlignment="Center" Visibility="Hidden">
+        <StackPanel
+            x:Name="spMenuFin"
+            Width="370"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="#33000000"
+            Visibility="Hidden">
             <Grid Margin="0,0,0,20">
-                <Rectangle Height="50" Fill="#6d5445"/>
-                <TextBlock Text="FIN DU JEU" 
-                           FontFamily="Stencil"
-                           FontSize="36"
-                           Foreground="White"
-                           TextAlignment="Center" VerticalAlignment="Center"/>
+                <Rectangle Height="50" Fill="#6d5445" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="36"
+                    Foreground="White"
+                    Text="FIN DU JEU"
+                    TextAlignment="Center" />
             </Grid>
-            <StackPanel Orientation="Horizontal" Height="50" Margin="0,0,0,10">
-                <TextBlock Text="Nombre de vagues survécues : " Margin="25,0,0,0" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="txtNbVagues" Text="" Margin="10,0,0,0"  FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel
+                Height="50"
+                Margin="0,0,0,10"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="25,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text="Nombre de vagues survécues : "
+                    TextAlignment="Center" />
+                <TextBlock
+                    x:Name="txtNbVagues"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text=""
+                    TextAlignment="Center" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="50" Margin="0,0,0,10">
-                <TextBlock Text="Nombre de bateaux coulés : " Margin="25,0,0,0" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="txtNbCoules" Text="" Margin="10,0,0,0"  FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel
+                Height="50"
+                Margin="0,0,0,10"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="25,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text="Nombre de bateaux coulés : "
+                    TextAlignment="Center" />
+                <TextBlock
+                    x:Name="txtNbCoules"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text=""
+                    TextAlignment="Center" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="50" Margin="0,0,0,50">
-                <TextBlock Text="Nombre de morts : " Margin="25,0,0,0" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock x:Name="txtNbMorts" Text="" Margin="10,0,0,0"  FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel
+                Height="50"
+                Margin="0,0,0,50"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="25,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text="Nombre de morts : "
+                    TextAlignment="Center" />
+                <TextBlock
+                    x:Name="txtNbMorts"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text=""
+                    TextAlignment="Center" />
             </StackPanel>
             <StackPanel Margin="0,0,0,10">
-                <TextBlock Text="Voulez-vous rejouer ?" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" Margin="0,0,0,10"/>
-                <Button x:Name="btnRejouer" Content="Rejouer"
-                        Background="#6d5445"
-                        BorderBrush="#6d5445"
-                        Click="btnJouer_Click"
-                        FontSize="18"
-                        Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"/>
+                <TextBlock
+                    Margin="0,0,0,10"
+                    FontFamily="Stencil"
+                    FontSize="18"
+                    Foreground="#FF3C2C23"
+                    Text="Voulez-vous rejouer ?"
+                    TextAlignment="Center" />
+                <Button
+                    x:Name="btnRejouer"
+                    Width="100"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="#6d5445"
+                    BorderBrush="#6d5445"
+                    Click="btnJouer_Click"
+                    Content="Rejouer"
+                    FontSize="18"
+                    Foreground="White" />
             </StackPanel>
         </StackPanel>
-        
+
         <Grid
             x:Name="menuClasse"
             Background="Gray"

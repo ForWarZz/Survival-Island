@@ -36,11 +36,13 @@ namespace Survival_Island.Entites
 
         public SoundPlayer soundPlayerTire;
 
+        public bool nouveauNiveau = false;
+
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
             base(carte, moteurJeu, bitmapImage, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
         {
             fenetre = moteurJeu.Fenetre;
-            Niveau = 0;
+            Niveau = 1;
             PointsAmeliorations = 0;
             Experience = 0;
             ExperienceMax = Constante.JOUEUR_EXPERIENCE_MAX_N1;
@@ -283,6 +285,7 @@ namespace Survival_Island.Entites
 
         private void NiveauSuivant()
         {
+            nouveauNiveau = true;
             PointsAmeliorations++;
 
             Niveau += 1;
@@ -320,6 +323,15 @@ namespace Survival_Island.Entites
             fenetre.txtVitesseJoueurAmelio.Text = VitesseMax.ToString();
 
             fenetre.txtNiveau.Text = Niveau.ToString();
+
+            if (nouveauNiveau && !fenetre.menuActif)
+            {
+                fenetre.ellipseNouveauNiveau.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                fenetre.ellipseNouveauNiveau.Visibility = Visibility.Hidden;
+            }
         }
 
         public override void MettreAJour()

@@ -14,7 +14,7 @@ namespace Survival_Island
         private MoteurJeu moteurJeu;
 
         private bool jouer;
-        private bool menuActif = false;
+        public bool menuActif = false;
         private bool activePause = false;
         private bool jeu = false;
 
@@ -42,12 +42,12 @@ namespace Survival_Island
             if (jouer)
             {
                 hudJoueur.Visibility = Visibility.Visible;
-                btnAmeliorations.Visibility = Visibility.Visible;
+                gridBoutonAmelio.Visibility = Visibility.Visible;
             }
             else
             {
                 hudJoueur.Visibility = Visibility.Hidden;
-                btnAmeliorations.Visibility = Visibility.Hidden;
+                gridBoutonAmelio.Visibility = Visibility.Hidden;
             }
         }
 
@@ -109,6 +109,7 @@ namespace Survival_Island
         // Gestions du menu d'amélioration
         private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
         {
+            moteurJeu.Joueur.nouveauNiveau = false;
             if (menuActif)
             {
                 menuActif = false;
