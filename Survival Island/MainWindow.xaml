@@ -537,10 +537,9 @@
                     VerticalAlignment="Center"
                     Background="#6d5445"
                     BorderBrush="#6d5445"
-                    Click="btnJouer_Click"
                     Content="Rejouer"
                     FontSize="18"
-                    Foreground="White" />
+                    Foreground="White" Click="btnRejouer_Click" />
             </StackPanel>
         </StackPanel>
 

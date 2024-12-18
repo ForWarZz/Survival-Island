@@ -222,5 +222,11 @@ namespace Survival_Island
         {
             MenuBateauChange();
         }
+
+        private void btnRejouer_Click(object sender, RoutedEventArgs e)
+        {
+            spMenuFin.Visibility = Visibility.Hidden;
+            moteurJeu.Rejouer();
+        }
     }
 }

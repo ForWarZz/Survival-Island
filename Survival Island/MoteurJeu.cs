@@ -491,8 +491,6 @@ namespace Survival_Island
 
         public void Rejouer()
         {
-            Fenetre.spMenuFin.Visibility = Visibility.Hidden;
-
             carte.Children.Clear();
             Boulets.Clear();
             ObjetsBonus.Clear();
