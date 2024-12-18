@@ -1,4 +1,5 @@
-﻿using Survival_Island.Outils;
+﻿using Survival_Island.Entites;
+using Survival_Island.Outils;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;

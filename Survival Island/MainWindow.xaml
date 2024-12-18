@@ -377,6 +377,41 @@
                     Style="{StaticResource BoutonRond}" />
             </StackPanel>
         </StackPanel>
+
+        <StackPanel x:Name="spMenuFin" 
+                    HorizontalAlignment="Center"
+                    Background="#33000000" Width="370" VerticalAlignment="Center" Visibility="Hidden">
+            <Grid Margin="0,0,0,20">
+                <Rectangle Height="50" Fill="#6d5445"/>
+                <TextBlock Text="FIN DU JEU" 
+                           FontFamily="Stencil"
+                           FontSize="36"
+                           Foreground="White"
+                           TextAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Height="50" Margin="0,0,0,10">
+                <TextBlock Text="Nombre de vagues survécues : " Margin="25,0,0,0" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtNbVagues" Text="" Margin="10,0,0,0"  FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="50" Margin="0,0,0,10">
+                <TextBlock Text="Nombre de bateaux coulés : " Margin="25,0,0,0" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtNbCoules" Text="" Margin="10,0,0,0"  FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="50" Margin="0,0,0,50">
+                <TextBlock Text="Nombre de morts : " Margin="25,0,0,0" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtNbMorts" Text="" Margin="10,0,0,0"  FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Voulez-vous rejouer ?" FontSize="18" FontFamily="Stencil" Foreground="#FF3C2C23" TextAlignment="Center" Margin="0,0,0,10"/>
+                <Button x:Name="btnRejouer" Content="Rejouer"
+                        Background="#6d5445"
+                        BorderBrush="#6d5445"
+                        Click="btnJouer_Click"
+                        FontSize="18"
+                        Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"/>
+            </StackPanel>
+        </StackPanel>
+        
         <Grid
             x:Name="menuClasse"
             Background="Gray"
