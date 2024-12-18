@@ -48,7 +48,7 @@ namespace Survival_Island.Entites
             }
             else
             {
-                if (EstProcheDeCible(cibleActuelle) && )
+                if (EstProcheDeCible(cibleActuelle))
                 {
                     ChangerOrientation(orientationFinale);
                     CanonActif = true;
