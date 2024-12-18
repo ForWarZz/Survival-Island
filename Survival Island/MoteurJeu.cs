@@ -427,7 +427,7 @@ namespace Survival_Island
                 }
 
                 // Boulets joueur sur ennemi
-                for (int j = 0; j < gestionVagues.EnnemisActuels.Count; j++)
+                for (int j = gestionVagues.EnnemisActuels.Count - 1; j < 0; j--)
                 {
                     Ennemi ennemi = gestionVagues.EnnemisActuels[j];
                     if (ennemi.EnCollisionAvec(boulet) && boulet.Tireur is Joueur)
