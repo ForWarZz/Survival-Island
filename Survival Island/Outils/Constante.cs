@@ -27,7 +27,7 @@
         public const int ILE_VIE_MAX = 1000;
         public const int AMELIO_VIE_ILE = 1000;
 
-        public const int NOMBRE_ROCHERS_CARTE = 200;
+        public const int NOMBRE_ROCHERS_CARTE = 40;
         public const double MULTIPILICATEUR_TAILLE_ROCHER = 0.5;
 
         public const int TEMPS_ROTATION_NAVIRE = 20;    // Millisecondes
