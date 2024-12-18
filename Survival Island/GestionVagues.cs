@@ -22,7 +22,7 @@ namespace Survival_Island
 
         public List<Ennemi> EnnemisActuels { get; set; }
 
-        private DispatcherTimer minuteurVague;
+        public DispatcherTimer MinuteurVague { get; private set; }
         public int Secondes { get; set; }
 
         private int numeroVague;
@@ -47,21 +47,16 @@ namespace Survival_Island
 
         public void LancerMinuteurVague()
         {
-            minuteurVague.Start();
+            MinuteurVague.Start();
             moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + "s !";
             moteurJeu.Fenetre.txtStatusVague.Visibility = Visibility.Visible;
         }
 
-        public void StopperMinuteurVague()
-        {
-            moteurJeu.Fenetre.txtStatusVague.Visibility = Visibility.Hidden;
-        }
-
         private void InitMinuteur()
         {
-            minuteurVague = new DispatcherTimer();
-            minuteurVague.Interval = TimeSpan.FromSeconds(1);
-            minuteurVague.Tick += LancerVague;
+            MinuteurVague = new DispatcherTimer();
+            MinuteurVague.Interval = TimeSpan.FromSeconds(1);
+            MinuteurVague.Tick += LancerVague;
         }
 
         private void LancerVague(object? sender, EventArgs e)
@@ -78,10 +73,10 @@ namespace Survival_Island
 
                 AjouterVague();
 
-                minuteurVague.Stop();
+                MinuteurVague.Stop();
                 vagueEnCours = true;
 
-                minuteurVague.Stop();
+                MinuteurVague.Stop();
                 Secondes = Constante.TEMPS_ENTRE_VAGUE;
             }
         }
@@ -89,15 +84,16 @@ namespace Survival_Island
         private void AjouterVague()
         {
             // Nombre d'ennemis basé sur le numéro de vague (par ex : vague 1 = 3 ennemis, vague 2 = 5, etc.)
-            int nombreEnnemis = Math.Min(1 + numeroVague, 8);
+            int nombreEnnemis = Math.Min(Constante.VAGUE_MIN_ENNEMI + numeroVague, Constante.VAGUE_MAX_ENNEMI);
 
-            int vieMax = 100 + (numeroVague * 10);
-            int degats = 10 + numeroVague;
-            double tempsRechargement = Math.Max(1.0, 3.0 - (numeroVague * 0.1));
+            int vieMax = Constante.VIE_BASE_ENNEMI + (numeroVague * Constante.MULTIPLICATEUR_VIE_ENNEMI);
+            int degats = Constante.DEGATS_BASE_ENNEMI + numeroVague;
+            double tempsRechargement = Math.Max(
+                Constante.TEMPS_RECHARGEMENT_MIN_ENNEMI, 
+                Constante.TEMPS_RECHARGEMENT_BASE_ENNEMI - (numeroVague * Constante.TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI));
 
 
             AjouterEnnemis(nombreEnnemis, vieMax, degats, Constante.JOUEUR_VITESSE, tempsRechargement);
-            Console.WriteLine($"Vague {numeroVague} : {nombreEnnemis} ennemis ajoutés !");
         }
 
         public void MettreAJour()
@@ -105,10 +101,9 @@ namespace Survival_Island
             if (!vagueEnCours) return;
             if (EnnemisActuels.Count == 0)
             {
-                Console.WriteLine($"Vague {numeroVague} terminée !");
                 vagueEnCours = false;
 
-                minuteurVague.Start();
+                MinuteurVague.Start();
             }
         }
 
@@ -126,7 +121,7 @@ namespace Survival_Island
                         rechargementCanon
                 );
 
-                Point position = moteurJeu.PositionAleatoireValide(ennemi.CanvaElement.Width, ennemi.CanvaElement.Height, 0, Constante.MARGE_APPARITION_ENNEMI);
+                Point position = moteurJeu.GenererPositionAleatoire(ennemi.CanvaElement.Width, ennemi.CanvaElement.Height, 0, Constante.MARGE_APPARITION_ENNEMI);
 
                 EnnemisActuels.Add(ennemi);
                 ennemi.Apparaitre(position);

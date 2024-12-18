@@ -83,25 +83,26 @@
 
         <TextBlock
             x:Name="txtStatusVague"
-            Margin="0,23,0,0"
+            Margin="0,39,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Text="Les ennemies vont arriver. Rapprochez vous de l'île."
-            Visibility="Hidden" />
+            Visibility="Hidden" FontFamily="Stencil" />
 
         <TextBlock
             x:Name="txtVagueActuelle"
-            Margin="25,23,0,0"
+            Margin="25,39,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Text="Vague actuelle : 1"
-            Visibility="Hidden" />
+            Visibility="Hidden" FontFamily="Stencil" FontSize="14" />
+        
         <TextBlock
             x:Name="txtNombreTue"
-            Margin="0,23,25,0"
+            Margin="0,39,25,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Visibility="Hidden"><Run Language="fr-fr" Text="Ennemis tués" /><Run Text=" :" /><Run Text=" 0" /></TextBlock>
+            Visibility="Hidden" FontFamily="Stencil"><Run Language="fr-fr" Text="Ennemis tués" /><Run Text=" :" /><Run Text=" 0" /></TextBlock>
 
         <StackPanel
             x:Name="hudJoueur"
@@ -168,8 +169,9 @@
                 FontFamily="Stencil"
                 FontSize="36"
                 Foreground="White"
-                Text=""
-                TextAlignment="Center" />
+                Text="PAUSE"
+                TextAlignment="Center"
+                Visibility="Hidden" />
 
             <Button
                 x:Name="btnJouer"
@@ -177,11 +179,13 @@
                 Background="#6d5445"
                 BorderBrush="#6d5445"
                 Click="btnJouer_Click"
+                FontFamily="Stencil"
                 Content="Jouer"
                 FontSize="18"
                 Foreground="White" />
             <Button
                 x:Name="btnOuvrirOptions"
+                FontFamily="Stencil"
                 Height="40"
                 Margin="0,20,0,0"
                 Background="#6d5445"
@@ -192,6 +196,7 @@
                 Foreground="White" />
             <Button
                 x:Name="btnFermerJeu"
+                FontFamily="Stencil"
                 Height="40"
                 Margin="0,60,0,0"
                 Background="#6d5445"
@@ -581,7 +586,6 @@
                     Margin="20,20,20,20"
                     Content="Ignore" />
             </StackPanel>
-
         </Grid>
     </Grid>
 </Window>

@@ -14,38 +14,17 @@ namespace Survival_Island
         private MoteurJeu moteurJeu;
 
         private bool jouer;
+        private bool pauseActive;
         public bool menuActif = false;
-        private bool activePause = false;
-        private bool jeu = false;
 
         public MainWindow()
         {
             InitializeComponent();
 
             moteurJeu = new MoteurJeu(this);
+
             jouer = false;
-
-        }
-        
-        private void Pause()
-        {
-            // Quand le menu est en pause, cacher le hudjoueur et le bouton menu améliorations etc
-            if (jouer)
-            {
-                hudJoueur.Visibility = Visibility.Visible;
-                gridBoutonAmelio.Visibility = Visibility.Visible;
-
-                txtNombreTue.Visibility = Visibility.Visible;
-                txtVagueActuelle.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                hudJoueur.Visibility = Visibility.Hidden;
-                gridBoutonAmelio.Visibility = Visibility.Hidden;
-
-                txtNombreTue.Visibility = Visibility.Hidden;
-                txtVagueActuelle.Visibility = Visibility.Hidden;
-            }
+            pauseActive = false;
         }
 
         // Gestion des touches et de la souris
@@ -53,7 +32,6 @@ namespace Survival_Island
         {
             if (jouer && e.Key == Key.Z)
             {
-
                 moteurJeu.Joueur.Deplacement = false;
             }
         }
@@ -64,19 +42,18 @@ namespace Survival_Island
                 moteurJeu.Joueur.Deplacement = true;
 
             if (jouer && e.Key == Key.G)
-            {
                 moteurJeu.Joueur.ModeTriche = true;
-            }
+
             if (jouer && e.Key == Key.Escape)
             {
-
                 menuAccueil.Visibility = Visibility.Visible;
+                txtPause.Visibility = Visibility.Visible;
+
                 menuAccueil.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#50000000");
                 btnJouer.Content = "Retour au jeu";
 
                 jouer = false;
-                Pause();
-                moteurJeu.Joueur.Deplacement = false;
+                moteurJeu.Pause();
             }
         }
 
@@ -101,7 +78,7 @@ namespace Survival_Island
         // Gestions du menu d'amélioration
         private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.Joueur.nouveauNiveau = false;
+            moteurJeu.Joueur.NouveauNiveau = false;
 
             if (menuActif)
             {
@@ -122,26 +99,28 @@ namespace Survival_Island
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
             menuAccueil.Visibility = Visibility.Hidden;
-            jouer = true;
-            jeu = true;
-            if (!activePause)
+
+            if (pauseActive)
+            {
+                menuAccueil.Visibility = Visibility.Hidden;
+                txtPause.Visibility = Visibility.Hidden;
+
+                moteurJeu.Pause();
+            }
+            else
             {
                 moteurJeu.InitJeu();
-                activePause = true;
-                txtPause.Text = "PAUSE";
+                jouer = true;
             }
-            Pause();
         }
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
         {
-            jeu = false;
             FermerJeu();
         }
 
         private void MenuQuitter_Click(object sender, RoutedEventArgs e)
         {
-            jeu = false;
             FermerJeu();
         }
 
@@ -152,10 +131,10 @@ namespace Survival_Island
             if (result == MessageBoxResult.OK)
                 Application.Current.Shutdown();
         }
+
         private void MenuSonAffiche()
         {
             DialogueAudio dialog = new DialogueAudio(moteurJeu, jouer);
-
             bool? result = dialog.ShowDialog();
 
             if (result == false)
@@ -171,12 +150,9 @@ namespace Survival_Island
 
         private void MenuBateauChange()
         {
-            if (jeu)
-            {
-                DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
-                bool? result = dialog.ShowDialog();
-                moteurJeu.NumBateau = dialog.numBateau;
-            }
+            DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
+            bool? result = dialog.ShowDialog();
+            moteurJeu.NumBateau = dialog.numBateau;
         }
 
         private void MenuSonClick(object sender, RoutedEventArgs e)

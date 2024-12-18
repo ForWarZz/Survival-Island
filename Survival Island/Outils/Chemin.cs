@@ -7,7 +7,7 @@
         public const string IMAGE_BATEAU_ROUGE = "pack://application:,,,/Images/Bateaux/bateau_rouge.png";
         public const string IMAGE_BATEAU_VERT = "pack://application:,,,/Images/Bateaux/bateau_vert.png";
 
-        public const string IMAGE_BOULET_CANON = "pack://application:,,,/Images/Bateaux/boulet_canon.png";
+        public const string IMAGE_BATEAU_ENNEMI = "pack://application:,,,/Images/Bateaux/bateau_ennemi.png";
 
         public const string IMAGE_ILE = "pack://application:,,,/Images/CarteJeu/Iles/ile.png";
         public const string IMAGE_ILEC = "pack://application:,,,/Images/CarteJeu/Iles/ile_cassee.png";

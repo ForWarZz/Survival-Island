@@ -21,8 +21,9 @@ namespace Survival_Island
         public DialogueChangerBateau(MoteurJeu moteurJeu)
         {
             InitializeComponent();
-            this.joueur = moteurJeu.Joueur;
-            this.images = joueur.images;
+
+            joueur = moteurJeu.Joueur;
+            images = joueur.Images;
             imageActuelle = (BitmapImage)((Image)joueur.CanvaElement).Source;
             imgBateau.Source = imageActuelle;
             numBateau = moteurJeu.NumBateau;

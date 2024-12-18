@@ -15,9 +15,7 @@ namespace Survival_Island.Entites
         private Point orientationFinale;
         private Point ciblePrincipale;
         private Point cibleActuelle;
-
         private bool joueurDansRayon;
-
         private Joueur joueur;
 
         public Ennemi(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, int vieMax, int degats, double vitesse, double tempsRechargementCanon) :
@@ -31,13 +29,21 @@ namespace Survival_Island.Entites
         {
             ciblePrincipale = position;
             cibleActuelle = position;
-
             this.orientationFinale = orientationFinale;
         }
 
         public override void Deplacer(double deltaTemps)
         {
-            if (cibleActuelle != null)
+            VerifierJoueursDansRayon();
+
+            if (joueurDansRayon)
+            {
+                cibleActuelle = joueur.Centre;
+                ChangerOrientation(joueur.Centre);
+                CanonActif = true;
+            }
+
+            else
             {
                 if (EstProcheDeCible(cibleActuelle))
                 {
@@ -47,11 +53,23 @@ namespace Survival_Island.Entites
                 else
                 {
                     ChangerOrientation(ciblePrincipale);
-
                     base.Deplacer(deltaTemps);
                     MettreAJourPositionVie();
                 }
             }
+        }
+
+        protected override bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
+        {
+            Collision nouvelleCollision = new Collision(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
+
+            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.Ile.CollisionRectangle))
+                return false;
+
+            if (nouvelleCollision.EnCollisionAvec(MoteurJeu.Joueur.CollisionRectangle))
+                return false;
+
+            return true;
         }
 
         public void VerifierJoueursDansRayon()
@@ -61,7 +79,6 @@ namespace Survival_Island.Entites
             if (DistanceAvec(joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
             {
                 joueurDansRayon = true;
-                cibleActuelle = joueur.Centre;
                 return;
             }
 
@@ -74,7 +91,7 @@ namespace Survival_Island.Entites
         private bool EstProcheDeCible(Point position)
         {
             double distance = DistanceAvec(position);
-            return distance <= 50;
+            return distance <= Constante.TOLERANCE_CIBLE_ENNEMI;
         }
 
         private double DistanceAvec(Point position)
@@ -82,4 +99,5 @@ namespace Survival_Island.Entites
             return Math.Sqrt(Math.Pow(PositionX - position.X, 2) + Math.Pow(PositionY - position.Y, 2));
         }
     }
+
 }

@@ -112,27 +112,7 @@ namespace Survival_Island.Entites.Navire
             }
         }
 
-        protected bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
-        {
-            Collision nouvelleCollision = new Collision(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
-/*
-            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.Ile.CollisionRectangle))
-                return false;
-
-            foreach (Obstacle obstacle in MoteurJeu.Obstacles)
-            {
-                if (nouvelleCollision.CollisionDevantAvec(obstacle.CollisionRectangle))
-                    return false;
-            }
-
-            foreach (ObjetRecompense objetBonus in MoteurJeu.ObjetsBonus)
-            {
-                if (nouvelleCollision.CollisionDevantAvec(objetBonus.CollisionRectangle))
-                    return false;
-            }*/
-
-            return true;
-        }
+        protected abstract bool PeutAllerVers(double nouvellePosX, double nouvellePosY);
 
         private void AnimationRotation(object? sender, EventArgs e)
         {

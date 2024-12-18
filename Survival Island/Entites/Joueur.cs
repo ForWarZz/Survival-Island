@@ -1,4 +1,6 @@
-﻿using Survival_Island.Entites.Navire;
+﻿using Survival_Island.Entites.Base;
+using Survival_Island.Entites.Navire;
+using Survival_Island.Entites.Objets;
 using Survival_Island.Outils;
 using System.Media;
 using System.Security.Cryptography;
@@ -23,16 +25,15 @@ namespace Survival_Island.Entites
         public int PointsAmeliorations { get; set; }
         public bool ModeTriche { get; set; }
 
-        public int niveauClasse;
+        public int NiveauClasse { get; set; }
+        public bool NouveauNiveau { get; set; }
 
         public int NombreTue { get; set; }
         public int NombreMort { get; set; }
 
-        public BitmapImage[] images;
+        public BitmapImage[] Images { get; private set; }
 
         private DispatcherTimer minuteurReapparition;
-
-        public bool nouveauNiveau = false;
 
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
             base(carte, moteurJeu, bitmapImage, Brushes.Black, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
@@ -48,13 +49,11 @@ namespace Survival_Island.Entites
 
             ModeTriche = false;
 
-            niveauClasse = 0;
+            NiveauClasse = 0;
+            NouveauNiveau = false;
 
             InitImages();
-
-            minuteurReapparition = new DispatcherTimer();
-            minuteurReapparition.Interval = Constante.TEMPS_REAPPARITION;
-            minuteurReapparition.Tick += Reapparition;
+            InitReapparitionMinuteur();
         }
 
         public void InitImages()
@@ -64,7 +63,14 @@ namespace Survival_Island.Entites
             BitmapImage bateauJ = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_JAUNE));
             BitmapImage bateauV = new BitmapImage(new Uri(Chemin.IMAGE_BATEAU_VERT));
 
-            images = [bateauR, bateauB, bateauJ, bateauV];
+            Images = [bateauR, bateauB, bateauJ, bateauV];
+        }
+
+        private void InitReapparitionMinuteur()
+        {
+            minuteurReapparition = new DispatcherTimer();
+            minuteurReapparition.Interval = Constante.TEMPS_REAPPARITION;
+            minuteurReapparition.Tick += Reapparition;
         }
 
         private void AfficherMenuClasse()
@@ -128,7 +134,7 @@ namespace Survival_Island.Entites
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
 
                 }
-                this.niveauClasse = 1;
+                this.NiveauClasse = 1;
             }
 
             else if (Niveau >= 15 && classe != "ignore") {
@@ -156,7 +162,7 @@ namespace Survival_Island.Entites
 
                     }
 
-                    this.niveauClasse = 2;
+                    this.NiveauClasse = 2;
                 }
             }
 
@@ -180,7 +186,7 @@ namespace Survival_Island.Entites
         private void Reapparition(object? sender, EventArgs e)
         {
             minuteurReapparition.Stop();
-            Point nouvellePosition = MoteurJeu.PositionAleatoireValide(CanvaElement.Width, CanvaElement.Height, 0);
+            Point nouvellePosition = MoteurJeu.GenererPositionAleatoire(CanvaElement.Width, CanvaElement.Height);
 
             Vie = VieMax;
             EstMort = false;
@@ -201,6 +207,34 @@ namespace Survival_Island.Entites
 
             if (ancienX != PositionX || ancienY != PositionY)
                 DeplaceCameraVers(Position);
+        }
+
+        protected override bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
+        {
+            Collision nouvelleCollision = new Collision(nouvellePosX, nouvellePosY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
+
+            if (nouvelleCollision.CollisionDevantAvec(MoteurJeu.Ile.CollisionRectangle))
+                return false;
+
+            foreach (Obstacle obstacle in MoteurJeu.Obstacles)
+            {
+                if (nouvelleCollision.CollisionDevantAvec(obstacle.CollisionRectangle))
+                    return false;
+            }
+
+            foreach (ObjetRecompense objetBonus in MoteurJeu.ObjetsBonus)
+            {
+                if (nouvelleCollision.CollisionDevantAvec(objetBonus.CollisionRectangle))
+                    return false;
+            }
+
+            foreach (Ennemi ennemi in MoteurJeu.GestionVagues.EnnemisActuels)
+            {
+                if (nouvelleCollision.EnCollisionAvec(ennemi.CollisionRectangle)) 
+                    return false;
+            }
+
+            return true;
         }
 
         private void DeplaceCameraVers(Point position)
@@ -236,7 +270,7 @@ namespace Survival_Island.Entites
 
         private void NiveauSuivant()
         {
-            nouveauNiveau = true;
+            NouveauNiveau = true;
             PointsAmeliorations++;
 
             Niveau += 1;
@@ -278,7 +312,7 @@ namespace Survival_Island.Entites
 
             fenetre.txtNiveau.Text = Niveau.ToString();
 
-            if (nouveauNiveau && !fenetre.menuActif)
+            if (NouveauNiveau && !fenetre.menuActif)
             {
                 fenetre.ellipseNouveauNiveau.Visibility = Visibility.Visible;
             }
@@ -308,7 +342,7 @@ namespace Survival_Island.Entites
         {
             if (PointsAmeliorations > 0)
             {
-                VitesseMax = Math.Round(VitesseMax + Constante.AMELIO_VITESSE,1);
+                VitesseMax = Math.Round(VitesseMax + Constante.AMELIO_VITESSE, 1);
                 PointsAmeliorations--;
                 MettreAJour();
             }

@@ -74,8 +74,7 @@ namespace Survival_Island.Entites
 
         public override void PlusDeVie()
         {
-            // Coder perdu
-            moteurJeu.JeuTermine = true;
+            moteurJeu.TerminerJeu();
         }
 
         private void ActualiserHUD()
@@ -90,7 +89,7 @@ namespace Survival_Island.Entites
 
         private void ActualiserMenuAmelioration()
         {
-            fenetre.txtVieIleAmelio.Text = Vie.ToString();
+            fenetre.txtVieIleAmelio.Text = VieMax.ToString();
         }
 
         public override void MettreAJour()
