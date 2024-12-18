@@ -25,7 +25,7 @@ namespace Survival_Island
             this.images = joueur.images;
             imageActuelle = (BitmapImage)((Image)joueur.CanvaElement).Source;
             imgBateau.Source = imageActuelle;
-            numBateau = moteurJeu.numBateau;
+            numBateau = moteurJeu.NumBateau;
 
         }
         

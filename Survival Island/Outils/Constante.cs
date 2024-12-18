@@ -6,14 +6,18 @@
 
         public const int JOUEUR_VIE_MAX = 100;
         public const int AMELIO_VIE_MAX = 20;
-        public const int JOUEUR_VITESSE = 4;
-        public const int AMELIO_VITESSE_MAX = 8;
+
+        public const int JOUEUR_VITESSE = 300;
+        public const int AMELIO_VITESSE_MAX = 550;
         public const double AMELIO_VITESSE = 0.2;
+
         public const int JOUEUR_DEGATS = 20;
         public const int AMELIO_DEGATS = 2;
-        public const double JOUEUR_RECHARGEMENT_CANON = 1;
 
-        public const double BATEAU_ACCELERATION = 0.1;
+        public const double JOUEUR_RECHARGEMENT_CANON = 1;
+        public static readonly TimeSpan TEMPS_REAPPARITION = TimeSpan.FromSeconds(5);
+
+        public const double BATEAU_ACCELERATION = 200;
 
         public const int JOUEUR_EXPERIENCE_MAX_N1 = 100;
         public const double MULTIPLICATEUR_NIVEAU = 1.5;
@@ -21,13 +25,14 @@
         public const int LARGEUR_NAVIRE = 50;
         public const int HAUTEUR_NAVIRE = 100;
 
-        public const int VITESSE_BOULET = 10;
+        public const int VITESSE_BOULET = 500;
         public const int TAILLE_BOULET_INIT = 10;
 
         public const int ILE_VIE_MAX = 1000;
         public const int AMELIO_VIE_ILE = 1000;
+        public const int MARGE_ILE = 800;
 
-        public const int NOMBRE_ROCHERS_CARTE = 40;
+        public const int NOMBRE_ROCHERS_CARTE = 100;
         public const double MULTIPILICATEUR_TAILLE_ROCHER = 0.5;
 
         public const int TEMPS_ROTATION_NAVIRE = 20;    // Millisecondes
@@ -47,6 +52,12 @@
 
         public const int HAUTEUR_BARRE_VIE = 10;
 
-        public const int TAILLE_CELLULE_RECHERCHE_CHEMIN = 15;
+        public const int RAYON_DETECTION_JOUEUR = 300;
+        public const int MARGE_APPARITION_ENNEMI = 500;
+
+        public const int TEMPS_ENTRE_VAGUE = 20;
+
+        public const int VAGUE_MIN_ENNEMI = 1;
+        public const int VAGUE_MAX_ENNEMI = 5;
     }
 }

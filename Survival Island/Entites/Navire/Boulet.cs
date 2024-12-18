@@ -12,12 +12,12 @@ namespace Survival_Island.Entites.Navire
         public Vector Direction { get; private set; }
         public Bateau Tireur { get; private set; }
 
-        public Boulet(Canvas carte, Vector direction, Bateau tireur) : base(carte, false)
+        public Boulet(Canvas carte, Vector direction, Bateau tireur, Brush couleurBoulet) : base(carte, false)
         {
             Ellipse bouletEllipse = new Ellipse();
-            bouletEllipse.Width = tireur.taille_boulets;
-            bouletEllipse.Height = tireur.taille_boulets;
-            bouletEllipse.Fill = Brushes.Black;
+            bouletEllipse.Width = tireur.TailleBoulets;
+            bouletEllipse.Height = tireur.TailleBoulets;
+            bouletEllipse.Fill = couleurBoulet;
 
             CanvaElement = bouletEllipse;
 

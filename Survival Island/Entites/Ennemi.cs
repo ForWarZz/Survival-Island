@@ -1,87 +1,85 @@
 ﻿using Survival_Island.Entites.Base;
 using Survival_Island.Entites.Navire;
+using Survival_Island.Entites.Objets;
 using Survival_Island.Outils;
-using Survival_Island.Recherche;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Survival_Island.Entites
 {
     public class Ennemi : Bateau
     {
-        private EntiteBase cible;
+        private Point orientationFinale;
+        private Point ciblePrincipale;
+        private Point cibleActuelle;
 
-        private RechercheChemin rechercheChemin;
+        private bool joueurDansRayon;
 
-        private Stack<Cellule> chemin;
-        private Cellule celluleActuelle;
+        private Joueur joueur;
 
-        private bool cheminEnCoursDeCalcul;
-
-        public Ennemi(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, int vieMax, int degats, double vitesse, double tempsRechargementCanon, EntiteBase cible) : 
-            base(carte, moteurJeu, bitmapBateau, true, vieMax, degats, vitesse, tempsRechargementCanon)
+        public Ennemi(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, int vieMax, int degats, double vitesse, double tempsRechargementCanon) :
+            base(carte, moteurJeu, bitmapBateau, Brushes.Red, true, vieMax, degats, vitesse, tempsRechargementCanon)
         {
-            cheminEnCoursDeCalcul = false;
-            rechercheChemin = moteurJeu.RechercheChemin;
-
-            this.cible = cible;
+            joueurDansRayon = false;
+            joueur = MoteurJeu.Joueur;
         }
 
-        public override async void Apparaitre(double x, double y)
+        public void DefinirCible(Point position, Point orientationFinale)
         {
-            base.Apparaitre(x, y);
+            ciblePrincipale = position;
+            cibleActuelle = position;
 
-            cheminEnCoursDeCalcul = true;
-            double cibleX = cible.PositionX;
-            double cibleY = cible.PositionY;
-
-            // Permet de faire le calcul du chemin sans bloquer le jeu
-            chemin = await Task.Run(() => 
-                        rechercheChemin.TrouverChemin(x, y, cibleX, cibleY));
-
-            cheminEnCoursDeCalcul = false;
-
-            rechercheChemin.AfficherCheminJeu(chemin, Carte);
-            celluleActuelle = chemin.Pop();
+            this.orientationFinale = orientationFinale;
         }
 
-        public override void Deplacer()
+        public override void Deplacer(double deltaTemps)
         {
-            if (cheminEnCoursDeCalcul || chemin == null || chemin.Count == 0)
+            if (cibleActuelle != null)
             {
-                Deplacement = false;
+                if (EstProcheDeCible(cibleActuelle))
+                {
+                    ChangerOrientation(orientationFinale);
+                    CanonActif = true;
+                }
+                else
+                {
+                    ChangerOrientation(ciblePrincipale);
+
+                    base.Deplacer(deltaTemps);
+                    MettreAJourPositionVie();
+                }
+            }
+        }
+
+        public void VerifierJoueursDansRayon()
+        {
+            joueurDansRayon = false;
+
+            if (DistanceAvec(joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
+            {
+                joueurDansRayon = true;
+                cibleActuelle = joueur.Centre;
                 return;
             }
 
-            // Vérifie si on est proche de la cellule actuelle
-            if (EstProcheDeCellule(celluleActuelle))
+            if (!joueurDansRayon)
             {
-                celluleActuelle = chemin.Pop();
-            }
-
-            // Essayer de faire de l'anticipation pour eviter les arrêts ?
-            ChangerOrientation(new Point(celluleActuelle.MondePosX, celluleActuelle.MondePosY));
-            if (EstOrienteVers(celluleActuelle))
-            {
-                base.Deplacer();
-                MettreAJourPositionVie();
+                cibleActuelle = ciblePrincipale;
             }
         }
 
-        private bool EstOrienteVers(Cellule cellule)
+        private bool EstProcheDeCible(Point position)
         {
-            double diffAngle = Math.Abs(AngleCible - AngleActuel);
-            return diffAngle <= Constante.TOLERANCE_ANGLE_ROTATION * 2; // Par exemple, 5-10 degrés
+            double distance = DistanceAvec(position);
+            return distance <= 50;
         }
 
-        private bool EstProcheDeCellule(Cellule cellule)
+        private double DistanceAvec(Point position)
         {
-
-            double distance = Math.Sqrt(Math.Pow(PositionX - cellule.MondePosX, 2) + Math.Pow(PositionY - cellule.MondePosY, 2));
-            return distance <= 60; // Tolérance
+            return Math.Sqrt(Math.Pow(PositionX - position.X, 2) + Math.Pow(PositionY - position.Y, 2));
         }
     }
 }

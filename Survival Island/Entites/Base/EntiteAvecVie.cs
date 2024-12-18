@@ -11,12 +11,14 @@ namespace Survival_Island.Entites.Base
 
         public ProgressBar BarreDeVie { get; private set; }
 
+        public bool EstMort { get; set; }
         private bool barreVieVisible;
 
         public EntiteAvecVie(Canvas carte, bool estStatique, bool barreVieVisible, int vieMax) : base(carte, estStatique)
         {
             VieMax = vieMax;
             Vie = vieMax;
+            EstMort = false;
 
             this.barreVieVisible = barreVieVisible;
         }
@@ -42,9 +44,9 @@ namespace Survival_Island.Entites.Base
             Canvas.SetTop(BarreDeVie, PositionY + CanvaElement.Height);
         }
 
-        public override void Apparaitre(double x, double y)
+        public override void Apparaitre(Point position)
         {
-            base.Apparaitre(x, y);
+            base.Apparaitre(position);
 
             if (barreVieVisible)
             {
@@ -56,7 +58,7 @@ namespace Survival_Island.Entites.Base
                 BarreDeVie.Minimum = 0;
 
                 Carte.Children.Add(BarreDeVie);
-                
+
                 MettreAJourPositionVie();
             }
 
@@ -81,11 +83,17 @@ namespace Survival_Island.Entites.Base
 
             if (Vie <= 0)
             {
-                Disparaitre();
+                PlusDeVie();
                 return true;
             }
 
             return false;
+        }
+
+        public virtual void PlusDeVie()
+        {
+            Disparaitre();
+            EstMort = true;
         }
 
         public virtual void AjouterVie(int vie)

@@ -12,30 +12,32 @@ namespace Survival_Island.Entites.Base
         private Point[] corners;
         private Polygon? debugPolygon;
 
-        public Collision(Rect rect, double angle)
+        public Collision(Rect rect, double angle = 0)
         {
             Point centre = new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
             RotateTransform transformer = new RotateTransform(angle, centre.X, centre.Y);
 
-            corners = [
+            corners =
+            [
                 transformer.Transform(new Point(rect.X, rect.Y)),
                 transformer.Transform(new Point(rect.X + rect.Width, rect.Y)),
                 transformer.Transform(new Point(rect.X + rect.Width, rect.Y + rect.Height)),
                 transformer.Transform(new Point(rect.X, rect.Y + rect.Height))
             ];
 
-            Segments = [
-                [ corners[0], corners[1] ],
-                [ corners[1], corners[2] ],
-                [ corners[2], corners[3] ],
-                [ corners[3], corners[0] ]
+            Segments =
+            [
+                new Point[] { corners[0], corners[1] },
+                new Point[] { corners[1], corners[2] },
+                new Point[] { corners[2], corners[3] },
+                new Point[] { corners[3], corners[0] }
             ];
         }
 
-        public Collision(double posX, double posY, double largeur, double hauteur, double angle) : this(new Rect(posX, posY, largeur, hauteur), angle)
+        public Collision(Point position, double largeur, double hauteur, double angle = 0) : this(new Rect(position.X, position.Y, largeur, hauteur), angle)
         { }
 
-        public Collision(double posX, double posY, double largeur, double hauteur) : this(new Rect(posX, posY, largeur, hauteur), 0)
+        public Collision(double posX, double posY, double largeur, double hauteur, double angle = 0) : this(new Rect(posX, posY, largeur, hauteur), angle)
         { }
 
         private bool LignesIntersectent(Point A1, Point A2, Point B1, Point B2)
@@ -68,7 +70,50 @@ namespace Survival_Island.Entites.Base
                 }
             }
 
+            foreach (Point point in autreRect.corners)
+            {
+                if (PointDansCollision(point))
+                {
+                    return true;
+                }
+            }
+
+            foreach (Point point in corners)
+            {
+                if (autreRect.PointDansCollision(point))
+                {
+                    return true;
+                }
+            }
+
             return false;
+        }
+
+        public bool CollisionDevantAvec(Collision autreRect)
+        {
+            Point[] segmentDevant = Segments[2];
+
+            foreach (Point[] segmentB in autreRect.Segments)
+            {
+                if (LignesIntersectent(segmentDevant[0], segmentDevant[1], segmentB[0], segmentB[1]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool PointDansCollision(Point point)
+        {
+            // Le point doit être à l'intérieur des bornes en X et Y
+            double minX = Math.Min(corners[0].X, Math.Min(corners[1].X, Math.Min(corners[2].X, corners[3].X)));
+            double maxX = Math.Max(corners[0].X, Math.Max(corners[1].X, Math.Max(corners[2].X, corners[3].X)));
+            double minY = Math.Min(corners[0].Y, Math.Min(corners[1].Y, Math.Min(corners[2].Y, corners[3].Y)));
+            double maxY = Math.Max(corners[0].Y, Math.Max(corners[1].Y, Math.Max(corners[2].Y, corners[3].Y)));
+
+            return point.X >= minX && point.X <= maxX &&
+                   point.Y >= minY && point.Y <= maxY;
         }
 
         public void AfficherCollision(Canvas carte)

@@ -1,5 +1,4 @@
-﻿using Survival_Island.Entites;
-using Survival_Island.Outils;
+﻿using Survival_Island.Outils;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,16 +13,8 @@ namespace Survival_Island
         private MoteurJeu moteurJeu;
 
         private bool jouer;
-        public bool menuActif = false;
+        private bool menuActif = false;
         private bool activePause = false;
-        private bool jeu = false;
-
-
-        public MediaPlayer mediaPlayerMusique = new MediaPlayer();
-
-        public MediaPlayer mediaPlayerSon = new MediaPlayer();
-
-
 
         public MainWindow()
         {
@@ -33,21 +24,25 @@ namespace Survival_Island
             jouer = false;
 
         }
-
-        
         
         private void Pause()
         {
-            // Quand le menu est en pause, cacher le hudjoueur et le bouton menu améliorations
+            // Quand le menu est en pause, cacher le hudjoueur et le bouton menu améliorations etc
             if (jouer)
             {
                 hudJoueur.Visibility = Visibility.Visible;
-                gridBoutonAmelio.Visibility = Visibility.Visible;
+                btnAmeliorations.Visibility = Visibility.Visible;
+
+                txtNombreTue.Visibility = Visibility.Visible;
+                txtVagueActuelle.Visibility = Visibility.Visible;
             }
             else
             {
                 hudJoueur.Visibility = Visibility.Hidden;
-                gridBoutonAmelio.Visibility = Visibility.Hidden;
+                btnAmeliorations.Visibility = Visibility.Hidden;
+
+                txtNombreTue.Visibility = Visibility.Hidden;
+                txtVagueActuelle.Visibility = Visibility.Hidden;
             }
         }
 
@@ -68,7 +63,6 @@ namespace Survival_Island
 
             if (jouer && e.Key == Key.G)
             {
-                Console.WriteLine("God mod");
                 moteurJeu.Joueur.ModeTriche = true;
             }
             if (jouer && e.Key == Key.Escape)
@@ -78,7 +72,7 @@ namespace Survival_Island
                 menuAccueil.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#50000000");
                 btnJouer.Content = "Retour au jeu";
 
-                jouer = false ;
+                jouer = false;
                 Pause();
                 moteurJeu.Joueur.Deplacement = false;
             }
@@ -87,11 +81,7 @@ namespace Survival_Island
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (jouer)
-            {
                 moteurJeu.Joueur.CanonActif = true;
-
-                
-            }
         }
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -109,7 +99,6 @@ namespace Survival_Island
         // Gestions du menu d'amélioration
         private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.Joueur.nouveauNiveau = false;
             if (menuActif)
             {
                 menuActif = false;
@@ -134,7 +123,6 @@ namespace Survival_Island
         {
             menuAccueil.Visibility = Visibility.Hidden;
             jouer = true;
-            jeu = true;
             if (!activePause)
             {
                 moteurJeu.InitJeu();
@@ -146,13 +134,11 @@ namespace Survival_Island
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
         {
-            jeu = false;
             FermerJeu();
         }
 
         private void MenuQuitter_Click(object sender, RoutedEventArgs e)
         {
-            jeu = false;
             FermerJeu();
         }
 
@@ -163,15 +149,16 @@ namespace Survival_Island
             if (result == MessageBoxResult.OK)
                 Application.Current.Shutdown();
         }
-        private void MenuSonAffiche()
+
+        private void MenuSonClick(object sender, RoutedEventArgs e)
         {
             DialogueAudio dialog = new DialogueAudio(moteurJeu, jouer);
-
+  
             bool? result = dialog.ShowDialog();
 
             if (result == false)
             {
-                moteurJeu.mediaPlayerMusique.Volume = dialog.SlideMusique.Value;
+                moteurJeu.MediaPlayerMusique.Volume = dialog.SlideMusique.Value;
                 if (jouer)
                 {
                     Console.WriteLine("Ca joue et sa console");
@@ -180,24 +167,11 @@ namespace Survival_Island
             }
         }
 
-        private void MenuBateauChange()
-        {
-            if (jeu)
-            {
-                DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
-                bool? result = dialog.ShowDialog();
-                moteurJeu.numBateau = dialog.numBateau;
-            }
-        }
-
-        private void MenuSonClick(object sender, RoutedEventArgs e)
-        {
-            MenuSonAffiche();
-        }
-
         private void MenuChangerBateau_Click(object sender, RoutedEventArgs e)
         {
-            MenuBateauChange();
+            DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
+            bool? result = dialog.ShowDialog();
+            moteurJeu.NumBateau = dialog.numBateau;
         }
 
         private void btnVieBateauAmelio_Click(object sender, RoutedEventArgs e)
@@ -234,28 +208,6 @@ namespace Survival_Island
         {
             if (jouer)
                 moteurJeu.Joueur.Deplacement = false;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            spParametres.Visibility = Visibility.Hidden;
-            menuAccueil.Visibility = Visibility.Visible;
-        }
-
-        private void btnOuvrirOptions_Click(object sender, RoutedEventArgs e)
-        {
-            menuAccueil.Visibility = Visibility.Hidden;
-            spParametres.Visibility = Visibility.Visible;
-        }
-
-        private void btnAudio_Click(object sender, RoutedEventArgs e)
-        {
-            MenuSonAffiche();
-        }
-
-        private void btnChangeBateau_Click(object sender, RoutedEventArgs e)
-        {
-            MenuBateauChange();
         }
     }
 }

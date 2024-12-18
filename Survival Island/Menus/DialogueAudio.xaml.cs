@@ -19,7 +19,7 @@ namespace Survival_Island
         {
             InitializeComponent();
 
-            this.SlideMusique.Value = moteurJeu.mediaPlayerMusique.Volume;
+            this.SlideMusique.Value = moteurJeu.MediaPlayerMusique.Volume;
 
             if (jeuLance)
             {

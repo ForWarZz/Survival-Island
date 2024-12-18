@@ -58,6 +58,14 @@ namespace Survival_Island.Entites.Base
             }
         }
 
+        public Point Position
+        {
+            get
+            {
+                return new Point(PositionX, PositionY);
+            }
+        }
+
         public Collision CollisionRectangle
         {
             get
@@ -66,6 +74,14 @@ namespace Survival_Island.Entites.Base
                     return collision;
 
                 return new Collision(PositionX, PositionY, CanvaElement.Width, CanvaElement.Height, AngleRotation());
+            }
+        }
+
+        public Point Centre
+        {
+            get
+            {
+                return new Point(PositionX + CanvaElement.Width / 2, PositionY + CanvaElement.Height / 2);
             }
         }
 
@@ -89,16 +105,15 @@ namespace Survival_Island.Entites.Base
             return CollisionRectangle.EnCollisionAvec(new Collision(rect, angle));
         }
 
-        public virtual void Apparaitre(double x, double y)
+        public virtual void Apparaitre(Point position)
         {
             if (Carte == null)
                 throw new Exception("La carte n'est pas définie");
 
-            PositionX = x;
-            PositionY = y;
+            PositionX = position.X;
+            PositionY = position.Y;
 
-            collision = new Collision(x, y, CanvaElement.Width, CanvaElement.Height, AngleRotation());
-            // collision.AfficherCollision(carte);
+            collision = new Collision(position, CanvaElement.Width, CanvaElement.Height, AngleRotation());
 
             Carte.Children.Add(CanvaElement);
         }

@@ -3,7 +3,9 @@ using Survival_Island.Entites.Base;
 using Survival_Island.Entites.Navire;
 using Survival_Island.Entites.Objets;
 using Survival_Island.Outils;
-using Survival_Island.Recherche;
+using System.IO;
+using System.Media;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,6 +17,8 @@ namespace Survival_Island
     public class MoteurJeu
     {
         public MainWindow Fenetre { get; }
+
+        public bool JeuTermine { get; set; }
 
         private Canvas carte;
         private Image[] mer;
@@ -32,14 +36,14 @@ namespace Survival_Island
         public List<ObjetRecompense> ObjetsBonus { get; }
 
         public Ile Ile { get; private set; }
+        private GestionVagues gestionVagues { get; set; }
 
-        public RechercheChemin RechercheChemin { get; private set; }
-        public List<Ennemi> Ennemis { get; }
+        public int NumBateau { get; set; }
 
-        public int numBateau = 0;
-
-        public MediaPlayer mediaPlayerMusique = new MediaPlayer();
-
+        public MediaPlayer MediaPlayerMusique { get; private set; }
+        public SoundPlayer SoundPlayerTire { get; private set; }
+        
+        private DateTime miseAJourTemps;
 
         public MoteurJeu(MainWindow fenetre)
         {
@@ -48,17 +52,13 @@ namespace Survival_Island
             carte = fenetre.carte;
             random = new Random();
 
+            NumBateau = 0;
+
             Boulets = new List<Boulet>();
             ObjetsBonus = new List<ObjetRecompense>();
             Obstacles = new Obstacle[Constante.NOMBRE_ROCHERS_CARTE];
-            Ennemis = new List<Ennemi>();
 
-            string cheminMusique = "Son/MusiqueFond.mp3";
-            mediaPlayerMusique.Open(new Uri(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cheminMusique)));
-            mediaPlayerMusique.Volume = 0.2;
-            mediaPlayerMusique.MediaEnded += (sender, e) => mediaPlayerMusique.Position = TimeSpan.Zero;
-            mediaPlayerMusique.Play();
-
+            InitSons();
             InitBitmaps();
             InitCarte();
         }
@@ -68,17 +68,26 @@ namespace Survival_Island
             InitIle();
             InitRochers();
 
-            
-
-            InitRechercheChemin();
-
             InitJoueur();
-
 
             InitBonusMinuteur();
             InitBoucleJeu();
+
+            gestionVagues = new GestionVagues(carte, this, bitmapBateau);
+            gestionVagues.LancerMinuteurVague();
         }
 
+        private void InitSons()
+        {
+            MediaPlayerMusique = new MediaPlayer();
+
+            MediaPlayerMusique.Open(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Chemin.MUSIQUE_FOND)));
+            MediaPlayerMusique.Volume = 0.2;
+            MediaPlayerMusique.MediaEnded += (sender, e) => MediaPlayerMusique.Position = TimeSpan.Zero;
+            MediaPlayerMusique.Play();
+
+            SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
+        }
 
         private void InitBitmaps()
         {
@@ -101,11 +110,10 @@ namespace Survival_Island
 
         private void InitJoueur()
         {
-            double posX, posY;
-            PositionAleatoireValide(Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE, 0, out posX, out posY);
+            Point position = PositionAleatoireValide(Constante.LARGEUR_NAVIRE, Constante.HAUTEUR_NAVIRE, 0);
 
             Joueur = new Joueur(carte, this, bitmapBateau);
-            Joueur.Apparaitre(100, 100);
+            Joueur.Apparaitre(position);
         }
 
         private void InitRochers()
@@ -123,11 +131,10 @@ namespace Survival_Island
                 rocher.Height = randomRocher.Height * multiplicateurTaille;
                 rocher.RenderTransform = new RotateTransform(angleRotation, rocher.Width / 2, rocher.Height / 2);
 
-                double posX, posY;
-                PositionAleatoireValide(rocher.Width, rocher.Height, angleRotation, out posX, out posY);
+                Point position = PositionAleatoireValide(rocher.Width, rocher.Height, angleRotation);
 
                 Obstacle obstacle = new Obstacle(carte, rocher);
-                obstacle.Apparaitre(posX, posY);
+                obstacle.Apparaitre(position);
 
                 Obstacles[i] = obstacle;
             }
@@ -160,17 +167,6 @@ namespace Survival_Island
             }
         }
 
-        private void InitRechercheChemin()
-        {
-            RechercheChemin = new RechercheChemin((int)carte.Width, (int)carte.Height, Constante.TAILLE_CELLULE_RECHERCHE_CHEMIN);
-            RechercheChemin.Grille.AjouterEntiteDansGrille(Ile);
-
-            foreach (Obstacle obstacle in Obstacles)
-            {
-                RechercheChemin.Grille.AjouterEntiteDansGrille(obstacle);
-            }
-        }
-
         private void InitBoucleJeu()
         {
             CompositionTarget.Rendering += Jeu;
@@ -178,9 +174,27 @@ namespace Survival_Island
 
         private void Jeu(object? sender, EventArgs e)
         {
-            Joueur.Deplacer();
+            DateTime tempsActuel = DateTime.Now;
+            TimeSpan tempsEcoule = tempsActuel - miseAJourTemps;
+            double deltaTemps = tempsEcoule.TotalSeconds;
 
-            DeplacerBoulets();
+            miseAJourTemps = tempsActuel;
+
+            Joueur.Deplacer(deltaTemps);
+
+            foreach (Ennemi ennemi in gestionVagues.EnnemisActuels)
+            {
+                ennemi.Deplacer(deltaTemps);
+                ennemi.VerifierJoueursDansRayon();
+
+                if (ennemi.CanonActif)
+                    ennemi.TirerBoulet();
+
+                if (ennemi.TempsDernierTir > 0)
+                    ennemi.TempsDernierTir -= deltaTemps;
+            }
+
+            DeplacerBoulets(deltaTemps);
             CheckBouletsCollisions();
 
             if (Joueur.CanonActif)
@@ -204,13 +218,12 @@ namespace Survival_Island
             int nbBonusAajouter = Math.Min(randomQuantite, Constante.BORNE_MAX_APPARITION_COFFRE - ObjetsBonus.Count);
 
             for (int i = 0; i < nbBonusAajouter; i++)
-            {                
+            {
                 double multiplicateur = Constante.MULTIPLICATEUR_TAILLE_COFFRE + random.NextDouble();
                 int objetLargeur = (int)(Constante.BASE_COFFRE_LARGEUR * multiplicateur);
                 int objetHauteur = (int)(Constante.BASE_COFFRE_HAUTEUR * multiplicateur);
 
-                double posX, posY;
-                PositionAleatoireValide(objetLargeur, objetHauteur, 0, out posX, out posY);
+                Point position = PositionAleatoireValide(objetLargeur, objetHauteur, 0);
 
                 TypeRecompense typeRecompense = (TypeRecompense)random.Next(0, Enum.GetValues(typeof(TypeRecompense)).Length);
 
@@ -227,10 +240,8 @@ namespace Survival_Island
 
                 ObjetRecompense objet = new ObjetRecompense
                     (carte, bitmapTresor, objetLargeur, objetHauteur, valeurRecompense, typeRecompense, Constante.BASE_COFFRE_VIE, true);
-                objet.Apparaitre(posX, posY);
+                objet.Apparaitre(position);
                 ObjetsBonus.Add(objet);
-
-                RechercheChemin.Grille.AjouterEntiteDansGrille(objet);
             }
         }
 
@@ -260,25 +271,69 @@ namespace Survival_Island
             return true;
         }
 
-        private void PositionAleatoireValide(double largeur, double hauteur, double angleRotation, out double posX, out double posY)
+        public Point PositionAleatoireValide(double largeur, double hauteur, double angleRotation = 0)
         {
-            posX = 0;
-            posY = 0;
-
+            double posX, posY;
             bool positionValide;
 
             do
             {
                 posX = random.Next(0, (int)(carte.Width - largeur));
-                posY = random.Next(0, (int)(carte.Width - hauteur));
+                posY = random.Next(0, (int)(carte.Height - hauteur));
 
                 Collision collision = new Collision(posX, posY, largeur, hauteur, angleRotation);
-
                 positionValide = CheckPositionValide(collision);
             } while (!positionValide);
+
+            return new Point(posX, posY);
         }
 
-        private void DeplacerBoulets()
+        public Point PositionAleatoireValide(double largeur, double hauteur, double angleRotation = 0, int marge = 0)
+        {
+            double posX, posY;
+            bool positionValide;
+
+            if (marge > carte.Width || marge > carte.Height)
+                throw new ArgumentException("La marge est plus grande que la carte.");
+
+            int carteLargeur = (int)carte.Width;
+            int carteHauteur = (int)carte.Height;
+
+            do
+            {
+                // Choisir aléatoirement sur quel bord générer la position (gauche, droite, haut ou bas)
+                int bord = random.Next(0, 4); // 0 = gauche, 1 = droite, 2 = haut, 3 = bas
+
+                if (bord == 0) // Bord gauche
+                {
+                    posX = random.Next(0, marge); // X entre 0 et la marge
+                    posY = random.Next(0, carteHauteur - (int)hauteur); // Y dans toute la hauteur de la carte, mais en tenant compte de la hauteur du bateau
+                }
+                else if (bord == 1) // Bord droit
+                {
+                    posX = random.Next(carteLargeur - marge, carteLargeur - (int)(largeur)); // X entre (taille carte - marge) et la taille de la carte
+                    posY = random.Next(0, carteHauteur - (int)hauteur); // Y dans toute la hauteur de la carte, mais en tenant compte de la hauteur du bateau
+                }
+                else if (bord == 2) // Bord haut
+                {
+                    posX = random.Next(0, carteLargeur - (int)largeur); // X dans toute la largeur de la carte, mais en tenant compte de la largeur du bateau
+                    posY = random.Next(0, marge); // Y entre 0 et la marge
+                }
+                else // Bord bas
+                {
+                    posX = random.Next(0, carteLargeur - (int)largeur); // X dans toute la largeur de la carte, mais en tenant compte de la largeur du bateau
+                    posY = random.Next(carteHauteur - marge, carteHauteur - (int)hauteur); // Y entre (taille carte - marge) et la taille de la carte
+                }
+
+                // Créer un objet de collision avec la position et vérifier sa validité
+                Collision collision = new Collision(posX, posY, largeur, hauteur, angleRotation);
+                positionValide = CheckPositionValide(collision);
+            } while (!positionValide);
+
+            return new Point(posX, posY);
+        }
+
+        private void DeplacerBoulets(double deltaTemps)
         {
             for (int i = 0; i < Boulets.Count; i++)
             {
@@ -286,12 +341,13 @@ namespace Survival_Island
                 double bouletX = Canvas.GetLeft(boulet.CanvaElement);
                 double bouletY = Canvas.GetTop(boulet.CanvaElement);
 
-                bouletX += boulet.Direction.X * Constante.VITESSE_BOULET;
-                bouletY += boulet.Direction.Y * Constante.VITESSE_BOULET;
+                bouletX += boulet.Direction.X * Constante.VITESSE_BOULET * deltaTemps;
+                bouletY += boulet.Direction.Y * Constante.VITESSE_BOULET * deltaTemps;
 
                 Canvas.SetLeft(boulet.CanvaElement, bouletX);
                 Canvas.SetTop(boulet.CanvaElement, bouletY);
 
+                // Supprimer les boulets qui sortent de la carte
                 if (bouletX < 0 || bouletY < 0 ||
                     bouletX > carte.Width + boulet.CanvaElement.Width || bouletY > carte.Height + boulet.CanvaElement.Width)
                 {
@@ -302,7 +358,7 @@ namespace Survival_Island
 
             if (Joueur.TempsDernierTir > 0)
             {
-                Joueur.TempsDernierTir -= 1.0 / 60.0;
+                Joueur.TempsDernierTir -= deltaTemps;
             }
         }
 
@@ -316,25 +372,29 @@ namespace Survival_Island
                 {
                     if (boulet.EnCollisionAvec(obstacle))
                     {
-                        Console.WriteLine("Collision avec un obstacle: X=" + obstacle.PositionX + " Y=" + obstacle.PositionY);
-
                         boulet.Disparaitre();
                         Boulets.RemoveAt(i);
                     }
                 }
 
+                // Collision boulet avec ile
                 if (boulet.EnCollisionAvec(Ile))
                 {
+                    if (boulet.Tireur is Ennemi)
+                    {
+                        Ile.InfligerDegats(boulet.Tireur.Degats);
+                    }
+
                     boulet.Disparaitre();
                     Boulets.RemoveAt(i);
                 }
 
+                // Collision boulets avec objets bonus
                 for (int j = ObjetsBonus.Count - 1; j >= 0; j--)
                 {
                     ObjetRecompense objetBonus = ObjetsBonus[j];
                     if (boulet.EnCollisionAvec(objetBonus))
                     {
-                        Console.WriteLine("Collision avec un objet bonus: X=" + objetBonus.PositionX + " Y=" + objetBonus.PositionY);
                         bool estDetruit = objetBonus.InfligerDegats(Joueur.Degats);
 
                         if (estDetruit && boulet.Tireur is Joueur)
@@ -350,36 +410,43 @@ namespace Survival_Island
                             }
 
                             ObjetsBonus.RemoveAt(j);
-                            RechercheChemin.Grille.SupprimerEntiteDansGrille(objetBonus);
                         }
 
                         boulet.Disparaitre();
                         Boulets.RemoveAt(i);
                     }
                 }
-            }
-        }
 
-        public void AjouterEnnemis(int nombreEnnemis, int vie, int degats, int vitesse, double rechargementCanon)
-        {
-            for (int i = 0; i < nombreEnnemis; i++)
-            {
-                Ennemi ennemi = new Ennemi(
-                        carte,
-                        this,
-                        bitmapBateau,
-                        vie,
-                        degats,
-                        vitesse,
-                        rechargementCanon,
-                        Ile
-                    );
+                // Boulet ennemi sur joueur
+                if (Joueur.EnCollisionAvec(boulet) && boulet.Tireur is Ennemi)
+                {
+                    Joueur.InfligerDegats(boulet.Tireur.Degats);
 
-                double posX, posY;
-                PositionAleatoireValide(ennemi.CanvaElement.Width, ennemi.CanvaElement.Height, 0, out posX, out posY);
+                    boulet.Disparaitre();
+                    Boulets.RemoveAt(i);
+                }
 
-                Ennemis.Add(ennemi);
-                ennemi.Apparaitre(posX, posY);
+                // Boulets joueur sur ennemi
+                for (int j = 0; j < gestionVagues.EnnemisActuels.Count; j++)
+                {
+                    Ennemi ennemi = gestionVagues.EnnemisActuels[j];
+                    if (ennemi.EnCollisionAvec(boulet) && boulet.Tireur is Joueur)
+                    {
+                        bool mort = ennemi.InfligerDegats(Joueur.Degats);
+
+                        if (mort)
+                        {
+                            gestionVagues.EnnemisActuels.RemoveAt(j);
+                            gestionVagues.MettreAJour();
+
+                            Joueur.NombreTue++;
+                            Joueur.MettreAJour();
+                        }
+
+                        boulet.Disparaitre();
+                        Boulets.RemoveAt(i);
+                    }
+                }
             }
         }
     }

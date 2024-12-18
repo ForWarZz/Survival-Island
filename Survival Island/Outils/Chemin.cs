@@ -19,5 +19,8 @@
         public const string IMAGE_ROCHER3 = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_3.png";
 
         public const string IMAGE_TRESOR = "pack://application:,,,/Images/CarteJeu/tresor.png";
+
+        public const string MUSIQUE_FOND = "Son/MusiqueFond.mp3";
+        public const string SON_TIRE = "pack://application:,,,/Son/shoot.wav";
     }
 }
