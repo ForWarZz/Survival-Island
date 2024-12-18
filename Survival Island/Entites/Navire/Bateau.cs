@@ -35,13 +35,15 @@ namespace Survival_Island.Entites.Navire
         protected BitmapImage bateauImage;
 
         public int TailleBoulets {  get; set; }
-        private Brush couleurBoulet;
+
+        public string ModeBateau { get; set; }
 
         protected int nombreBouletsParShoot;
         protected int angleBoulets;
         protected int espacementBoulets;
 
         private SoundPlayer soundPlayerTire;
+        private Brush couleurBoulet;
 
         protected Bateau(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapBateau, Brush couleurBoulet, bool barreVie, int vieMax, int degats, double vitesse, double tempsRechargementCanon) : base(carte, false, barreVie, vieMax)
         {
@@ -68,6 +70,8 @@ namespace Survival_Island.Entites.Navire
             espacementBoulets = 0;
             angleBoulets = 0;
 
+            ModeBateau = "classique";
+
             InitRotationTemps();
         }
 
@@ -90,8 +94,6 @@ namespace Survival_Island.Entites.Navire
                 PositionY = Math.Max(0, Math.Min(nouvellePosY, maxY));
             } else
                 VitesseActuelle = 0;
-            
-  
         }
 
         public virtual void ChangerOrientation(Point nouvellePosition)

@@ -16,16 +16,12 @@ namespace Survival_Island.Entites
         private MainWindow fenetre;
         private double cameraX, cameraY;
 
-
-
         public int Niveau { get; private set; }
         public int Experience { get; private set; }
         public int ExperienceMax { get; private set; }
 
         public int PointsAmeliorations { get; set; }
         public bool ModeTriche { get; set; }
-
-        public string ModeBateau { get; set; }
 
         public int niveauClasse;
 
@@ -35,6 +31,8 @@ namespace Survival_Island.Entites
         public BitmapImage[] images;
 
         private DispatcherTimer minuteurReapparition;
+
+        public bool nouveauNiveau = false;
 
         public Joueur(Canvas carte, MoteurJeu moteurJeu, BitmapImage bitmapImage) :
             base(carte, moteurJeu, bitmapImage, Brushes.Black, false, Constante.JOUEUR_VIE_MAX, Constante.JOUEUR_DEGATS, Constante.JOUEUR_VITESSE, Constante.JOUEUR_RECHARGEMENT_CANON)
@@ -238,6 +236,7 @@ namespace Survival_Island.Entites
 
         private void NiveauSuivant()
         {
+            nouveauNiveau = true;
             PointsAmeliorations++;
 
             Niveau += 1;
@@ -247,7 +246,7 @@ namespace Survival_Island.Entites
                 AfficherMenuClasse();
             }
             else if (Niveau >= 15 && ModeBateau != "classique" ) {
-                    AfficherMenuClasse();
+                AfficherMenuClasse();
             }
 
             Experience = 0;
@@ -278,6 +277,15 @@ namespace Survival_Island.Entites
             fenetre.txtVitesseJoueurAmelio.Text = VitesseMax.ToString();
 
             fenetre.txtNiveau.Text = Niveau.ToString();
+
+            if (nouveauNiveau && !fenetre.menuActif)
+            {
+                fenetre.ellipseNouveauNiveau.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                fenetre.ellipseNouveauNiveau.Visibility = Visibility.Hidden;
+            }
         }
 
         public override void MettreAJour()

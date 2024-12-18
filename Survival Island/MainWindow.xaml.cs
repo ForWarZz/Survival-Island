@@ -1,4 +1,5 @@
 ﻿using Survival_Island.Outils;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,8 +14,9 @@ namespace Survival_Island
         private MoteurJeu moteurJeu;
 
         private bool jouer;
-        private bool menuActif = false;
+        public bool menuActif = false;
         private bool activePause = false;
+        private bool jeu = false;
 
         public MainWindow()
         {
@@ -31,7 +33,7 @@ namespace Survival_Island
             if (jouer)
             {
                 hudJoueur.Visibility = Visibility.Visible;
-                btnAmeliorations.Visibility = Visibility.Visible;
+                gridBoutonAmelio.Visibility = Visibility.Visible;
 
                 txtNombreTue.Visibility = Visibility.Visible;
                 txtVagueActuelle.Visibility = Visibility.Visible;
@@ -39,7 +41,7 @@ namespace Survival_Island
             else
             {
                 hudJoueur.Visibility = Visibility.Hidden;
-                btnAmeliorations.Visibility = Visibility.Hidden;
+                gridBoutonAmelio.Visibility = Visibility.Hidden;
 
                 txtNombreTue.Visibility = Visibility.Hidden;
                 txtVagueActuelle.Visibility = Visibility.Hidden;
@@ -99,6 +101,8 @@ namespace Survival_Island
         // Gestions du menu d'amélioration
         private void btnAmeliorations_Click(object sender, RoutedEventArgs e)
         {
+            moteurJeu.Joueur.nouveauNiveau = false;
+
             if (menuActif)
             {
                 menuActif = false;
@@ -112,17 +116,19 @@ namespace Survival_Island
                 menuActif = true;
                 spAmelio.Visibility = Visibility.Visible;
                 btnAmeliorations.Content = "Fermer";
+                moteurJeu.Joueur.MettreAJour();
 
                 spAmelio.Focus();
             }
         }
 
         // Menu accueil
-        
+
         private void btnJouer_Click(object sender, RoutedEventArgs e)
         {
             menuAccueil.Visibility = Visibility.Hidden;
             jouer = true;
+            jeu = true;
             if (!activePause)
             {
                 moteurJeu.InitJeu();
@@ -134,11 +140,13 @@ namespace Survival_Island
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
         {
+            jeu = false;
             FermerJeu();
         }
 
         private void MenuQuitter_Click(object sender, RoutedEventArgs e)
         {
+            jeu = false;
             FermerJeu();
         }
 
@@ -149,11 +157,10 @@ namespace Survival_Island
             if (result == MessageBoxResult.OK)
                 Application.Current.Shutdown();
         }
-
-        private void MenuSonClick(object sender, RoutedEventArgs e)
+        private void MenuSonAffiche()
         {
             DialogueAudio dialog = new DialogueAudio(moteurJeu, jouer);
-  
+
             bool? result = dialog.ShowDialog();
 
             if (result == false)
@@ -167,11 +174,24 @@ namespace Survival_Island
             }
         }
 
+        private void MenuBateauChange()
+        {
+            if (jeu)
+            {
+                DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
+                bool? result = dialog.ShowDialog();
+                moteurJeu.NumBateau = dialog.numBateau;
+            }
+        }
+
+        private void MenuSonClick(object sender, RoutedEventArgs e)
+        {
+            MenuSonAffiche();
+        }
+
         private void MenuChangerBateau_Click(object sender, RoutedEventArgs e)
         {
-            DialogueChangerBateau dialog = new DialogueChangerBateau(moteurJeu);
-            bool? result = dialog.ShowDialog();
-            moteurJeu.NumBateau = dialog.numBateau;
+            MenuBateauChange();
         }
 
         private void btnVieBateauAmelio_Click(object sender, RoutedEventArgs e)
@@ -208,6 +228,28 @@ namespace Survival_Island
         {
             if (jouer)
                 moteurJeu.Joueur.Deplacement = false;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            spParametres.Visibility = Visibility.Hidden;
+            menuAccueil.Visibility = Visibility.Visible;
+        }
+
+        private void btnOuvrirOptions_Click(object sender, RoutedEventArgs e)
+        {
+            menuAccueil.Visibility = Visibility.Hidden;
+            spParametres.Visibility = Visibility.Visible;
+        }
+
+        private void btnAudio_Click(object sender, RoutedEventArgs e)
+        {
+            MenuSonAffiche();
+        }
+
+        private void btnChangeBateau_Click(object sender, RoutedEventArgs e)
+        {
+            MenuBateauChange();
         }
     }
 }
