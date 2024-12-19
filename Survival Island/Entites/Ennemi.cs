@@ -110,7 +110,7 @@ namespace Survival_Island.Entites
             for (int i = obstaclesCaches.Count - 1; i >= 0; i--)
             {
                 EntiteBase entite = obstaclesCaches[i];
-                if (DistanceAvec(entite.Position) > Constante.DISTANCE_EVASION)
+                if (Calcul.DistanceAvec(Position, entite.Position) > Constante.DISTANCE_EVASION)
                 {
                     entite.CanvaElement.Visibility = Visibility.Visible;
                     obstaclesCaches.RemoveAt(i);
@@ -122,7 +122,7 @@ namespace Survival_Island.Entites
         {
             joueurDansRayon = false;
 
-            if (DistanceAvec(joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
+            if (Calcul.DistanceAvec(Position, joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
             {
                 joueurDansRayon = true;
                 return;
@@ -136,13 +136,8 @@ namespace Survival_Island.Entites
 
         private bool EstProcheDeCible(Point position)
         {
-            double distance = DistanceAvec(position);
+            double distance = Calcul.DistanceAvec(Position, position);
             return distance <= Constante.TOLERANCE_CIBLE_ENNEMI;
-        }
-
-        private double DistanceAvec(Point position)
-        {
-            return Math.Sqrt(Math.Pow(PositionX - position.X, 2) + Math.Pow(PositionY - position.Y, 2));
         }
 
         protected override void BouletTire() 

@@ -65,21 +65,22 @@
             Height="20"
             VerticalAlignment="Top"
             Background="White">
-            <MenuItem Background="White" Header="Paramètres">
+            <MenuItem Background="White" Header="_Paramètres">
                 <MenuItem
                     x:Name="MenuSon"
                     Click="MenuSonClick"
-                    Header="Son..." />
+                    Header="_Son..." />
                 <MenuItem
                     x:Name="MenuChangerBateau"
                     Click="MenuChangerBateau_Click"
-                    Header="Changer Bateau..." />
+                    Header="_Changer Bateau..." />
             </MenuItem>
             <MenuItem
                 x:Name="MenuQuitter"
                 Click="MenuQuitter_Click"
-                Header="Quitter" />
+                Header="_Quitter" />
         </Menu>
+
 
         <TextBlock
             x:Name="txtStatusVague"
