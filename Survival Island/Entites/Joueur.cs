@@ -39,7 +39,7 @@ namespace Survival_Island.Entites
                 Constante.JOUEUR_RECHARGEMENT_CANON)
         {
             fenetre = moteurJeu.Fenetre;
-            Niveau = 0;
+            Niveau = 1;
             PointsAmeliorations = 0;
             Experience = 0;
             ExperienceMax = Constante.JOUEUR_EXPERIENCE_MAX_N1;
