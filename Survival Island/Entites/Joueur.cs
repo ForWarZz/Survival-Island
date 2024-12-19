@@ -266,6 +266,8 @@ namespace Survival_Island.Entites
         {
             base.PlusDeVie();
 
+            NombreMort++;
+
             MoteurJeu.Fenetre.gridReapparition.Visibility = Visibility.Visible;
             MinuteurReapparition.Start();
         }

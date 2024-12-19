@@ -115,9 +115,15 @@ namespace Survival_Island.Entites
 
         public void VerifierJoueursDansRayon()
         {
-            joueurDansRayon = false;
+            if (joueur.EstMort)
+            {
+                joueurDansRayon = false;
+                cibleActuelle = ciblePrincipale;
+                return;
+            }
 
-            if (Calcul.DistanceAvec(Centre, joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR && !joueur.EstMort)
+            joueurDansRayon = false;
+            if (Calcul.DistanceAvec(Centre, joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
             {
                 joueurDansRayon = true;
                 cibleActuelle = joueur.Centre;
