@@ -90,7 +90,7 @@
             FontFamily="Stencil"
             FontSize="16"
             Text="Les ennemies vont arriver. Rapprochez vous de l'île."
-            Visibility="Visible" />
+            Visibility="Hidden" />
 
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,39,0,0" x:Name="spVagueInfo" Visibility="Hidden">
             <StackPanel  Margin="0,0,0,5" Orientation="Horizontal">
