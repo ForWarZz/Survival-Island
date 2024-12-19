@@ -62,6 +62,7 @@ namespace Survival_Island
                 btnJouer.Content = "Retour au jeu";
 
                 jouer = false;
+                pauseActive = true;
                 moteurJeu.Pause();
             }
         }
@@ -121,12 +122,14 @@ namespace Survival_Island
                 txtPause.Visibility = Visibility.Hidden;
 
                 moteurJeu.Pause();
+                pauseActive = false;
             }
             else
             {
                 moteurJeu.InitJeu();
-                jouer = true;
             }
+
+            jouer = true;
         }
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
