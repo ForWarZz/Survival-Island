@@ -311,6 +311,11 @@ namespace Survival_Island.Entites
             }
         }
 
+        protected override void BouletTire()
+        {
+            MoteurJeu.GestionSons.SoundPlayerTire.Play();
+        }
+
         public override void MettreAJour()
         {
             base.MettreAJour();

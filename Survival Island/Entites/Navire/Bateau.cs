@@ -155,7 +155,7 @@ namespace Survival_Island.Entites.Navire
                 return;
             TempsDernierTir = TempsRechargementCanon;
 
-            MoteurJeu.GestionSons.SoundPlayerTire.Play();
+            BouletTire();
 
             double espaceBoulets = angleBoulets / (nombreBouletsParShoot);
 
@@ -191,5 +191,7 @@ namespace Survival_Island.Entites.Navire
                 MoteurJeu.Boulets.Add(boulet);
             }
         }
+
+        protected abstract void BouletTire();
     }
 }

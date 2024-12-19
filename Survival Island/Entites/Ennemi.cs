@@ -144,5 +144,8 @@ namespace Survival_Island.Entites
         {
             return Math.Sqrt(Math.Pow(PositionX - position.X, 2) + Math.Pow(PositionY - position.Y, 2));
         }
+
+        protected override void BouletTire() 
+        { }
     }
 }
