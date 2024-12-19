@@ -14,8 +14,6 @@ namespace Survival_Island
 {
     public class GestionSons
     {
-        public MediaPlayer MediaPlayerMusique { get; }
-
         public MediaPlayer[] Musiques { get; set; }
         //public SoundPlayer SoundPlayerTire { get; }
         public SoundPlayer[] Sons { get; set; }
