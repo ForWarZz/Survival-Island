@@ -253,7 +253,7 @@ namespace Survival_Island
                 }
 
                 // Collision entre boulet ennemi et joueur
-                if (Joueur.EnCollisionAvec(boulet) && boulet.Tireur is Ennemi)
+                if (Joueur.EnCollisionAvec(boulet) && !Joueur.EstMort && boulet.Tireur is Ennemi)
                 {
                     Joueur.InfligerDegats(boulet.Tireur.Degats);
                     bouletsASupprimer.Add(boulet);
