@@ -12,25 +12,20 @@ namespace Survival_Island
     public partial class MainWindow : Window
     {
         private MoteurJeu moteurJeu;
-
-        private bool jouer;
-        private bool pauseActive;
-        public bool menuActif = false;
+        public bool menuActif { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
             moteurJeu = new MoteurJeu(this);
-
-            jouer = false;
-            pauseActive = false;
+            menuActif = false;
         }
 
         // Gestion des touches et de la souris
         private void Fenetre_KeyUp(object sender, KeyEventArgs e)
         {
-            if (jouer && e.Key == Key.Z)
+            if (PeutJouer() && e.Key == Key.Z)
             {
                 //Console.WriteLine("DEBUG: Z relaché");
                 moteurJeu.Joueur.Deplacement = false;
@@ -39,19 +34,19 @@ namespace Survival_Island
 
         private void Fenetre_KeyDown(object sender, KeyEventArgs e)
         {
-            if (jouer && e.Key == Key.Z)
+            if (PeutJouer() && e.Key == Key.Z)
             {
                 //Console.WriteLine("DEBUG: Z pressé");
                 moteurJeu.Joueur.Deplacement = true;
             }
 
-            if (jouer && e.Key == Key.G)
+            if (PeutJouer() && e.Key == Key.G)
             {
                 //Console.WriteLine("DEBUG: Mode triche activé");
                 moteurJeu.Joueur.ModeTriche = true;
             }
 
-            if (jouer && e.Key == Key.Escape)
+            if (PeutJouer() && e.Key == Key.Escape)
             {
                 //Console.WriteLine("DEBUG: Menu pause");
 
@@ -61,15 +56,13 @@ namespace Survival_Island
                 menuAccueil.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#50000000");
                 btnJouer.Content = "Retour au jeu";
 
-                jouer = false;
-                pauseActive = true;
                 moteurJeu.Pause();
             }
         }
 
         private void Fenetre_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (jouer)
+            if (PeutJouer())
             {
                 //Console.WriteLine("DEBUG: Activer canon joueur");
                 moteurJeu.Joueur.CanonActif = true;
@@ -78,7 +71,7 @@ namespace Survival_Island
 
         private void Fenetre_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (jouer)
+            if (PeutJouer())
             {
                 //Console.WriteLine("DEBUG: Désactiver canon joueur");
                 moteurJeu.Joueur.CanonActif = false;
@@ -87,7 +80,7 @@ namespace Survival_Island
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
         {
-            if (jouer && !moteurJeu.EstPause)
+            if (PeutJouer())
                 moteurJeu.Joueur.ChangerOrientation(e.GetPosition(carte));
         }
 
@@ -116,20 +109,17 @@ namespace Survival_Island
         {
             menuAccueil.Visibility = Visibility.Hidden;
 
-            if (pauseActive)
+            if (moteurJeu.JeuLance)
             {
                 menuAccueil.Visibility = Visibility.Hidden;
                 txtPause.Visibility = Visibility.Hidden;
 
                 moteurJeu.Pause();
-                pauseActive = false;
             }
             else
             {
                 moteurJeu.InitJeu();
             }
-
-            jouer = true;
         }
 
         private void btnFermerJeu_Click(object sender, RoutedEventArgs e)
@@ -205,13 +195,13 @@ namespace Survival_Island
 
         private void Fenetre_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (jouer)
+            if (PeutJouer())
                 moteurJeu.Joueur.Deplacement = true;
         }
 
         private void Fenetre_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (jouer)
+            if (PeutJouer())
                 moteurJeu.Joueur.Deplacement = false;
         }
 
@@ -241,6 +231,11 @@ namespace Survival_Island
         {
             spMenuFin.Visibility = Visibility.Hidden;
             moteurJeu.Rejouer();
+        }
+
+        private bool PeutJouer()
+        {
+            return moteurJeu.JeuLance && !moteurJeu.EstPause;
         }
     }
 }

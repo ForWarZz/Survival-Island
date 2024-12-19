@@ -20,6 +20,7 @@ namespace Survival_Island
         public Canvas Carte { get; }
 
         public bool EstPause { get; private set; }
+        public bool JeuLance { get; set; }
 
 
         private DispatcherTimer objetBonusMinuteur;
@@ -45,6 +46,9 @@ namespace Survival_Island
         {
             Fenetre = fenetre;
 
+            EstPause = false;
+            JeuLance = false;
+
             Carte = fenetre.carte;
             random = new Random();
 
@@ -63,6 +67,8 @@ namespace Survival_Island
 
         public void InitJeu()
         {
+            JeuLance = true;
+
             GestionCarte.InitIle();
 
             GestionVagues = new GestionVagues(this);
