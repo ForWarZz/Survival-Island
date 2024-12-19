@@ -81,7 +81,6 @@
                 Header="_Quitter" />
         </Menu>
 
-
         <TextBlock
             x:Name="txtStatusVague"
             Margin="0,39,0,0"
@@ -89,38 +88,47 @@
             VerticalAlignment="Top"
             FontFamily="Stencil"
             FontSize="16"
+            Foreground="#6d5445"
             Visibility="Hidden" />
 
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,39,0,0" x:Name="spVagueInfo" Visibility="Hidden">
             <StackPanel  Margin="0,0,0,5" Orientation="Horizontal">
                 <TextBlock
-                FontFamily="Stencil"
-                Text="Vague actuelle :"/>
+                    FontFamily="Stencil"
+                    Foreground="#6d5445"
+                    Text="Vague actuelle :"/>
                 <TextBlock
-                x:Name="txtVagueActuelle"
-                FontFamily="Stencil"
-                Text="1" Margin="5,0,0,0"/>
+                    x:Name="txtVagueActuelle"
+                    Foreground="#6d5445"
+                    FontFamily="Stencil"
+                    Text="1" Margin="5,0,0,0"/>
             </StackPanel>
 
 
             <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
                 <TextBlock
-                FontFamily="Stencil"
-                Text="Nombres de pirates en vie :"/>
+                    FontFamily="Stencil"
+                    Foreground="#6d5445"
+                    Text="Nombres de pirates en vie :"/>
                 <TextBlock
-                x:Name="txtNbPiratesVie"
-                FontFamily="Stencil"
-                Text="0" Margin="5,0,0,0"/>
+                    x:Name="txtNbPiratesVie"
+                    Foreground="#6d5445"
+                    FontFamily="Stencil"
+                    Text="0" Margin="5,0,0,0"/>
             </StackPanel>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,39,25,0" x:Name="spJoueurStats" Visibility="Hidden">
             <TextBlock
-            FontFamily="Stencil"
-            Text="Nombre de pirates coulés :"/>
-            <TextBlock x:Name="txtNbPiratesCoule"
-            FontFamily="Stencil"
-            Text="0" Margin="5,0,0,0"/>
+                FontFamily="Stencil"
+                Foreground="#6d5445"
+                Text="Nombre de pirates coulés :"/>
+            
+            <TextBlock 
+                x:Name="txtNbPiratesCoule"
+                Foreground="#6d5445"
+                FontFamily="Stencil"
+                Text="0" Margin="5,0,0,0"/>
         </StackPanel>
 
         <StackPanel
@@ -640,6 +648,17 @@
                     Margin="20,20,20,20"
                     Content="Ignore" />
             </StackPanel>
+        </Grid>
+
+        <Grid x:Name="gridReapparition" Background="#33000000">
+            <TextBlock
+            Margin="0,39,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontFamily="Stencil"
+            FontSize="28"
+            Text="Vous êtes mort. Vous allez réapparaitre dans 5 secondes..."
+            Visibility="Visible" Foreground="#FF6D5445" />
         </Grid>
     </Grid>
 </Window>

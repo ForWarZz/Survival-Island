@@ -266,6 +266,8 @@ namespace Survival_Island.Entites
         public override void PlusDeVie()
         {
             base.PlusDeVie();
+
+            MoteurJeu.Fenetre.gridReapparition.Visibility = Visibility.Hidden;
             minuteurReapparition.Start();
         }
 
@@ -276,6 +278,8 @@ namespace Survival_Island.Entites
 
             Vie = VieMax;
             EstMort = false;
+
+            MoteurJeu.Fenetre.gridReapparition.Visibility = Visibility.Hidden;
 
             MettreAJour();
             Apparaitre(nouvellePosition);

@@ -366,6 +366,8 @@ namespace Survival_Island
             if (afficher)
             {
                 Fenetre.hudJoueur.Visibility = Visibility.Visible;
+
+                Fenetre.spAmelio.Visibility = Fenetre.menuActif ? Visibility.Visible : Visibility.Hidden;
                 Fenetre.gridBoutonAmelio.Visibility = Visibility.Visible;
 
                 Fenetre.spJoueurStats.Visibility = Visibility.Visible;
@@ -376,6 +378,8 @@ namespace Survival_Island
             else
             {
                 Fenetre.hudJoueur.Visibility = Visibility.Hidden;
+
+                Fenetre.spAmelio.Visibility = Visibility.Hidden;
                 Fenetre.gridBoutonAmelio.Visibility = Visibility.Hidden;
 
                 Fenetre.spJoueurStats.Visibility = Visibility.Hidden;
