@@ -434,7 +434,6 @@ namespace Survival_Island.Entites
         public override void MettreAJour()
         {
             base.MettreAJour();
-
             ActualiserHUD();
         }
 

@@ -279,10 +279,11 @@
                 x:Name="ellipseNouveauNiveau"
                 Width="20"
                 Height="20"
-                Margin="1621,695,100,47"
+                Margin="0,0,98,47"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Fill="Red" />
+                Fill="Red"
+                Visibility="Hidden" />
         </Grid>
         <StackPanel
             x:Name="spAmelio"
