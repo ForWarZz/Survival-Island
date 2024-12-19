@@ -103,7 +103,7 @@ namespace Survival_Island
 
         public void Relance(object? sender, EventArgs e)
         {
-            Musiques[indiceMusiqueJoue].Position = TimeSpan.Zero;
+            Musiques[IndiceMusiqueJoue].Position = TimeSpan.Zero;
         }
 
         public void MusiqueSuivante()
