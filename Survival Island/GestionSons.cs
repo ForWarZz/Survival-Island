@@ -105,7 +105,7 @@ namespace Survival_Island
 
         public void Relance(object? sender, EventArgs e)
         {
-            MediaPlayerMusique.Position = TimeSpan.Zero;
+            Musiques[indiceMusiqueJoue].Position = TimeSpan.Zero;
         }
 
         public void MusiqueSuivante()
