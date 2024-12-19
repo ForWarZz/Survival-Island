@@ -54,7 +54,7 @@ namespace Survival_Island
         }
         private void InitSons()
         {
-           Sons = ChargerSons(Chemin.SON, 5, "wav");
+           Sons = ChargerSons(Chemin.SON, Constante.NB_SON, Constante.SON_EXT);
 
         }
 
@@ -91,7 +91,7 @@ namespace Survival_Island
         }
         private void InitMusique()
         {
-            Uri[] tab = ChargerMusiques(Chemin.MUSIQUE_FOND, 4, "mp3");
+            Uri[] tab = ChargerMusiques(Chemin.MUSIQUE_FOND, Constante.NB_MUSIQUE, Constante.MUSIQUE_EXT);
 
             Musiques = new MediaPlayer[tab.Length];
 
@@ -120,7 +120,5 @@ namespace Survival_Island
             Musiques[IndiceMusiqueJoue].Play();
 
         }
-
-        
     }
 }
