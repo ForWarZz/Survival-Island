@@ -110,6 +110,8 @@ namespace Survival_Island.Entites
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
 
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.Charge;
+
                 fenetre.btnQuatre.Content = "sniper";
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("sniper"); };
 
