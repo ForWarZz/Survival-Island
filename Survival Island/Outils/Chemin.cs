@@ -2,6 +2,10 @@
 {
     public static class Chemin
     {
+
+
+        
+
         public const string BATEAUX_JOUEUR = "pack://application:,,,/Images/Bateaux/Joueur/bateau_";
         public const string ROCHERS = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_";
 
@@ -12,13 +16,25 @@
 
         public const string IMAGE_MER = "pack://application:,,,/Images/CarteJeu/mer.png";
 
-/*        public const string IMAGE_ROCHER1 = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_1.png";
-        public const string IMAGE_ROCHER2 = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_2.png";
-        public const string IMAGE_ROCHER3 = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_3.png";*/
 
         public const string IMAGE_TRESOR = "pack://application:,,,/Images/CarteJeu/tresor.png";
 
+
+        public const string IMG_EVENTAILLE = "pack://application:,,,/Images/ModeDeTir/Eventaille.png";
+        public const string IMG_MEGA = "pack://application:,,,/Images/ModeDeTir/Mega.png";
+        public const string IMG_MK30 = "pack://application:,,,/Images/ModeDeTir/mk30.png";
+        public const string IMG_OCTO = "pack://application:,,,/Images/ModeDeTir/Octo.png";
+        public const string IMG_QUATROPLUS = "pack://application:,,,/Images/ModeDeTir/QuatroPlus.png";
+        public const string IMG_SNIPER = "pack://application:,,,/Images/ModeDeTir/Sniper.png";
+        public const string IMG_TRIO = "pack://application:,,,/Images/ModeDeTir/trio.png";
+        
+        
+
+
         public const string MUSIQUE_FOND = "Son/MusiqueFond.mp3";
         public const string SON_TIRE = "pack://application:,,,/Son/shoot.wav";
+
+
+
     }
 }

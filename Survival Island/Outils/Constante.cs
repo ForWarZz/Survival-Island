@@ -22,7 +22,7 @@ namespace Survival_Island.Outils
         public const int JOUEUR_DEGATS = 40;
         public const int AMELIO_DEGATS = 5;
 
-        public const double JOUEUR_RECHARGEMENT_CANON = 0.5;
+        public const double JOUEUR_RECHARGEMENT_CANON = 1;
         public static readonly TimeSpan TEMPS_REAPPARITION = TimeSpan.FromSeconds(5);
 
         public const double BATEAU_ACCELERATION = 200;
@@ -81,12 +81,20 @@ namespace Survival_Island.Outils
         public const int RECOMPENSE_EXP_ENNEMI_TUE = 25;
 
         public const double TEMPS_RECHARGEMENT_MIN_ENNEMI = 1.0;
-        public const double TEMPS_RECHARGEMENT_BASE_ENNEMI = 3.0;
+        public const double TEMPS_RECHARGEMENT_BASE_ENNEMI = 1.0;
         public const double TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI = 3.0;
 
 
-        public static readonly ImmutableArray<double> VALEUR_MODE_QUATRE = ImmutableArray.Create(4, 360, 1.1);
-
+        public static readonly ImmutableArray<double> MODE_QUATRE = ImmutableArray.Create(4.0, 360.0, 1.1);
+        public static readonly ImmutableArray<double> MODE_DOUBLE = ImmutableArray.Create(2.0, 0.0, 1.1, 10.0);
+        public static readonly ImmutableArray<double> MODE_POMPE = ImmutableArray.Create(3.0, 20.0, 1.1);
+        public static readonly ImmutableArray<double> MODE_OCTOPUS = ImmutableArray.Create(8.0, 360.0, 1.3);
+        public static readonly ImmutableArray<double> MODE_QUATRO_PLUS = ImmutableArray.Create(4.0, 360.0, 0.8, 10.0, 30.0);
+        public static readonly ImmutableArray<double> MODE_TRIO = ImmutableArray.Create(3.0, 0.0, 1.0, 15.0, 15.0);
+        public static readonly ImmutableArray<double> MODE_MEGA = ImmutableArray.Create(1.0, 0.0, 1.8, 20.0, 60.0);
+        public static readonly ImmutableArray<double> MODE_EVENTAILLE = ImmutableArray.Create(6.0, 180.0, 1.0);
+        public static readonly ImmutableArray<double> MODE_SNIPER = ImmutableArray.Create(1.0, 0.0, 3.0, 40.0, 0.0);
+        public static readonly ImmutableArray<double> MODE_MK30 = ImmutableArray.Create(5.0, 35.0, 0.8, 20.0, 15.0);
 
     }
 }

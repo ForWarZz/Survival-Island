@@ -19,6 +19,18 @@ namespace Survival_Island
         public BitmapImage Ile { get; private set; }
         public BitmapImage IleFaible { get; private set; }
 
+
+        public BitmapImage ImageOcto { get; private set; }
+        public BitmapImage ImageQuatroPlus { get; private set; }
+        public BitmapImage ImageSniper { get; private set; }
+        public BitmapImage ImageMk30 { get; private set; }
+        public BitmapImage ImageTrio { get; private set; }
+        public BitmapImage ImageMega { get; private set; }
+        public BitmapImage ImageEventaille { get; private set; }
+
+
+
+
         public GestionImages()
         {
             Mer = ChargerImage(Chemin.IMAGE_MER);
@@ -29,8 +41,22 @@ namespace Survival_Island
 
             BateauEnnemi = ChargerImage(Chemin.IMAGE_BATEAU_ENNEMI);
 
+
+            ImageOcto = ChargerImage(Chemin.IMG_OCTO);
+            ImageQuatroPlus = ChargerImage(Chemin.IMG_QUATROPLUS);
+            ImageSniper = ChargerImage(Chemin.IMG_SNIPER);
+            ImageMk30 = ChargerImage(Chemin.IMG_MK30);
+            ImageTrio = ChargerImage(Chemin.IMG_TRIO);
+            ImageMega = ChargerImage(Chemin.IMG_MEGA);
+            ImageEventaille = ChargerImage(Chemin.IMG_EVENTAILLE);
+
+
             Ile = ChargerImage(Chemin.IMAGE_ILE);
             IleFaible = ChargerImage(Chemin.IMAGE_ILEC);
+
+
+
+
         }
 
         private BitmapImage ChargerImage(string chemin)
