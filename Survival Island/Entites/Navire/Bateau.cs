@@ -171,18 +171,19 @@ namespace Survival_Island.Entites.Navire
                 espacementBouletsY = Math.Cos(angleOrientation) * espacementBoulets;
             }
 
-            // Générer chaque boulet avec une direction légèrement différente
             for (int i = 0; i < nombreBouletsParShoot; i++)
             {
-                // Calcul de l'angle pour ce boulet
                 double offsetAngle = (i - (nombreBouletsParShoot) / 2.0) * (espaceBoulets * Math.PI / 180.0);
                 double angleBoulet = angleOrientation + offsetAngle;
 
                 // Calcul de la direction du boulet
                 Vector directionBoulet = new Vector(Math.Cos(angleBoulet), Math.Sin(angleBoulet));
 
+
                 // Création et apparition du boulet
                 Boulet boulet = new Boulet(Carte, directionBoulet, this, couleurBoulet);
+
+
                 Point positionBoulet = new Point(
                     centreBateauX - boulet.CanvaElement.Width / 2 + i * espacementBouletsX,
                     centreBateauY - boulet.CanvaElement.Height / 2 + i * espacementBouletsY);
