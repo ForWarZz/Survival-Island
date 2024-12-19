@@ -188,8 +188,5 @@ namespace Survival_Island.Entites
 
             return true;
         }
-
-        protected override void BouletTire()
-        { }
     }
 }
