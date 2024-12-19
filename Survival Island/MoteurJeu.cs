@@ -236,10 +236,13 @@ namespace Survival_Island
                     {
                         bool estDetruit = objetBonus.InfligerDegats(Joueur.Degats);
 
-                        if (estDetruit && boulet.Tireur is Joueur)
+                        if (estDetruit)
                         {
-                            Joueur.AjouterExperience(objetBonus.RecompenseExperience);
-                            Joueur.AjouterVie(objetBonus.RecompenseVie);
+                            if (boulet.Tireur is Joueur)
+                            {
+                                Joueur.AjouterExperience(objetBonus.RecompenseExperience);
+                                Joueur.AjouterVie(objetBonus.RecompenseVie);
+                            }
 
                             ObjetsBonus.RemoveAt(j);
                         }
