@@ -650,7 +650,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid x:Name="gridReapparition" Background="#33000000">
+        <Grid x:Name="gridReapparition" Background="#33000000" Visibility="Hidden">
             <TextBlock
             Margin="0,39,0,0"
             HorizontalAlignment="Center"
