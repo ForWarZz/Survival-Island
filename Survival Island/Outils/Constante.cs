@@ -16,17 +16,17 @@ namespace Survival_Island.Outils
         public const int JOUEUR_VIE_MAX = 100;
         public const int AMELIO_VIE_MAX = 20;
 
-        public const int JOUEUR_VITESSE = 300;
-        public const int AMELIO_VITESSE_MAX = 550;
-        public const double AMELIO_VITESSE = 10;
+        public const int JOUEUR_VITESSE = 300;  // Vitesse en px/s
+        public const int AMELIO_VITESSE_MAX = 550;  // Vitesse en px/s
+        public const double AMELIO_VITESSE = 40;  // Vitesse en px/s
 
         public const int JOUEUR_DEGATS = 40;
         public const int AMELIO_DEGATS = 5;
 
-        public const double JOUEUR_RECHARGEMENT_CANON = 1;
+        public const double JOUEUR_RECHARGEMENT_CANON = 1.0;    // En seconde
         public static readonly TimeSpan TEMPS_REAPPARITION = TimeSpan.FromSeconds(5);
 
-        public const double BATEAU_ACCELERATION = 200;
+        public const double BATEAU_ACCELERATION = 200;  // Vitesse en px/s
 
         public const int JOUEUR_EXPERIENCE_MAX_N1 = 100;
         public const double MULTIPLICATEUR_NIVEAU = 1.5;
@@ -34,7 +34,7 @@ namespace Survival_Island.Outils
         public const int LARGEUR_NAVIRE = 50;
         public const int HAUTEUR_NAVIRE = 100;
 
-        public const int VITESSE_BOULET = 500;
+        public const int VITESSE_BOULET = 500;  // Vitesse en px/s
         public const int TAILLE_BOULET_INIT = 10;
 
         public const int ILE_VIE_MAX = 1000;
@@ -46,7 +46,7 @@ namespace Survival_Island.Outils
         public const int NOMBRE_ROCHERS_CARTE = 100;
         public const double MULTIPLICATEUR_TAILLE_ROCHER = 0.5;
 
-        public const int TEMPS_ROTATION_NAVIRE = 10;    // Millisecondes
+        public const int VITESSE_ROTATION_BATEAU = 250;     // Vitesse en deg/s
         public const int TOLERANCE_ANGLE_ROTATION = 5;  // En degré
 
         public const int BASE_COFFRE_VIE = JOUEUR_DEGATS * 3;
@@ -75,6 +75,9 @@ namespace Survival_Island.Outils
         public const int VAGUE_MIN_ENNEMI = 1;
         public const int VAGUE_MAX_ENNEMI = 8;
 
+        public const string MESSAGE_VAGUE_EN_COURS = "Les ennemis arrivent. Protégez l'île à tout prix !";
+        public const string MESSAGE_VAGUE_EN_ATTENTE = "Allez cherchez des trésors pour vous restaurez. Les ennemis arrivent dans {0} secondes !";
+
         public const int VIE_BASE_ENNEMI = 100;
         public const int MULTIPLICATEUR_VIE_ENNEMI = 2;
 
@@ -86,22 +89,15 @@ namespace Survival_Island.Outils
         public const double TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI = 3.0;
 
 
-        public static readonly ImmutableArray<double> MODE_QUATRE = ImmutableArray.Create(4.0, 360.0, 1.1);
-        public static readonly ImmutableArray<double> MODE_DOUBLE = ImmutableArray.Create(2.0, 0.0, 1.1, 10.0);
-        public static readonly ImmutableArray<double> MODE_POMPE = ImmutableArray.Create(3.0, 20.0, 1.1);
-        public static readonly ImmutableArray<double> MODE_OCTOPUS = ImmutableArray.Create(8.0, 360.0, 1.3);
-        public static readonly ImmutableArray<double> MODE_QUATRO_PLUS = ImmutableArray.Create(4.0, 360.0, 0.8, 10.0, 30.0);
-        public static readonly ImmutableArray<double> MODE_TRIO = ImmutableArray.Create(3.0, 0.0, 1.0, 15.0, 15.0);
-        public static readonly ImmutableArray<double> MODE_MEGA = ImmutableArray.Create(1.0, 0.0, 1.8, 20.0, 60.0);
-        public static readonly ImmutableArray<double> MODE_EVENTAILLE = ImmutableArray.Create(6.0, 180.0, 1.0);
-        public static readonly ImmutableArray<double> MODE_SNIPER = ImmutableArray.Create(1.0, 0.0, 3.0, 40.0, 0.0);
-        public static readonly ImmutableArray<double> MODE_MK30 = ImmutableArray.Create(5.0, 35.0, 0.8, 20.0, 15.0);
-
-
-
-        public const int MUSIQUE_DE_BASE = 0;
-        public const int SON_DE_BASE = 0;
-
-
+        public static readonly double[] MODE_QUATRE = [4.0, 360.0, 1.1];
+        public static readonly double[] MODE_DOUBLE = [2.0, 0.0, 1.1, 10.0];
+        public static readonly double[] MODE_POMPE = [3.0, 20.0, 1.1];
+        public static readonly double[] MODE_OCTOPUS = [8.0, 360.0, 1.3];
+        public static readonly double[] MODE_QUATRO_PLUS = [4.0, 360.0, 0.8, 10.0, 30.0];
+        public static readonly double[] MODE_TRIO = [3.0, 0.0, 1.0, 15.0, 15.0];
+        public static readonly double[] MODE_MEGA = [1.0, 0.0, 1.8, 20.0, 60.0];
+        public static readonly double[] MODE_EVENTAILLE = [6.0, 180.0, 1.0];
+        public static readonly double[] MODE_SNIPER = [1.0, 0.0, 3.0, 40.0, 0.0];
+        public static readonly double[] MODE_MK30 = [5.0, 35.0, 0.8, 20.0, 15.0];
     }
 }

@@ -111,9 +111,12 @@ namespace Survival_Island
             miseAJourTemps = tempsActuel;
 
             Joueur.Deplacer(deltaTemps);
+            Joueur.MiseAJourRotation(deltaTemps);
+
             foreach (Ennemi ennemi in GestionVagues.EnnemisActuels)
             {
                 ennemi.Deplacer(deltaTemps);
+                ennemi.MiseAJourRotation(deltaTemps);
                 ennemi.VerifierJoueursDansRayon();
 
                 if (ennemi.CanonActif)
@@ -126,7 +129,7 @@ namespace Survival_Island
             DeplacerBoulets(deltaTemps);
             CheckBouletsCollisions();
 
-            if (Joueur.CanonActif)
+            if (Joueur.CanonActif && !Joueur.EstMort)
                 Joueur.TirerBoulet();
 
             if (Joueur.TempsDernierTir > 0)
@@ -253,7 +256,7 @@ namespace Survival_Island
                 }
 
                 // Collision entre boulet ennemi et joueur
-                if (Joueur.EnCollisionAvec(boulet) && boulet.Tireur is Ennemi)
+                if (Joueur.EnCollisionAvec(boulet) && !Joueur.EstMort && boulet.Tireur is Ennemi)
                 {
                     Joueur.InfligerDegats(boulet.Tireur.Degats);
                     bouletsASupprimer.Add(boulet);
@@ -296,13 +299,15 @@ namespace Survival_Island
         {
             GestionVagues.MinuteurVague.Stop();
             objetBonusMinuteur.Stop();
+            Joueur.MinuteurReapparition.Stop();
+
             EstPause = true;
 
             AfficherHUD(false);
 
             Fenetre.txtNbMorts.Text = Joueur.NombreMort.ToString();
             Fenetre.txtNbCoules.Text = Joueur.NombreCoule.ToString();
-            Fenetre.txtNbVagues.Text = GestionVagues.NumeroVague.ToString();
+            Fenetre.txtNbVagues.Text = (GestionVagues.NumeroVague - 1).ToString();
 
             Fenetre.spMenuFin.Visibility = Visibility.Visible;
         }
