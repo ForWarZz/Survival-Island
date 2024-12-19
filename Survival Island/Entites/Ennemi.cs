@@ -90,28 +90,6 @@ namespace Survival_Island.Entites
             ReapparaitreObstaclesCaches();
         }
 
-/*        private bool EstOrienteCorrectement(Point cible)
-        {
-            double angleNecessaire = CalculerAngleVersCible(cible);
-            double diffAngle = Math.Abs(AngleActuel - angleNecessaire);
-
-            // Gestion des angles circulaires (360°)
-            if (diffAngle > 180)
-                diffAngle = 360 - diffAngle;
-
-            // Retourne vrai si l'angle est dans la tolérance
-            return diffAngle <= Constante.TOLERANCE_CIBLE_ENNEMI;
-        }
-
-        private double CalculerAngleVersCible(Point cible)
-        {
-            double deltaX = cible.X - Centre.X;
-            double deltaY = cible.Y - Centre.Y;
-
-            // Retourne l'angle en degrés
-            return Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
-        }*/
-
         private void CacherEntite(EntiteBase entite)
         {
             if (!obstaclesCaches.Contains(entite))

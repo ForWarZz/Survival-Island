@@ -49,7 +49,11 @@ namespace Survival_Island
         public void LancerMinuteurVague()
         {
             MinuteurVague.Start();
-            moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + "s !";
+            moteurJeu.Fenetre.txtStatusVague.Text = string.Format(Constante.MESSAGE_VAGUE_EN_ATTENTE, Secondes);
+
+            moteurJeu.Fenetre.txtNbPiratesVie.Text = "0";
+            moteurJeu.Fenetre.txtVagueActuelle.Text = "0";
+
             moteurJeu.Fenetre.txtStatusVague.Visibility = Visibility.Visible;
         }
 
@@ -63,14 +67,13 @@ namespace Survival_Island
         private void LancerVague(object? sender, EventArgs e)
         {
             Secondes--;
-            moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + " secondes !";
+            moteurJeu.Fenetre.txtStatusVague.Text = string.Format(Constante.MESSAGE_VAGUE_EN_ATTENTE, Secondes);
 
             if (Secondes <= 0)
             {
-                Console.WriteLine("DEBUG: Lancement vague n." + NumeroVague);
+                //Console.WriteLine("DEBUG: Lancement vague n." + NumeroVague);
 
-                moteurJeu.Fenetre.txtStatusVague.Text = "Les ennemis arrivent. Défendez votre île !";
-
+                moteurJeu.Fenetre.txtStatusVague.Text = Constante.MESSAGE_VAGUE_EN_COURS;
                 NumeroVague++;
 
                 moteurJeu.Fenetre.txtVagueActuelle.Text = NumeroVague.ToString();
@@ -104,7 +107,7 @@ namespace Survival_Island
         {
             if (!vagueEnCours) return;
 
-            Console.WriteLine("DEBUG: MAJ GESTION VAGUE");
+            //Console.WriteLine("DEBUG: MAJ GESTION VAGUE");
             moteurJeu.Fenetre.txtNbPiratesVie.Text = EnnemisActuels.Count.ToString();
 
             if (EnnemisActuels.Count == 0)
@@ -112,7 +115,7 @@ namespace Survival_Island
                 vagueEnCours = false;
                 MinuteurVague.Start();
 
-                Console.WriteLine("DEBUG: Fin vague n." + NumeroVague);
+                //Console.WriteLine("DEBUG: Fin vague n." + NumeroVague);
             }
         }
 

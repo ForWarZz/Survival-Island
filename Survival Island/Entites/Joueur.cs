@@ -32,7 +32,7 @@ namespace Survival_Island.Entites
         public int NombreMort { get; set; }
 
 
-        private DispatcherTimer minuteurReapparition;
+        public DispatcherTimer MinuteurReapparition { get; set; }
 
         public Joueur(MoteurJeu moteurJeu) :
             base(moteurJeu, moteurJeu.GestionImages.BateauxJoueur[0], Brushes.Black, 
@@ -53,15 +53,14 @@ namespace Survival_Island.Entites
             NiveauClasse = 0;
             NouveauNiveau = false;
 
-
             InitReapparitionMinuteur();
         }
 
         private void InitReapparitionMinuteur()
         {
-            minuteurReapparition = new DispatcherTimer();
-            minuteurReapparition.Interval = Constante.TEMPS_REAPPARITION;
-            minuteurReapparition.Tick += Reapparition;
+            MinuteurReapparition = new DispatcherTimer();
+            MinuteurReapparition.Interval = Constante.TEMPS_REAPPARITION;
+            MinuteurReapparition.Tick += Reapparition;
         }
 
         private void AfficherMenuClasse()
@@ -267,13 +266,13 @@ namespace Survival_Island.Entites
         {
             base.PlusDeVie();
 
-            MoteurJeu.Fenetre.gridReapparition.Visibility = Visibility.Hidden;
-            minuteurReapparition.Start();
+            MoteurJeu.Fenetre.gridReapparition.Visibility = Visibility.Visible;
+            MinuteurReapparition.Start();
         }
 
         private void Reapparition(object? sender, EventArgs e)
         {
-            minuteurReapparition.Stop();
+            MinuteurReapparition.Stop();
             Point nouvellePosition = MoteurJeu.GestionCarte.GenererPositionAleatoire(CanvaElement.Width, CanvaElement.Height);
 
             Vie = VieMax;

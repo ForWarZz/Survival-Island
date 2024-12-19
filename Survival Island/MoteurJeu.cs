@@ -126,7 +126,7 @@ namespace Survival_Island
             DeplacerBoulets(deltaTemps);
             CheckBouletsCollisions();
 
-            if (Joueur.CanonActif)
+            if (Joueur.CanonActif && !Joueur.EstMort)
                 Joueur.TirerBoulet();
 
             if (Joueur.TempsDernierTir > 0)
@@ -296,13 +296,15 @@ namespace Survival_Island
         {
             GestionVagues.MinuteurVague.Stop();
             objetBonusMinuteur.Stop();
+            Joueur.MinuteurReapparition.Stop();
+
             EstPause = true;
 
             AfficherHUD(false);
 
             Fenetre.txtNbMorts.Text = Joueur.NombreMort.ToString();
             Fenetre.txtNbCoules.Text = Joueur.NombreCoule.ToString();
-            Fenetre.txtNbVagues.Text = GestionVagues.NumeroVague.ToString();
+            Fenetre.txtNbVagues.Text = (GestionVagues.NumeroVague - 1).ToString();
 
             Fenetre.spMenuFin.Visibility = Visibility.Visible;
         }

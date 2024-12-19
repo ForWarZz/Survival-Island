@@ -75,6 +75,9 @@ namespace Survival_Island.Outils
         public const int VAGUE_MIN_ENNEMI = 1;
         public const int VAGUE_MAX_ENNEMI = 8;
 
+        public const string MESSAGE_VAGUE_EN_COURS = "Les ennemis arrivent. Protégez l'île à tout prix !";
+        public const string MESSAGE_VAGUE_EN_ATTENTE = "Allez cherchez des trésors pour vous restaurez. Les ennemis arrivent dans {0} secondes !";
+
         public const int VIE_BASE_ENNEMI = 100;
         public const int MULTIPLICATEUR_VIE_ENNEMI = 2;
 
@@ -96,6 +99,5 @@ namespace Survival_Island.Outils
         public static readonly double[] MODE_EVENTAILLE = [6.0, 180.0, 1.0];
         public static readonly double[] MODE_SNIPER = [1.0, 0.0, 3.0, 40.0, 0.0];
         public static readonly double[] MODE_MK30 = [5.0, 35.0, 0.8, 20.0, 15.0];
-
     }
 }
