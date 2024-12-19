@@ -19,8 +19,8 @@ namespace Survival_Island
         public MediaPlayer[] Musiques { get; set; }
         //public SoundPlayer SoundPlayerTire { get; }
         public SoundPlayer[] Sons { get; set; }
-        public int indiceMusiqueJoue { get; set; }
-        public int indiceSonJoue { get; set; }
+        public int IndiceMusiqueJoue { get; set; }
+        public int IndiceSonJoue { get; set; }
 
 
         public GestionSons()
@@ -31,25 +31,25 @@ namespace Survival_Island
             InitSons();
 
 
-            indiceSonJoue = Constante.SON_DE_BASE;
-            indiceMusiqueJoue = Constante.MUSIQUE_DE_BASE;
+            IndiceSonJoue = Constante.SON_DE_BASE;
+            IndiceMusiqueJoue = Constante.MUSIQUE_DE_BASE;
 
-            Musiques[indiceMusiqueJoue].Play();
+            Musiques[IndiceMusiqueJoue].Play();
 
             //SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
         }
 
         public void JoueSon()
         {
-            Sons[indiceSonJoue].Play();
+            Sons[IndiceSonJoue].Play();
         }
 
         public void SonSuivant()
         {
             
-            indiceSonJoue += 1;
-            indiceSonJoue = indiceSonJoue % Sons.Length;
-            Sons[indiceSonJoue].Play();
+            IndiceSonJoue += 1;
+            IndiceSonJoue = IndiceSonJoue % Sons.Length;
+            Sons[IndiceSonJoue].Play();
 
         }
         private void InitSons()
@@ -110,14 +110,14 @@ namespace Survival_Island
 
         public void MusiqueSuivante()
         {
-            Musiques[indiceMusiqueJoue].Stop();
+            Musiques[IndiceMusiqueJoue].Stop();
 
-            double volumeMusiqueSuivante = Musiques[indiceMusiqueJoue].Volume;
+            double volumeMusiqueSuivante = Musiques[IndiceMusiqueJoue].Volume;
 
-            indiceMusiqueJoue += 1;
-            indiceMusiqueJoue= indiceMusiqueJoue % Musiques.Length ;
-            Musiques[indiceMusiqueJoue].Volume=volumeMusiqueSuivante;
-            Musiques[indiceMusiqueJoue].Play();
+            IndiceMusiqueJoue += 1;
+            IndiceMusiqueJoue= IndiceMusiqueJoue % Musiques.Length ;
+            Musiques[IndiceMusiqueJoue].Volume=volumeMusiqueSuivante;
+            Musiques[IndiceMusiqueJoue].Play();
 
         }
 

@@ -2,10 +2,6 @@
 {
     public static class Chemin
     {
-
-
-        
-
         public const string BATEAUX_JOUEUR = "pack://application:,,,/Images/Bateaux/Joueur/bateau_";
         public const string ROCHERS = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_";
 
@@ -28,13 +24,8 @@
         public const string IMG_SNIPER = "pack://application:,,,/Images/ModeDeTir/Sniper.png";
         public const string IMG_TRIO = "pack://application:,,,/Images/ModeDeTir/trio.png";
         
-        
-
 
         public const string MUSIQUE_FOND = "Son/MusiqueFond";
         public const string SON = "pack://application:,,,/Son/son";
-
-
-
     }
 }
