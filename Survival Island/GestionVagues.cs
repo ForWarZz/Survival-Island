@@ -25,7 +25,8 @@ namespace Survival_Island
         public DispatcherTimer MinuteurVague { get; private set; }
         public int Secondes { get; set; }
 
-        private int numeroVague;
+        public int NumeroVague { get; private set; }
+
         private bool vagueEnCours;
 
         public GestionVagues(MoteurJeu moteurJeu)
@@ -39,7 +40,7 @@ namespace Survival_Island
             EnnemisActuels = new List<Ennemi>();
             Secondes = Constante.TEMPS_ENTRE_VAGUE;
 
-            numeroVague = 0;
+            NumeroVague = 0;
             vagueEnCours = false;
 
             InitMinuteur();
@@ -66,12 +67,12 @@ namespace Survival_Island
 
             if (Secondes <= 0)
             {
-                //Console.WriteLine("DEBUG: Lancement vague n." + numeroVague);
+                //Console.WriteLine("DEBUG: Lancement vague n." + NumeroVague);
 
                 moteurJeu.Fenetre.txtStatusVague.Text = "Les ennemis arrivent. Défendez votre île !";
 
-                numeroVague++;
-                moteurJeu.Fenetre.txtVagueActuelle.Text = "Vague actuelle : " + numeroVague;
+                NumeroVague++;
+                moteurJeu.Fenetre.txtVagueActuelle.Text = "Vague actuelle : " + NumeroVague;
 
                 AjouterVague();
 
@@ -86,13 +87,13 @@ namespace Survival_Island
         private void AjouterVague()
         {
             // Nombre d'ennemis basé sur le numéro de vague (par ex : vague 1 = 3 ennemis, vague 2 = 5, etc.)
-            int nombreEnnemis = Math.Min(Constante.VAGUE_MIN_ENNEMI + numeroVague, Constante.VAGUE_MAX_ENNEMI);
+            int nombreEnnemis = Math.Min(Constante.VAGUE_MIN_ENNEMI + NumeroVague, Constante.VAGUE_MAX_ENNEMI);
 
-            int vieMax = Constante.VIE_BASE_ENNEMI + (numeroVague * Constante.MULTIPLICATEUR_VIE_ENNEMI);
-            int degats = Constante.DEGATS_BASE_ENNEMI + numeroVague;
+            int vieMax = Constante.VIE_BASE_ENNEMI + (NumeroVague * Constante.MULTIPLICATEUR_VIE_ENNEMI);
+            int degats = Constante.DEGATS_BASE_ENNEMI + NumeroVague;
             double tempsRechargement = Math.Max(
                 Constante.TEMPS_RECHARGEMENT_MIN_ENNEMI, 
-                Constante.TEMPS_RECHARGEMENT_BASE_ENNEMI - (numeroVague * Constante.TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI));
+                Constante.TEMPS_RECHARGEMENT_BASE_ENNEMI - (NumeroVague * Constante.TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI));
 
 
             AjouterEnnemis(nombreEnnemis, vieMax, degats, Constante.JOUEUR_VITESSE, tempsRechargement);

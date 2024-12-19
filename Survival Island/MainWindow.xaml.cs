@@ -87,7 +87,7 @@ namespace Survival_Island
 
         private void Fenetre_MouseMove(object sender, MouseEventArgs e)
         {
-            if (jouer)
+            if (jouer && !moteurJeu.EstPause)
                 moteurJeu.Joueur.ChangerOrientation(e.GetPosition(carte));
         }
 

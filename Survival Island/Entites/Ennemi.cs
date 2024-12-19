@@ -16,10 +16,12 @@ namespace Survival_Island.Entites
         private Point ciblePrincipale;
         private Point cibleActuelle;
 
-        private bool joueurDansRayon;
-        private Joueur joueur;
+        private bool orientationEnCours;
+        private bool orientationFinaleEnCours;
 
+        private bool joueurDansRayon;
         private List<EntiteBase> obstaclesCaches;
+        private Joueur joueur;
 
         public Ennemi(MoteurJeu moteurJeu, int vieMax, int degats, double vitesse, double tempsRechargementCanon) :
             base(moteurJeu, moteurJeu.GestionImages.BateauEnnemi, Brushes.Red, true, vieMax, degats, vitesse, tempsRechargementCanon)
@@ -27,12 +29,15 @@ namespace Survival_Island.Entites
             joueurDansRayon = false;
             joueur = MoteurJeu.Joueur;
             obstaclesCaches = new List<EntiteBase>();
+
+            orientationEnCours = false;
         }
 
         public void DefinirCible(Point position, Point orientationFinale)
         {
             ciblePrincipale = position;
             cibleActuelle = position;
+
             this.orientationFinale = orientationFinale;
         }
 
@@ -43,26 +48,114 @@ namespace Survival_Island.Entites
             if (joueurDansRayon)
             {
                 cibleActuelle = joueur.Centre;
-                ChangerOrientation(joueur.Centre);
+
+                ChangerOrientation(cibleActuelle);
                 CanonActif = true;
+
+                orientationFinaleEnCours = false;
             }
             else
             {
-                if (EstProcheDeCible(cibleActuelle))
+                Console.WriteLine("DEBUG: Joueur pas dans rayon, depalcement vers cible");
+
+                if (EstProcheDeCible(ciblePrincipale))
                 {
-                    ChangerOrientation(orientationFinale);
+                    Console.WriteLine("DEBUG: Ennemi arrivé à sa cible principale.");
                     CanonActif = true;
                 }
                 else
                 {
-                    ChangerOrientation(ciblePrincipale);
-                    base.Deplacer(deltaTemps);
-                    MettreAJourPositionVie();
+                    if (AngleCible == AngleActuel && !orientationFinaleEnCours)
+                    {
+                        Console.WriteLine("DEBUG: Orientation finale en cours");
+
+                        ChangerOrientation(orientationFinale);
+                        orientationFinaleEnCours = true;
+                    } else if (!orientationEnCours)
+                    {
+                        Console.WriteLine("DEBUG: Orientation cible en cours");
+
+                        ChangerOrientation(cibleActuelle);
+                        orientationEnCours = true;
+                    } else
+                    {
+                        Console.WriteLine("DEBUG: Orientation bonne, deplacement");
+
+                        base.Deplacer(deltaTemps);
+                        MettreAJourPositionVie();
+                    }
                 }
             }
 
-            // Réapparaître les obstacles cachés si l'ennemi est assez loin
             ReapparaitreObstaclesCaches();
+        }
+
+/*        private bool EstOrienteCorrectement(Point cible)
+        {
+            double angleNecessaire = CalculerAngleVersCible(cible);
+            double diffAngle = Math.Abs(AngleActuel - angleNecessaire);
+
+            // Gestion des angles circulaires (360°)
+            if (diffAngle > 180)
+                diffAngle = 360 - diffAngle;
+
+            // Retourne vrai si l'angle est dans la tolérance
+            return diffAngle <= Constante.TOLERANCE_CIBLE_ENNEMI;
+        }
+
+        private double CalculerAngleVersCible(Point cible)
+        {
+            double deltaX = cible.X - Centre.X;
+            double deltaY = cible.Y - Centre.Y;
+
+            // Retourne l'angle en degrés
+            return Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
+        }*/
+
+        private void CacherEntite(EntiteBase entite)
+        {
+            if (!obstaclesCaches.Contains(entite))
+            {
+                entite.CanvaElement.Visibility = Visibility.Hidden;
+                obstaclesCaches.Add(entite);
+            }
+        }
+
+        private void ReapparaitreObstaclesCaches()
+        {
+            for (int i = obstaclesCaches.Count - 1; i >= 0; i--)
+            {
+                EntiteBase entite = obstaclesCaches[i];
+                if (Calcul.DistanceAvec(Position, entite.Position) > Constante.DISTANCE_EVASION)
+                {
+                    entite.CanvaElement.Visibility = Visibility.Visible;
+                    obstaclesCaches.RemoveAt(i);
+                }
+            }
+        }
+
+
+        public void VerifierJoueursDansRayon()
+        {
+            joueurDansRayon = false;
+
+            if (Calcul.DistanceAvec(Centre, joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
+            {
+                joueurDansRayon = true;
+                cibleActuelle = joueur.Centre;
+                return;
+            }
+
+            if (!joueurDansRayon)
+            {
+                cibleActuelle = ciblePrincipale;
+            }
+        }
+
+        private bool EstProcheDeCible(Point position)
+        {
+            double distance = Calcul.DistanceAvec(Centre, position);
+            return distance <= Constante.TOLERANCE_CIBLE_ENNEMI;
         }
 
         protected override bool PeutAllerVers(double nouvellePosX, double nouvellePosY)
@@ -96,51 +189,7 @@ namespace Survival_Island.Entites
             return true;
         }
 
-        private void CacherEntite(EntiteBase entite)
-        {
-            if (!obstaclesCaches.Contains(entite))
-            {
-                entite.CanvaElement.Visibility = Visibility.Hidden;
-                obstaclesCaches.Add(entite);
-            }
-        }
-
-        private void ReapparaitreObstaclesCaches()
-        {
-            for (int i = obstaclesCaches.Count - 1; i >= 0; i--)
-            {
-                EntiteBase entite = obstaclesCaches[i];
-                if (Calcul.DistanceAvec(Position, entite.Position) > Constante.DISTANCE_EVASION)
-                {
-                    entite.CanvaElement.Visibility = Visibility.Visible;
-                    obstaclesCaches.RemoveAt(i);
-                }
-            }
-        }
-
-        public void VerifierJoueursDansRayon()
-        {
-            joueurDansRayon = false;
-
-            if (Calcul.DistanceAvec(Position, joueur.Centre) <= Constante.RAYON_DETECTION_JOUEUR)
-            {
-                joueurDansRayon = true;
-                return;
-            }
-
-            if (!joueurDansRayon)
-            {
-                cibleActuelle = ciblePrincipale;
-            }
-        }
-
-        private bool EstProcheDeCible(Point position)
-        {
-            double distance = Calcul.DistanceAvec(Position, position);
-            return distance <= Constante.TOLERANCE_CIBLE_ENNEMI;
-        }
-
-        protected override void BouletTire() 
+        protected override void BouletTire()
         { }
     }
 }

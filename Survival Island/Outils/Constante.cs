@@ -45,7 +45,7 @@ namespace Survival_Island.Outils
         public const int NOMBRE_ROCHERS_CARTE = 100;
         public const double MULTIPLICATEUR_TAILLE_ROCHER = 0.5;
 
-        public const int TEMPS_ROTATION_NAVIRE = 20;    // Millisecondes
+        public const int TEMPS_ROTATION_NAVIRE = 10;    // Millisecondes
         public const int TOLERANCE_ANGLE_ROTATION = 5;  // En degré
 
         public const int BASE_COFFRE_VIE = JOUEUR_DEGATS * 3;
@@ -65,7 +65,7 @@ namespace Survival_Island.Outils
 
         public const int RAYON_DETECTION_JOUEUR = 300;
         public const int MARGE_APPARITION_ENNEMI = 500;
-        public const int TOLERANCE_CIBLE_ENNEMI = 100;
+        public const int TOLERANCE_CIBLE_ENNEMI = 100;   // En deg
 
         public const double DISTANCE_EVASION = 100.0;
 

@@ -11,7 +11,7 @@ namespace Survival_Island
     {
         public static double DistanceAvec(Point posA, Point posB)
         {
-            return Math.Sqrt(Math.Pow(posA.X - posB.X, 2) + Math.Pow(posA.X - posB.Y, 2));
+            return Math.Sqrt(Math.Pow(posA.X - posB.X, 2) + Math.Pow(posA.Y - posB.Y, 2));
         }
     }
 }

@@ -291,6 +291,8 @@ namespace Survival_Island
 
             Fenetre.txtNbMorts.Text = Joueur.NombreMort.ToString();
             Fenetre.txtNbCoules.Text = Joueur.NombreCoule.ToString();
+            Fenetre.txtNbVagues.Text = GestionVagues.NumeroVague.ToString();
+
             Fenetre.spMenuFin.Visibility = Visibility.Visible;
         }
 
