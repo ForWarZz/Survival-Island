@@ -16,6 +16,9 @@
     <None Remove="Images\Bateaux\bateau_ennemi.png" />
     <None Remove="Images\Bateaux\bateau_jaune.png" />
     <None Remove="images\Bateaux\ModeDeTir\Double.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Eventaille.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Mega.png" />
+    <None Remove="images\Bateaux\ModeDeTir\mk30.png" />
     <None Remove="images\Bateaux\ModeDeTir\Octo.png" />
     <None Remove="images\Bateaux\ModeDeTir\Pompe.png" />
     <None Remove="images\Bateaux\ModeDeTir\Quatre.png" />
@@ -58,6 +61,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Bateaux\ModeDeTir\Double.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Eventaille.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Mega.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\mk30.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\Bateaux\ModeDeTir\Octo.png">

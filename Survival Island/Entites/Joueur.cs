@@ -31,6 +31,7 @@ namespace Survival_Island.Entites
         public int NombreCoule { get; set; }
         public int NombreMort { get; set; }
 
+
         private DispatcherTimer minuteurReapparition;
 
         public Joueur(MoteurJeu moteurJeu) :
@@ -51,6 +52,7 @@ namespace Survival_Island.Entites
 
             NiveauClasse = 0;
             NouveauNiveau = false;
+
 
             InitReapparitionMinuteur();
         }
@@ -79,6 +81,12 @@ namespace Survival_Island.Entites
 
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
+                Console.WriteLine(MoteurJeu.GestionImages.ModDeTir[0]);
+
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ModDeTir[0];
+                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ModDeTir[1];
+                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ModDeTir[6];
+
 
                 fenetre.btnQuatre.Content = "Octopus";
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("octopus"); };
@@ -95,6 +103,12 @@ namespace Survival_Island.Entites
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
 
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ModDeTir[2];
+                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ModDeTir[3];
+                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ModDeTir[6];
+
+
+
                 fenetre.btnQuatre.Content = "trio";
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("trio"); };
 
@@ -109,8 +123,10 @@ namespace Survival_Island.Entites
 
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ModDeTir[4];
+                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ModDeTir[5];
+                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ModDeTir[6];
 
-                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.Charge;
 
                 fenetre.btnQuatre.Content = "sniper";
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("sniper"); };
@@ -178,7 +194,6 @@ namespace Survival_Island.Entites
                         this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_QUATRO_PLUS[3]) ; 
                         this.TailleBoulets = (int)Constante.MODE_QUATRO_PLUS[4];
                     }
-                    this.NiveauClasse = 2;
                 }
                 else if (ModeBateau == "double")
                 {
@@ -201,15 +216,7 @@ namespace Survival_Island.Entites
                         this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_MEGA[3]);
                         this.TailleBoulets = (int)Constante.MODE_MEGA[4];
                     }
-                    else if (classe == "Eventaille")
-                    {
-                        ModeBateau = "Eventaille";
-                        this.nombreBouletsParShoot = (int)Constante.MODE_EVENTAILLE[0];
-                        this.angleBoulets = (int)Constante.MODE_EVENTAILLE[1];
-                        this.TempsRechargementCanon = Constante.MODE_EVENTAILLE[2];
-                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                    }
-                    this.NiveauClasse = 2;
+                    
                 }
                 else if (ModeBateau == "pompe")
                 {
@@ -231,16 +238,18 @@ namespace Survival_Island.Entites
                         this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_MK30[3]);
                         this.TailleBoulets = (int)Constante.MODE_MK30[4];
                     }
-                    else if (classe == "Eventaille")
-                    {
-                        ModeBateau = "Eventaille";
-                        this.nombreBouletsParShoot = (int)Constante.MODE_EVENTAILLE[0];
-                        this.angleBoulets = (int)Constante.MODE_EVENTAILLE[1];
-                        this.TempsRechargementCanon = Constante.MODE_EVENTAILLE[2];
-                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                    }
-                    this.NiveauClasse = 2;
+                    
+                    
                 }
+                if (classe == "Eventaille")
+                {
+                    ModeBateau = "Eventaille";
+                    this.nombreBouletsParShoot = (int)Constante.MODE_EVENTAILLE[0];
+                    this.angleBoulets = (int)Constante.MODE_EVENTAILLE[1];
+                    this.TempsRechargementCanon = Constante.MODE_EVENTAILLE[2];
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                }
+                this.NiveauClasse = 2;
             }
 
             // Masquer le menu de sélection de classe

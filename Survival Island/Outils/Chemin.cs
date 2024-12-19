@@ -18,10 +18,15 @@
         public const string MUSIQUE_FOND = "Son/MusiqueFond.mp3";
         public const string SON_TIRE = "pack://application:,,,/Son/shoot.wav";
 
-        public const string IMG_SNIPER = "/images/Bateaux/ModeDeTir/Sniper.png";
-        public const string IMG_TRIO = "/images/Bateaux/ModeDeTir/trio.png";
-        public const string IMG_OCTO = "/images/Bateaux/ModeDeTir/Octo.png";
-        public const string IMG_QUATROPLUS = "/images/Bateaux/ModeDeTir/QuatroPlus.png";
+        public const string IMG_SNIPER = "pack://application:,,,/Images/Bateaux/ModeDeTir/Sniper.png";
+        public const string IMG_TRIO = "pack://application:,,,/Images/Bateaux/ModeDeTir/trio.png";
+        public const string IMG_OCTO = "pack://application:,,,/Images/Bateaux/ModeDeTir/Octo.png";
+        public const string IMG_QUATROPLUS = "pack://application:,,,/Images/Bateaux/ModeDeTir/QuatroPlus.png";
+        public const string IMG_MK30 = "pack://application:,,,/Images/Bateaux/ModeDeTir/mk30.png";
+        public const string IMG_MEGA = "pack://application:,,,/Images/Bateaux/ModeDeTir/Mega.png";
+        public const string IMG_EVENTAILLE = "pack://application:,,,/Images/Bateaux/ModeDeTir/Eventaille.png";
+
+
 
 
     }
