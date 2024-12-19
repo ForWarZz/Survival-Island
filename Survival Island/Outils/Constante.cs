@@ -5,6 +5,7 @@ namespace Survival_Island.Outils
     internal class Constante
     {
         public const double MUSIQUE_VOLUME = 0.2;
+        public const int EXPERIENCE_MODE_TRICHE = 10000;
 
 
         public const int NOMBRE_CARREAUX_MER = 32;

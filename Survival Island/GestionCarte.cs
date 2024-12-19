@@ -105,12 +105,6 @@ namespace Survival_Island
 
         public Point GenererPositionAleatoire(double largeur, double hauteur, double angleRotation = 0, int marge = 0)
         {
-            if (marge < 0)
-                throw new ArgumentException("La marge doit être positive.");
-
-            if (marge > 0 && (marge > carte.Width || marge > carte.Height))
-                throw new ArgumentException("La marge est plus grande que la taille de la carte.");
-
             double posX, posY;
             bool positionValide;
 
@@ -160,8 +154,9 @@ namespace Survival_Island
 
         private bool CheckPositionValide(Collision collision)
         {
-            if (Ile.EnCollisionAvec(collision))
+            if (Calcul.DistanceAvec(collision.Centre, Ile.Centre) < Constante.MARGE_ILE)
             {
+                Console.WriteLine("DEBUG: Trop proche de l'île");
                 return false;
             }
 
@@ -169,6 +164,7 @@ namespace Survival_Island
             {
                 if (obstacleDejaPresent != null && obstacleDejaPresent.EnCollisionAvec(collision))
                 {
+                    Console.WriteLine("DEBUG: Collision avec obstacle");
                     return false;
                 }
             }
@@ -177,6 +173,7 @@ namespace Survival_Island
             {
                 if (objetsBonusDejaPresent != null && objetsBonusDejaPresent.EnCollisionAvec(collision))
                 {
+                    Console.WriteLine("DEBUG: Collision avec objet bonus");
                     return false;
                 }
             }
@@ -185,6 +182,7 @@ namespace Survival_Island
             {
                 if (ennemi.EnCollisionAvec(collision))
                 {
+                    //Console.WriteLine("DEBUG: Collision avec ennemi");
                     return false;
                 }
             }

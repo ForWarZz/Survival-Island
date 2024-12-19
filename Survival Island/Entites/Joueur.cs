@@ -379,7 +379,7 @@ namespace Survival_Island.Entites
             fenetre.barreVieJoueur.Maximum = VieMax;
             fenetre.txtVieJoueur.Text = Vie + "/" + VieMax + " PV";
 
-            fenetre.txtNombreTue.Text = "Ennemis tués : " + NombreCoule;
+            fenetre.txtNbPiratesCoule.Text = NombreCoule.ToString();
 
             ActualiserMenuAmelioration();
         }

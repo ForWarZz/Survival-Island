@@ -8,6 +8,7 @@ namespace Survival_Island.Entites.Base
     public class Collision
     {
         public Point[][] Segments { get; }
+        public Point Centre { get;  }
 
         private Point[] corners;
 
@@ -16,8 +17,8 @@ namespace Survival_Island.Entites.Base
 
         public Collision(Rect rect, double angle = 0)
         {
-            Point centre = new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
-            RotateTransform transformer = new RotateTransform(angle, centre.X, centre.Y);
+            Centre = new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
+            RotateTransform transformer = new RotateTransform(angle, Centre.X, Centre.Y);
 
             corners =
             [

@@ -101,6 +101,9 @@ namespace Survival_Island
         {
             if (EstPause) return;
 
+            /*Permet de calculer le temps écoulé entre chaque mise à jour, afin de garantir une stabilité *
+              des mouvements et autres actions, sans dépendre du materiel. (Non utilisation de dispatcher, afin d'avoir un jeu plus fluide,
+              mais necessite ce calcul, pour */
             DateTime tempsActuel = DateTime.Now;
             TimeSpan tempsEcoule = tempsActuel - miseAJourTemps;
             double deltaTemps = tempsEcoule.TotalSeconds;
@@ -108,7 +111,6 @@ namespace Survival_Island
             miseAJourTemps = tempsActuel;
 
             Joueur.Deplacer(deltaTemps);
-
             foreach (Ennemi ennemi in GestionVagues.EnnemisActuels)
             {
                 ennemi.Deplacer(deltaTemps);
@@ -131,7 +133,7 @@ namespace Survival_Island
                 Joueur.TempsDernierTir -= deltaTemps;
 
             if (Joueur.ModeTriche)
-                Joueur.AjouterExperience(10000);
+                Joueur.AjouterExperience(Constante.EXPERIENCE_MODE_TRICHE);
         }
 
         private void InitBonusMinuteur()
@@ -363,8 +365,8 @@ namespace Survival_Island
                 Fenetre.hudJoueur.Visibility = Visibility.Visible;
                 Fenetre.gridBoutonAmelio.Visibility = Visibility.Visible;
 
-                Fenetre.txtNombreTue.Visibility = Visibility.Visible;
-                Fenetre.txtVagueActuelle.Visibility = Visibility.Visible;
+                Fenetre.spJoueurStats.Visibility = Visibility.Visible;
+                Fenetre.spVagueInfo.Visibility = Visibility.Visible;
 
                 Fenetre.txtStatusVague.Visibility = Visibility.Visible;
             }
@@ -373,8 +375,8 @@ namespace Survival_Island
                 Fenetre.hudJoueur.Visibility = Visibility.Hidden;
                 Fenetre.gridBoutonAmelio.Visibility = Visibility.Hidden;
 
-                Fenetre.txtNombreTue.Visibility = Visibility.Hidden;
-                Fenetre.txtVagueActuelle.Visibility = Visibility.Hidden;
+                Fenetre.spJoueurStats.Visibility = Visibility.Hidden;
+                Fenetre.spVagueInfo.Visibility = Visibility.Hidden;
 
                 Fenetre.txtStatusVague.Visibility = Visibility.Hidden;
             }

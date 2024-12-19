@@ -63,7 +63,7 @@ namespace Survival_Island
         private void LancerVague(object? sender, EventArgs e)
         {
             Secondes--;
-            moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + "s !";
+            moteurJeu.Fenetre.txtStatusVague.Text = "Allez chercher des trésors, vous avez " + Secondes + " secondes !";
 
             if (Secondes <= 0)
             {
@@ -72,7 +72,9 @@ namespace Survival_Island
                 moteurJeu.Fenetre.txtStatusVague.Text = "Les ennemis arrivent. Défendez votre île !";
 
                 NumeroVague++;
-                moteurJeu.Fenetre.txtVagueActuelle.Text = "Vague actuelle : " + NumeroVague;
+
+                moteurJeu.Fenetre.txtVagueActuelle.Text = NumeroVague.ToString();
+                moteurJeu.Fenetre.txtNbPiratesVie.Text = EnnemisActuels.Count.ToString();
 
                 AjouterVague();
 
