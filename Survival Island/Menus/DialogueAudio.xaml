@@ -36,7 +36,23 @@
                     Maximum="1"
                     Minimum="0" />
             </StackPanel>
-            <Button x:Name="btnAppliquer" Content="Appliquer" Width="100" Height="20" Margin="0,10,0,0" Click="btnAppliquer_Click"/>
+            <Button
+                x:Name="btnAppliquer"
+                Width="100"
+                Height="20"
+                Margin="0,10,0,0"
+                Click="btnAppliquer_Click"
+                Content="Appliquer" />
         </StackPanel>
+        <Button
+            Margin="325,42,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Suivant" />
+        <Button
+            Margin="325,92,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Suivant" />
     </Grid>
 </Window>
