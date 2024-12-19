@@ -22,7 +22,7 @@ namespace Survival_Island.Outils
         public const int JOUEUR_DEGATS = 40;
         public const int AMELIO_DEGATS = 5;
 
-        public const double JOUEUR_RECHARGEMENT_CANON = 0.5;
+        public const double JOUEUR_RECHARGEMENT_CANON = 1;
         public static readonly TimeSpan TEMPS_REAPPARITION = TimeSpan.FromSeconds(5);
 
         public const double BATEAU_ACCELERATION = 200;
@@ -81,7 +81,7 @@ namespace Survival_Island.Outils
         public const int RECOMPENSE_EXP_ENNEMI_TUE = 25;
 
         public const double TEMPS_RECHARGEMENT_MIN_ENNEMI = 1.0;
-        public const double TEMPS_RECHARGEMENT_BASE_ENNEMI = 3.0;
+        public const double TEMPS_RECHARGEMENT_BASE_ENNEMI = 1.0;
         public const double TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI = 3.0;
 
 
