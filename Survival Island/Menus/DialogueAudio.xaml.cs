@@ -14,7 +14,6 @@ namespace Survival_Island
         public DialogueAudio(MoteurJeu moteurJeu)
         {
             InitializeComponent();
-
             SlideMusique.Value = moteurJeu.GestionSons.MediaPlayerMusique.Volume;
         }
     }
