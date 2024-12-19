@@ -81,11 +81,10 @@ namespace Survival_Island.Entites
 
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
-                Console.WriteLine(MoteurJeu.GestionImages.ModDeTir[0]);
 
-                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ModDeTir[0];
-                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ModDeTir[1];
-                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ModDeTir[6];
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ImageOcto;
+                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ImageQuatroPlus;
+                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ImageEventaille;
 
 
                 fenetre.btnQuatre.Content = "Octopus";
@@ -103,9 +102,9 @@ namespace Survival_Island.Entites
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
 
-                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ModDeTir[2];
-                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ModDeTir[3];
-                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ModDeTir[6];
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ImageTrio;
+                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ImageMega;
+                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ImageEventaille;
 
 
 
@@ -123,9 +122,9 @@ namespace Survival_Island.Entites
 
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
-                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ModDeTir[4];
-                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ModDeTir[5];
-                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ModDeTir[6];
+                fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ImageSniper;
+                fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ImageMk30;
+                fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ImageEventaille;
 
 
                 fenetre.btnQuatre.Content = "sniper";

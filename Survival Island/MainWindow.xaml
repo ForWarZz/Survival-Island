@@ -573,28 +573,28 @@
                     Width="100"
                     Height="100"
                     Margin="40,0,0,170"
-                    Source="/images/Bateaux/ModeDeTir/Quatre.png"
+                    Source="/images/ModeDeTir/Quatre.png"
                     Stretch="Fill" />
                 <Image
                     x:Name="imgModeDeTir2"
                     Width="100"
                     Height="100"
                     Margin="40,0,40,170"
-                    Source="/images/Bateaux/ModeDeTir/Pompe.png"
+                    Source="/images/ModeDeTir/Pompe.png"
                     Stretch="Fill" />
                 <Image
                     x:Name="imgModeDeTir3"
                     Width="100"
                     Height="100"
                     Margin="0,0,20,170"
-                    Source="/images/Bateaux/ModeDeTir/Double.png"
+                    Source="/images/ModeDeTir/Double.png"
                     Stretch="Fill" />
                 <Image
                     x:Name="imgNext"
                     Width="100"
                     Height="100"
                     Margin="60,0,0,170"
-                    Source="/images/Bateaux/ModeDeTir/"
+                    Source="/images/ModeDeTir/"
                     Stretch="Fill" />
             </StackPanel>
             <StackPanel

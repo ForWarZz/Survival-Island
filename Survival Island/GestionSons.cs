@@ -22,10 +22,15 @@ namespace Survival_Island
 
             MediaPlayerMusique.Open(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Chemin.MUSIQUE_FOND)));
             MediaPlayerMusique.Volume = Constante.MUSIQUE_VOLUME;
-            MediaPlayerMusique.MediaEnded += (sender, e) => MediaPlayerMusique.Position = TimeSpan.Zero;
+            MediaPlayerMusique.MediaEnded += Relance;
             MediaPlayerMusique.Play();
 
             SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
+        }
+
+        public void Relance(object? sender, EventArgs e)
+        {
+            MediaPlayerMusique.Position = TimeSpan.Zero;
         }
     }
 }

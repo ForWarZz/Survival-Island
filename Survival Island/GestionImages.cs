@@ -19,7 +19,6 @@ namespace Survival_Island
         public BitmapImage Ile { get; private set; }
         public BitmapImage IleFaible { get; private set; }
 
-        public BitmapImage[] ModDeTir {  get; private set; }
 
         public BitmapImage ImageOcto { get; private set; }
         public BitmapImage ImageQuatroPlus { get; private set; }
@@ -42,18 +41,20 @@ namespace Survival_Island
 
             BateauEnnemi = ChargerImage(Chemin.IMAGE_BATEAU_ENNEMI);
 
+
+            ImageOcto = ChargerImage(Chemin.IMG_OCTO);
+            ImageQuatroPlus = ChargerImage(Chemin.IMG_QUATROPLUS);
+            ImageSniper = ChargerImage(Chemin.IMG_SNIPER);
+            ImageMk30 = ChargerImage(Chemin.IMG_MK30);
+            ImageTrio = ChargerImage(Chemin.IMG_TRIO);
+            ImageMega = ChargerImage(Chemin.IMG_MEGA);
+            ImageEventaille = ChargerImage(Chemin.IMG_EVENTAILLE);
+
+
             Ile = ChargerImage(Chemin.IMAGE_ILE);
             IleFaible = ChargerImage(Chemin.IMAGE_ILEC);
 
 
-            BitmapImage[] ModDeTir = new BitmapImage[7];
-            ModDeTir[0] = ChargerImage(Chemin.IMG_OCTO);
-            ModDeTir[1] = ChargerImage(Chemin.IMG_QUATROPLUS);
-            ModDeTir[2] = ChargerImage(Chemin.IMG_SNIPER);
-            ModDeTir[3] = ChargerImage(Chemin.IMG_MK30);
-            ModDeTir[4] = ChargerImage(Chemin.IMG_TRIO);
-            ModDeTir[5] = ChargerImage(Chemin.IMG_MEGA);
-            ModDeTir[6] = ChargerImage(Chemin.IMG_EVENTAILLE);
 
 
         }
