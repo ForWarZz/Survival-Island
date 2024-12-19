@@ -71,8 +71,8 @@ namespace Survival_Island.Entites
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("quatre"); };
-                fenetre.btnSpread.Click += (sender, e) => { ChoisirClasse("spread"); };
-                fenetre.btnDuo.Click += (sender, e) => { ChoisirClasse("duo"); };
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("pompe"); };
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("double"); };
             }
             else if (ModeBateau == "quatre")
             {
@@ -83,11 +83,41 @@ namespace Survival_Island.Entites
                 fenetre.btnQuatre.Content = "Octopus";
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("octopus"); };
 
-                fenetre.btnSpread.Content = "QuatroPlus";
-                fenetre.btnSpread.Click += (sender, e) => { ChoisirClasse("quatroPlus"); };
+                fenetre.btnPompe.Content = "QuatroPlus";
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("quatroPlus"); };
 
-                fenetre.btnDuo.Content = "trioDuo";
-                fenetre.btnDuo.Click += (sender, e) => { ChoisirClasse("trioDuo"); };
+                fenetre.btnDouble.Content = "Eventaille";
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
+            }
+            else if (ModeBateau == "double")
+            {
+
+                fenetre.menuClasse.Visibility = Visibility.Visible;
+
+
+                fenetre.btnQuatre.Content = "trio";
+                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("trio"); };
+
+                fenetre.btnPompe.Content = "MegaDouble";
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("MegaDouble"); };
+
+                fenetre.btnDouble.Content = "Eventaille";
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
+            }
+            else if (ModeBateau == "pompe")
+            {
+
+                fenetre.menuClasse.Visibility = Visibility.Visible;
+
+
+                fenetre.btnQuatre.Content = "sniper";
+                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("sniper"); };
+
+                fenetre.btnPompe.Content = "mk30";
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("mk30"); };
+
+                fenetre.btnDouble.Content = "Eventaille";
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
             }
 
             fenetre.btnIgnore.Click += (sender, e) => { ChoisirClasse("ignore"); };
@@ -106,19 +136,19 @@ namespace Survival_Island.Entites
                     this.TempsRechargementCanon = 1.1;
                     this.Degats = (this.Degats/this.nombreBouletsParShoot)*2;
                 }
-                else if (classe == "duo")
+                else if (classe == "double")
                 {
-                    ModeBateau = "duo";
+                    ModeBateau = "double";
                     this.nombreBouletsParShoot = 2;
                     this.angleBoulets = 0;
                     this.TempsRechargementCanon = 1.1;
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                     this.espacementBoulets = 10;
                 }
-                else if (classe == "spread")
+                else if (classe == "pompe")
                 {
 
-                    ModeBateau = "spread";
+                    ModeBateau = "pompe";
                     this.nombreBouletsParShoot = 3;
                     this.angleBoulets = 20;
                     this.TempsRechargementCanon = 1.1;
@@ -152,9 +182,9 @@ namespace Survival_Island.Entites
                         this.TailleBoulets = 30;
 
                     }
-                    else if (classe == "trioDuo")
+                    else if (classe == "Eventaille")
                     {
-                        ModeBateau = "trioDuo";
+                        ModeBateau = "Eventaille";
                         this.nombreBouletsParShoot = 6;
                         this.angleBoulets = 180;
                         this.TempsRechargementCanon = 1;
@@ -165,35 +195,80 @@ namespace Survival_Island.Entites
                 }
             }
 
-            else if (ModeBateau == "quatre")
+            else if (ModeBateau == "double")
             {
-                if (classe == "octopus")
+                if (classe == "trio")
                 {
 
-                    ModeBateau = "octopus";
-                    this.nombreBouletsParShoot = 8;
-                    this.angleBoulets = 360;
-                    this.TempsRechargementCanon = 1.3;
+                    ModeBateau = "trio";
+                    this.nombreBouletsParShoot = 3;
+                    this.angleBoulets = 0;
+                    this.TempsRechargementCanon = 1.0;
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                    this.espacementBoulets = 10;
+                }
+                else if (classe == "MegaDouble")
+                {
+
+                    ModeBateau = "MegaDouble";
+                    this.nombreBouletsParShoot = 2;
+                    this.angleBoulets = 0;
+                    this.TempsRechargementCanon = 1.8;
+                    this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
+                    this.TailleBoulets = 40;
+
 
                 }
-                else if (classe == "quatroPlus")
+                else if (classe == "Eventaille")
                 {
-
-                    ModeBateau = "quatroPlus";
-                    this.nombreBouletsParShoot = 4;
-                    this.angleBoulets = 360;
-                    this.TempsRechargementCanon = 0.8;
-                    this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 10;
-                    this.TailleBoulets = 30;
-
+                    ModeBateau = "Eventaille";
+                    this.nombreBouletsParShoot = 6;
+                    this.angleBoulets = 180;
+                    this.TempsRechargementCanon = 1;
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                 }
 
                 this.NiveauClasse = 2;
             }
-        
-        // Masquer le menu de sélection de classe
-        fenetre.menuClasse.Visibility = Visibility.Hidden;
+
+            else if (ModeBateau == "pompe")
+            {
+                if (classe == "sniper")
+                {
+
+                    ModeBateau = "sniper";
+                    this.nombreBouletsParShoot = 12;
+                    this.angleBoulets = 5;
+                    this.TempsRechargementCanon = 3.0;
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                    this.espacementBoulets = 10;
+                }
+                else if (classe == "mk30")
+                {
+
+                    ModeBateau = "mk30";
+                    this.nombreBouletsParShoot = 5;
+                    this.angleBoulets = 35;
+                    this.TempsRechargementCanon = 0.8;
+                    this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
+                    this.TailleBoulets = 15;
+
+
+                }
+                else if (classe == "Eventaille")
+                {
+                    ModeBateau = "Eventaille";
+                    this.nombreBouletsParShoot = 6;
+                    this.angleBoulets = 180;
+                    this.TempsRechargementCanon = 1;
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                }
+
+                this.NiveauClasse = 2;
+            }
+
+            // Masquer le menu de sélection de classe
+            fenetre.menuClasse.Visibility = Visibility.Hidden;
         }
 
 

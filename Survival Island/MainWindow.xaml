@@ -573,17 +573,17 @@
                     Margin="20"
                     Content="Quatre" />
                 <Button
-                    x:Name="btnSpread"
+                    x:Name="btnPompe"
                     Width="100"
                     Height="50"
                     Margin="20"
-                    Content="Spread" />
+                    Content="Pompe" />
                 <Button
-                    x:Name="btnDuo"
+                    x:Name="btnDouble"
                     Width="100"
                     Height="50"
                     Margin="20"
-                    Content="Duo" />
+                    Content="Double" />
                 <Button
                     x:Name="btnIgnore"
                     Width="100"
