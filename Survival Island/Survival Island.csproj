@@ -15,6 +15,13 @@
     <None Remove="Images\Bateaux\bateau_bleu.png" />
     <None Remove="Images\Bateaux\bateau_ennemi.png" />
     <None Remove="Images\Bateaux\bateau_jaune.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Double.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Octo.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Pompe.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Quatre.png" />
+    <None Remove="images\Bateaux\ModeDeTir\QuatroPlus.png" />
+    <None Remove="images\Bateaux\ModeDeTir\Sniper.png" />
+    <None Remove="images\Bateaux\ModeDeTir\trio.png" />
     <None Remove="Images\bateau_rouge.png" />
     <None Remove="Images\bateau_vert.png" />
     <None Remove="Images\boulet_canon.png" />
@@ -49,6 +56,27 @@
     </Resource>
     <Resource Include="Images\Bateaux\Joueur\bateau_4.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Double.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Octo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Pompe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Quatre.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\QuatroPlus.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\Sniper.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Bateaux\ModeDeTir\trio.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\CarteJeu\Iles\ile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

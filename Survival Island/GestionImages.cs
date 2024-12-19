@@ -19,6 +19,10 @@ namespace Survival_Island
         public BitmapImage Ile { get; private set; }
         public BitmapImage IleFaible { get; private set; }
 
+
+
+
+
         public GestionImages()
         {
             Mer = ChargerImage(Chemin.IMAGE_MER);
