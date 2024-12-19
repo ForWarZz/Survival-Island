@@ -408,7 +408,7 @@ namespace Survival_Island.Entites
             }
         }
 
-        protected override void BouletTire()
+        protected override void QuandBouletTire()
         {
             MoteurJeu.GestionSons.SoundPlayerTire.Play();
         }

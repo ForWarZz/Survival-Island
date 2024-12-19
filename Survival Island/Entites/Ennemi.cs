@@ -45,7 +45,7 @@ namespace Survival_Island.Entites
         {
             VerifierJoueursDansRayon();
 
-            if (joueurDansRayon)
+            if (joueurDansRayon && !joueur.EstMort)
             {
                 cibleActuelle = joueur.Centre;
 
@@ -56,30 +56,30 @@ namespace Survival_Island.Entites
             }
             else
             {
-                Console.WriteLine("DEBUG: Joueur pas dans rayon, depalcement vers cible");
+                //Console.WriteLine("DEBUG: Joueur pas dans rayon, depalcement vers cible");
 
                 if (EstProcheDeCible(ciblePrincipale))
                 {
-                    Console.WriteLine("DEBUG: Ennemi arrivé à sa cible principale.");
+                    //Console.WriteLine("DEBUG: Ennemi arrivé à sa cible principale.");
                     CanonActif = true;
                 }
                 else
                 {
                     if (AngleCible == AngleActuel && !orientationFinaleEnCours)
                     {
-                        Console.WriteLine("DEBUG: Orientation finale en cours");
+                        //Console.WriteLine("DEBUG: Orientation finale en cours");
 
                         ChangerOrientation(orientationFinale);
                         orientationFinaleEnCours = true;
                     } else if (!orientationEnCours)
                     {
-                        Console.WriteLine("DEBUG: Orientation cible en cours");
+                        //Console.WriteLine("DEBUG: Orientation cible en cours");
 
                         ChangerOrientation(cibleActuelle);
                         orientationEnCours = true;
                     } else
                     {
-                        Console.WriteLine("DEBUG: Orientation bonne, deplacement");
+                        //Console.WriteLine("DEBUG: Orientation bonne, deplacement");
 
                         base.Deplacer(deltaTemps);
                         MettreAJourPositionVie();

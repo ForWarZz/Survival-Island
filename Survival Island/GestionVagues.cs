@@ -67,21 +67,19 @@ namespace Survival_Island
 
             if (Secondes <= 0)
             {
-                //Console.WriteLine("DEBUG: Lancement vague n." + NumeroVague);
+                Console.WriteLine("DEBUG: Lancement vague n." + NumeroVague);
 
                 moteurJeu.Fenetre.txtStatusVague.Text = "Les ennemis arrivent. Défendez votre île !";
 
                 NumeroVague++;
 
                 moteurJeu.Fenetre.txtVagueActuelle.Text = NumeroVague.ToString();
-                moteurJeu.Fenetre.txtNbPiratesVie.Text = EnnemisActuels.Count.ToString();
 
                 AjouterVague();
 
                 MinuteurVague.Stop();
                 vagueEnCours = true;
 
-                MinuteurVague.Stop();
                 Secondes = Constante.TEMPS_ENTRE_VAGUE;
             }
         }
@@ -99,16 +97,22 @@ namespace Survival_Island
 
 
             AjouterEnnemis(nombreEnnemis, vieMax, degats, Constante.JOUEUR_VITESSE, tempsRechargement);
+            moteurJeu.Fenetre.txtNbPiratesVie.Text = nombreEnnemis.ToString();
         }
 
         public void MettreAJour()
         {
             if (!vagueEnCours) return;
+
+            Console.WriteLine("DEBUG: MAJ GESTION VAGUE");
+            moteurJeu.Fenetre.txtNbPiratesVie.Text = EnnemisActuels.Count.ToString();
+
             if (EnnemisActuels.Count == 0)
             {
                 vagueEnCours = false;
-
                 MinuteurVague.Start();
+
+                Console.WriteLine("DEBUG: Fin vague n." + NumeroVague);
             }
         }
 

@@ -155,7 +155,7 @@ namespace Survival_Island.Entites.Navire
                 return;
             TempsDernierTir = TempsRechargementCanon;
 
-            BouletTire();
+            QuandBouletTire();
 
             double espaceBoulets = angleBoulets / (nombreBouletsParShoot);
 
@@ -193,6 +193,9 @@ namespace Survival_Island.Entites.Navire
             }
         }
 
-        protected abstract void BouletTire();
+        protected virtual void QuandBouletTire()
+        {
+
+        }
     }
 }
