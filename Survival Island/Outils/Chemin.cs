@@ -1,6 +1,6 @@
 ﻿namespace Survival_Island.Outils
 {
-    public static class Chemin
+    public class Chemin
     {
         public const string BATEAUX_JOUEUR = "pack://application:,,,/Images/Bateaux/Joueur/bateau_";
         public const string ROCHERS = "pack://application:,,,/Images/CarteJeu/Rochers/rocher_";

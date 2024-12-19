@@ -1,14 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Survival_Island.Calcul" Collapsed="true">
-    <Position X="17.5" Y="1.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Calcul.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Survival_Island.DialogueAudio" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="17.5" Y="2.25" Width="1.5" />
+    <Position X="19.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAEAAAAAAAQAAAAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Menus\DialogueAudio.xaml.cs</FileName>
@@ -16,43 +9,50 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Survival_Island.DialogueChangerBateau" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="19.25" Y="2.25" Width="1.5" />
+    <Position X="21" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABAAAgAQAAAAAACAEAAAIAAAAIAAACAAAAA=</HashCode>
       <FileName>Menus\DialogueChangerBateau.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
+  <Class Name="Survival_Island.Calcul" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Calcul.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Survival_Island.GestionCarte" Collapsed="true">
-    <Position X="21" Y="2.25" Width="1.5" />
+    <Position X="22.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QgKAAAAAAAAAAAAAAAAABACFAAAAIAAAgAQAAgAAEAA=</HashCode>
       <FileName>GestionCarte.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.GestionImages" Collapsed="true">
-    <Position X="22.75" Y="2.25" Width="1.5" />
+    <Position X="17.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACCABAAAAAAAABQQAAQCAAAAAAAMgAgAAAAAEAAAA=</HashCode>
       <FileName>GestionImages.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.GestionSons" Collapsed="true">
-    <Position X="17.5" Y="3.25" Width="1.5" />
+    <Position X="19.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIACADAAAAAKACAAAAAAAADAAAAACIAAAAAAUA=</HashCode>
       <FileName>GestionSons.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.GestionVagues" Collapsed="true">
-    <Position X="19.25" Y="3.25" Width="1.5" />
+    <Position X="21" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAKAEAAAAQAAACAAACACAAAAgAAAIABAQAAAAIEQCAA=</HashCode>
       <FileName>GestionVagues.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="21" Y="3.25" Width="1.5" />
+    <Position X="22.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABCAAEAoAAAQAAhAAABJgAMAAgAAAEBAAAAGgJCACgA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
@@ -60,102 +60,95 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Survival_Island.MoteurJeu" Collapsed="true">
-    <Position X="22.75" Y="3.25" Width="1.5" />
+    <Position X="17.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CQAgBBECGCAIABIAAAEAAgwgCAAAEARQIAQAAAAAACA=</HashCode>
       <FileName>MoteurJeu.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Survival_Island.Entites.Ennemi" Collapsed="true">
-    <Position X="10.5" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAABgCAAEAEAQAAAQAAAAABAAAABgABIAACAACAI=</HashCode>
-      <FileName>Entites\Ennemi.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Survival_Island.Entites.Ile" Collapsed="true">
-    <Position X="6" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACABAAAAAEAAAIECAABAAAAAAIAAQAAQAAAEUAAAAA=</HashCode>
-      <FileName>Entites\Ile.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Survival_Island.Entites.Joueur" Collapsed="true">
-    <Position X="8.25" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CQAABCAECCAACAAUEBMAAQUAAAIAAACAQQAAE0CARAI=</HashCode>
-      <FileName>Entites\Joueur.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Survival_Island.Entites.Base.Collision" Collapsed="true">
-    <Position X="21" Y="1.25" Width="1.5" />
+    <Position X="21" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>CBAAAIAAAAIAAAAAQAAABAAAASAAAAAAAAAAAAAAAQA=</HashCode>
       <FileName>Entites\Base\Collision.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Entites.Base.EntiteAvecVie" Collapsed="true">
-    <Position X="9.25" Y="2.5" Width="1.5" />
+    <Position X="11.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAIAAAAAgAABAAIFAAAAAAAAAAQAAyAAAkQAAAAA=</HashCode>
       <FileName>Entites\Base\EntiteAvecVie.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Entites.Base.EntiteBase" Collapsed="true">
-    <Position X="9.25" Y="1.25" Width="1.5" />
+    <Position X="9.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAgIACABAAAAAhAAAABAAEAIAAAAAAAAAAwQAAAAA=</HashCode>
       <FileName>Entites\Base\EntiteBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Entites.Navire.Bateau" Collapsed="true">
-    <Position X="9.25" Y="4" Width="1.5" />
+    <Position X="13.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAAAACQAEIAAQAAAARAMAABCAIJAAACQAQHBEAAI=</HashCode>
       <FileName>Entites\Navire\Bateau.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Entites.Navire.Boulet" Collapsed="true">
-    <Position X="3.75" Y="2.5" Width="1.5" />
+    <Position X="3.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entites\Navire\Boulet.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Entites.Objets.ObjetRecompense" Collapsed="true">
-    <Position X="12.75" Y="4" Width="1.5" />
+    <Position X="8.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entites\Objets\ObjetRecompense.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Entites.Objets.Obstacle" Collapsed="true">
-    <Position X="15" Y="2.5" Width="1.5" />
+    <Position X="6" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entites\Objets\Obstacle.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Survival_Island.Entites.Ennemi" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABgCAAEAEAQAAAQAAAAABAAAABgABIAACAACAI=</HashCode>
+      <FileName>Entites\Ennemi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Survival_Island.Entites.Ile" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACABAAAAAEAAAIECAABAAAAAAIAAQAAQAAAEUAAAAA=</HashCode>
+      <FileName>Entites\Ile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Survival_Island.Entites.Joueur" Collapsed="true">
+    <Position X="15" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQAABCAECCAACAAUEBMAAQUAAAIAAACAQQAAE0CARAI=</HashCode>
+      <FileName>Entites\Joueur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Survival_Island.Outils.Chemin" Collapsed="true">
-    <Position X="19.25" Y="1.25" Width="1.5" />
+    <Position X="19.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIEAIIAAAAAAQIUIEEAAECIAAAAAAAAgAIAAAAAAAA=</HashCode>
       <FileName>Outils\Chemin.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Survival_Island.Outils.Constante" Collapsed="true">
-    <Position X="22.75" Y="1.25" Width="1.5" />
+    <Position X="17.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>G0DIqqAIIArKYAECDhoEkAIAIEEAMIwTLQIQYUiIUBI=</HashCode>
       <FileName>Outils\Constante.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="Survival_Island.Entites.Objets.TypeRecompense" Collapsed="true">
-    <Position X="17.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
-      <FileName>Entites\Objets\TypeRecompense.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
