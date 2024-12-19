@@ -31,8 +31,8 @@
         
 
 
-        public const string MUSIQUE_FOND = "Son/MusiqueFond.mp3";
-        public const string SON_TIRE = "pack://application:,,,/Son/shoot.wav";
+        public const string MUSIQUE_FOND = "Son/MusiqueFond";
+        public const string SON = "pack://application:,,,/Son/son";
 
 
 

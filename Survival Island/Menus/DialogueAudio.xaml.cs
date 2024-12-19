@@ -1,5 +1,13 @@
-﻿using Survival_Island.Entites;
+﻿using Survival_Island.Outils;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Media;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Survival_Island
 {
@@ -16,13 +24,23 @@ namespace Survival_Island
         {
             InitializeComponent();
             this.moteurJeu = moteurJeu;
-            SlideMusique.Value = moteurJeu.GestionSons.MediaPlayerMusique.Volume;
+            SlideMusique.Value = moteurJeu.GestionSons.Musiques[moteurJeu.GestionSons.indiceMusiqueJoue].Volume;
         }
 
         private void btnAppliquer_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.GestionSons.MediaPlayerMusique.Volume = SlideMusique.Value;
+            moteurJeu.GestionSons.Musiques[moteurJeu.GestionSons.indiceMusiqueJoue].Volume = SlideMusique.Value;
             DialogResult = true;
+        }
+
+        private void btnMusique_Click(object sender, RoutedEventArgs e)
+        {
+            this.moteurJeu.GestionSons.MusiqueSuivante();
+        }
+
+        private void btnSon_Click(object sender, RoutedEventArgs e)
+        {
+            this.moteurJeu.GestionSons.SonSuivant();
         }
     }
 }

@@ -8,29 +8,119 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Survival_Island
 {
     public class GestionSons
     {
         public MediaPlayer MediaPlayerMusique { get; }
-        public SoundPlayer SoundPlayerTire { get; }
+
+        public MediaPlayer[] Musiques { get; set; }
+        //public SoundPlayer SoundPlayerTire { get; }
+        public SoundPlayer[] Sons { get; set; }
+        public int indiceMusiqueJoue { get; set; }
+        public int indiceSonJoue { get; set; }
+
 
         public GestionSons()
         {
-            MediaPlayerMusique = new MediaPlayer();
 
-            MediaPlayerMusique.Open(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Chemin.MUSIQUE_FOND)));
-            MediaPlayerMusique.Volume = Constante.MUSIQUE_VOLUME;
-            MediaPlayerMusique.MediaEnded += Relance;
-            MediaPlayerMusique.Play();
+            InitMusique();
 
-            SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
+            InitSons();
+
+
+            indiceSonJoue = Constante.SON_DE_BASE;
+            indiceMusiqueJoue = Constante.MUSIQUE_DE_BASE;
+
+            Musiques[indiceMusiqueJoue].Play();
+
+            //SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
+        }
+
+        public void JoueSon()
+        {
+            Sons[indiceSonJoue].Play();
+        }
+
+        public void SonSuivant()
+        {
+            
+            indiceSonJoue += 1;
+            indiceSonJoue = indiceSonJoue % Sons.Length;
+            Sons[indiceSonJoue].Play();
+
+        }
+        private void InitSons()
+        {
+           Sons = ChargerSons(Chemin.SON, 5, "wav");
+
+        }
+
+        private SoundPlayer ChargerSon(string chemin)
+        {
+            return new SoundPlayer(Application.GetResourceStream(new Uri(chemin)).Stream);
+        }
+        private SoundPlayer[] ChargerSons(string chemin, int nombreSons, string extension)
+        {
+            SoundPlayer[] sons = new SoundPlayer[nombreSons];
+            for (int i = 1; i <= nombreSons; i++)
+            {
+                sons[i - 1] = ChargerSon(chemin + i + "." + extension);
+            }
+
+            return sons;
+        }
+
+
+        private Uri ChargerMusique(string chemin)
+        {
+            return new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, chemin));
+        }
+
+        private Uri[] ChargerMusiques(string chemin, int nombreSons, string extension)
+        {
+            Uri[] sons = new Uri[nombreSons];
+            for (int i = 1; i <= nombreSons; i++)
+            {
+                sons[i - 1] = ChargerMusique(chemin + i + "." + extension);
+            }
+
+            return sons;
+        }
+        private void InitMusique()
+        {
+            Uri[] tab = ChargerMusiques(Chemin.MUSIQUE_FOND, 4, "mp3");
+
+            Musiques = new MediaPlayer[tab.Length];
+
+            for (int i = 0; i < tab.Length; i++) {
+                Musiques[i] = new MediaPlayer();
+                Musiques[i].Open(tab[i]);
+                Musiques[i].Volume = Constante.MUSIQUE_VOLUME;
+                Musiques[i].MediaEnded += Relance;
+            }
         }
 
         public void Relance(object? sender, EventArgs e)
         {
             MediaPlayerMusique.Position = TimeSpan.Zero;
         }
+
+        public void MusiqueSuivante()
+        {
+            Musiques[indiceMusiqueJoue].Stop();
+
+            double volumeMusiqueSuivante = Musiques[indiceMusiqueJoue].Volume;
+
+            indiceMusiqueJoue += 1;
+            indiceMusiqueJoue= indiceMusiqueJoue % Musiques.Length ;
+            Musiques[indiceMusiqueJoue].Volume=volumeMusiqueSuivante;
+            Musiques[indiceMusiqueJoue].Play();
+
+        }
+
+        
     }
 }

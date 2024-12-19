@@ -414,7 +414,7 @@ namespace Survival_Island.Entites
 
         protected override void QuandBouletTire()
         {
-            MoteurJeu.GestionSons.SoundPlayerTire.Play();
+            MoteurJeu.GestionSons.JoueSon();
         }
 
         public override void MettreAJour()

@@ -44,15 +44,15 @@
                 Click="btnAppliquer_Click"
                 Content="Appliquer" />
         </StackPanel>
-        <Button
+        <Button x:Name="btnMusique"
             Margin="325,42,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Suivant" />
-        <Button
+            Content="Suivant" Click="btnMusique_Click" />
+        <Button x:Name="btnSon"
             Margin="325,92,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Suivant" />
+            Content="Suivant" Click="btnSon_Click" />
     </Grid>
 </Window>

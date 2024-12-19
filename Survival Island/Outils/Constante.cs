@@ -97,5 +97,11 @@ namespace Survival_Island.Outils
         public static readonly ImmutableArray<double> MODE_SNIPER = ImmutableArray.Create(1.0, 0.0, 3.0, 40.0, 0.0);
         public static readonly ImmutableArray<double> MODE_MK30 = ImmutableArray.Create(5.0, 35.0, 0.8, 20.0, 15.0);
 
+
+
+        public const int MUSIQUE_DE_BASE = 0;
+        public const int SON_DE_BASE = 0;
+
+
     }
 }
