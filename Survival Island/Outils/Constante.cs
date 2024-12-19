@@ -67,10 +67,10 @@
 
         public const double DISTANCE_EVASION = 50.0;
 
-        public const int TEMPS_ENTRE_VAGUE = 5;
+        public const int TEMPS_ENTRE_VAGUE = 20;    // En seconde
 
         public const int VAGUE_MIN_ENNEMI = 1;
-        public const int VAGUE_MAX_ENNEMI = 1;
+        public const int VAGUE_MAX_ENNEMI = 8;
 
         public const int VIE_BASE_ENNEMI = 100;
         public const int MULTIPLICATEUR_VIE_ENNEMI = 2;
