@@ -126,153 +126,125 @@ namespace Survival_Island.Entites
         private void ChoisirClasse(string classe)
         {
             // Appliquer les modifications en fonction de la classe choisie
-            if (Niveau >= 5 && ModeBateau=="classique" && classe!="ignore")
+            if (Niveau >= 5 && ModeBateau == "classique" && classe != "ignore")
             {
                 if (classe == "quatre")
                 {
                     ModeBateau = "quatre";
-                    this.nombreBouletsParShoot = 4;
-                    this.angleBoulets = 360;
-                    this.TempsRechargementCanon = 1.1;
-                    this.Degats = (this.Degats/this.nombreBouletsParShoot)*2;
+                    this.nombreBouletsParShoot = (int)Constante.MODE_QUATRE[0];
+                    this.angleBoulets = (int)Constante.MODE_QUATRE[1];
+                    this.TempsRechargementCanon = Constante.MODE_QUATRE[2];
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                 }
                 else if (classe == "double")
                 {
                     ModeBateau = "double";
-                    this.nombreBouletsParShoot = 2;
-                    this.angleBoulets = 0;
-                    this.TempsRechargementCanon = 1.1;
+                    this.nombreBouletsParShoot = (int)Constante.MODE_DOUBLE[0];
+                    this.angleBoulets = (int)Constante.MODE_DOUBLE[1];
+                    this.TempsRechargementCanon = Constante.MODE_DOUBLE[2];
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                    this.espacementBoulets = 10;
+                    this.espacementBoulets = (int)Constante.MODE_DOUBLE[3];
                 }
                 else if (classe == "pompe")
                 {
                     ModeBateau = "pompe";
-                    this.nombreBouletsParShoot = 3;
-                    this.angleBoulets = 20;
-                    this.TempsRechargementCanon = 1.1;
+                    this.nombreBouletsParShoot = (int)Constante.MODE_POMPE[0];
+                    this.angleBoulets = (int)Constante.MODE_POMPE[1];
+                    this.TempsRechargementCanon = Constante.MODE_POMPE[2];
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-
                 }
                 this.NiveauClasse = 1;
             }
-
-            else if (Niveau >= 15 && classe != "ignore") {
+            else if (Niveau >= 15 && classe != "ignore")
+            {
                 if (ModeBateau == "quatre")
                 {
                     if (classe == "octopus")
                     {
-
                         ModeBateau = "octopus";
-                        this.nombreBouletsParShoot = 8;
-                        this.angleBoulets = 360;
-                        this.TempsRechargementCanon = 1.3;
+                        this.nombreBouletsParShoot = (int)Constante.MODE_OCTOPUS[0];
+                        this.angleBoulets = (int)Constante.MODE_OCTOPUS[1];
+                        this.TempsRechargementCanon = Constante.MODE_OCTOPUS[2];
                         this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-
                     }
                     else if (classe == "quatroPlus")
                     {
-
                         ModeBateau = "quatroPlus";
-                        this.nombreBouletsParShoot = 4;
-                        this.angleBoulets = 360;
-                        this.TempsRechargementCanon = 0.8;
-                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 10;
-                        this.TailleBoulets = 30;
-
+                        this.nombreBouletsParShoot = (int)Constante.MODE_QUATRO_PLUS[0];
+                        this.angleBoulets = (int)Constante.MODE_QUATRO_PLUS[1];
+                        this.TempsRechargementCanon = Constante.MODE_QUATRO_PLUS[2];
+                        this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_QUATRO_PLUS[3]) ; 
+                        this.TailleBoulets = (int)Constante.MODE_QUATRO_PLUS[4];
                     }
-                    
-
                     this.NiveauClasse = 2;
                 }
-
                 else if (ModeBateau == "double")
                 {
                     if (classe == "trio")
                     {
-
                         ModeBateau = "trio";
-                        this.nombreBouletsParShoot = 3;
-                        this.angleBoulets = 0;
-                        this.TempsRechargementCanon = 1.0;
+                        this.nombreBouletsParShoot = (int)Constante.MODE_TRIO[0];
+                        this.angleBoulets = (int)Constante.MODE_TRIO[1];
+                        this.TempsRechargementCanon = Constante.MODE_TRIO[2];
                         this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                        this.espacementBoulets = 15;
-                        this.TailleBoulets = 15;
+                        this.espacementBoulets = (int)Constante.MODE_TRIO[3];
+                        this.TailleBoulets = (int)Constante.MODE_TRIO[4];
                     }
                     else if (classe == "Mega")
                     {
-
                         ModeBateau = "Mega";
-                        this.nombreBouletsParShoot = 1;
-                        this.angleBoulets = 0;
-                        this.TempsRechargementCanon = 1.8;
-                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
-                        this.TailleBoulets = 60;
-
-
+                        this.nombreBouletsParShoot = (int)Constante.MODE_MEGA[0];
+                        this.angleBoulets = (int)Constante.MODE_MEGA[1];
+                        this.TempsRechargementCanon = Constante.MODE_MEGA[2];
+                        this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_MEGA[3]);
+                        this.TailleBoulets = (int)Constante.MODE_MEGA[4];
                     }
                     else if (classe == "Eventaille")
                     {
                         ModeBateau = "Eventaille";
-                        this.nombreBouletsParShoot = 6;
-                        this.angleBoulets = 180;
-                        this.TempsRechargementCanon = 1;
+                        this.nombreBouletsParShoot = (int)Constante.MODE_EVENTAILLE[0];
+                        this.angleBoulets = (int)Constante.MODE_EVENTAILLE[1];
+                        this.TempsRechargementCanon = Constante.MODE_EVENTAILLE[2];
                         this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                     }
-
                     this.NiveauClasse = 2;
                 }
-
                 else if (ModeBateau == "pompe")
                 {
                     if (classe == "sniper")
                     {
-
                         ModeBateau = "sniper";
-                        this.nombreBouletsParShoot = 1;
-                        this.angleBoulets = 0;
-                        this.TempsRechargementCanon = 3.0;
-                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) +40 ;
-                        this.espacementBoulets = 0;
+                        this.nombreBouletsParShoot = (int)Constante.MODE_SNIPER[0];
+                        this.angleBoulets = (int)Constante.MODE_SNIPER[1];
+                        this.TempsRechargementCanon = Constante.MODE_SNIPER[2];
+                        this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_SNIPER[3]);
+                        this.espacementBoulets = (int)Constante.MODE_SNIPER[4];
                     }
                     else if (classe == "mk30")
                     {
-
                         ModeBateau = "mk30";
-                        this.nombreBouletsParShoot = 5;
-                        this.angleBoulets = 35;
-                        this.TempsRechargementCanon = 0.8;
-                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
-                        this.TailleBoulets = 15;
-
-
+                        this.nombreBouletsParShoot = (int)Constante.MODE_MK30[0];
+                        this.angleBoulets = (int)Constante.MODE_MK30[1];
+                        this.TempsRechargementCanon = Constante.MODE_MK30[2];
+                        this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_MK30[3]);
+                        this.TailleBoulets = (int)Constante.MODE_MK30[4];
                     }
                     else if (classe == "Eventaille")
                     {
                         ModeBateau = "Eventaille";
-                        this.nombreBouletsParShoot = 6;
-                        this.angleBoulets = 180;
-                        this.TempsRechargementCanon = 1;
+                        this.nombreBouletsParShoot = (int)Constante.MODE_EVENTAILLE[0];
+                        this.angleBoulets = (int)Constante.MODE_EVENTAILLE[1];
+                        this.TempsRechargementCanon = Constante.MODE_EVENTAILLE[2];
                         this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                     }
-
                     this.NiveauClasse = 2;
                 }
-
-                if (classe == "Eventaille")
-                {
-                    ModeBateau = "Eventaille";
-                    this.nombreBouletsParShoot = 6;
-                    this.angleBoulets = 160;
-                    this.TempsRechargementCanon = 1;
-                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                }
             }
-
 
             // Masquer le menu de sélection de classe
             fenetre.menuClasse.Visibility = Visibility.Hidden;
         }
+
 
 
         public override void Apparaitre(Point position)
