@@ -101,6 +101,11 @@ namespace Survival_Island.Outils
         public static readonly double[] MODE_MK30 = [5.0, 35.0, 0.8, 20.0, 15.0];
 
         public const int MUSIQUE_DE_BASE = 0;
+        public const int NB_MUSIQUE = 4;
+        public const string MUSIQUE_EXT = "mp3";
+
         public const int SON_DE_BASE = 0;
+        public const int NB_SON = 5;
+        public const string SON_EXT = "wav";
     }
 }
