@@ -98,8 +98,8 @@ namespace Survival_Island.Entites
                 fenetre.btnQuatre.Content = "trio";
                 fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("trio"); };
 
-                fenetre.btnPompe.Content = "MegaDouble";
-                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("MegaDouble"); };
+                fenetre.btnPompe.Content = "Mega";
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("Mega"); };
 
                 fenetre.btnDouble.Content = "Eventaille";
                 fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
@@ -196,17 +196,18 @@ namespace Survival_Island.Entites
                         this.angleBoulets = 0;
                         this.TempsRechargementCanon = 1.0;
                         this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                        this.espacementBoulets = 10;
+                        this.espacementBoulets = 15;
+                        this.TailleBoulets = 15;
                     }
-                    else if (classe == "MegaDouble")
+                    else if (classe == "Mega")
                     {
 
-                        ModeBateau = "MegaDouble";
-                        this.nombreBouletsParShoot = 2;
+                        ModeBateau = "Mega";
+                        this.nombreBouletsParShoot = 1;
                         this.angleBoulets = 0;
                         this.TempsRechargementCanon = 1.8;
                         this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
-                        this.TailleBoulets = 40;
+                        this.TailleBoulets = 60;
 
 
                     }
@@ -228,11 +229,11 @@ namespace Survival_Island.Entites
                     {
 
                         ModeBateau = "sniper";
-                        this.nombreBouletsParShoot = 12;
-                        this.angleBoulets = 5;
+                        this.nombreBouletsParShoot = 1;
+                        this.angleBoulets = 0;
                         this.TempsRechargementCanon = 3.0;
-                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                        this.espacementBoulets = 10;
+                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) +40 ;
+                        this.espacementBoulets = 0;
                     }
                     else if (classe == "mk30")
                     {
