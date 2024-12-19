@@ -89,7 +89,6 @@
             VerticalAlignment="Top"
             FontFamily="Stencil"
             FontSize="16"
-            Text="Les ennemies vont arriver. Rapprochez vous de l'île."
             Visibility="Hidden" />
 
         <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,39,0,0" x:Name="spVagueInfo" Visibility="Hidden">
@@ -111,7 +110,7 @@
                 <TextBlock
                 x:Name="txtNbPiratesVie"
                 FontFamily="Stencil"
-                Text="1" Margin="5,0,0,0"/>
+                Text="0" Margin="5,0,0,0"/>
             </StackPanel>
         </StackPanel>
 
