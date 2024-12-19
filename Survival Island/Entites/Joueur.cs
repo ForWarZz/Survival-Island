@@ -321,7 +321,7 @@ namespace Survival_Island.Entites
 
             foreach (Ennemi ennemi in MoteurJeu.GestionVagues.EnnemisActuels)
             {
-                if (nouvelleCollision.EnCollisionAvec(ennemi.CollisionRectangle)) 
+                if (nouvelleCollision.CollisionDevantAvec(ennemi.CollisionRectangle)) 
                     return false;
             }
 
