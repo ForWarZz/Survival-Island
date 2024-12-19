@@ -30,8 +30,6 @@ namespace Survival_Island.Entites.Navire
         protected double AngleCible { get; set; }
         protected double AngleActuel { get; set; }
 
-        protected DispatcherTimer rotationTemps;
-
         protected BitmapImage bateauImage;
 
         public int TailleBoulets {  get; set; }
@@ -68,8 +66,6 @@ namespace Survival_Island.Entites.Navire
             angleBoulets = 0;
 
             ModeBateau = "classique";
-
-            InitRotationTemps();
         }
 
         public virtual void Deplacer(double deltaTemps)
@@ -102,48 +98,42 @@ namespace Survival_Island.Entites.Navire
             double deltaY = nouvellePosition.Y - Centre.Y;
 
             AngleCible = Math.Atan2(deltaY, deltaX) * 180 / Math.PI - 90;
-
-            if (!rotationTemps.IsEnabled)
-            {
-                rotationTemps.Start();
-            }
         }
 
         protected abstract bool PeutAllerVers(double nouvellePosX, double nouvellePosY);
 
-        private void AnimationRotation(object? sender, EventArgs e)
+        public void MiseAJourRotation(double deltaTemps)
         {
-            double diffAngle = AngleCible - AngleActuel;
+            double diffAngle = (AngleCible - AngleActuel + 360) % 360;
+            if (diffAngle > 180) diffAngle -= 360;
 
-            if (diffAngle > 180)
-                diffAngle -= 360;
+            double deltaRotation = Constante.VITESSE_ROTATION_BATEAU * deltaTemps; // Delta rotation selon le temps écoulé
 
-            if (diffAngle < -180)
-                diffAngle += 360;
-
-            if (Math.Abs(diffAngle) <= Constante.TOLERANCE_ANGLE_ROTATION)   // On ajoute une tolérance pour éviter les oscillations infinies
+            // Si l'angle est dans la tolérance, on termine la rotation
+            if (Math.Abs(diffAngle) <= Constante.TOLERANCE_ANGLE_ROTATION)
             {
                 AngleActuel = AngleCible;
-                rotationTemps.Stop();
             }
             else
             {
-                AngleActuel += Math.Sign(diffAngle) * 5;
+                // Si l'angle est plus grand que la distance maximale à parcourir, on ajuste l'angle
+                if (Math.Abs(diffAngle) > deltaRotation)
+                {
+                    AngleActuel += Math.Sign(diffAngle) * deltaRotation;
+                }
+                else
+                {
+                    AngleActuel = AngleCible;
+                }
             }
 
-            // On calcule le vetceur directeur (utilisé pour le tir des boulets ou encore le mouvement)
+            // Mise à jour de l'orientation
             double angleRad = (AngleActuel + 90) * Math.PI / 180;
             Orientation = new Vector(Math.Cos(angleRad), Math.Sin(angleRad));
             Orientation.Normalize();
 
+            // Appliquer la transformation de rotation à l'élément graphique
             CanvaElement.RenderTransform = new RotateTransform(AngleActuel, CanvaElement.Width / 2, CanvaElement.Height / 2);
-        }
-
-        protected void InitRotationTemps()
-        {
-            rotationTemps = new DispatcherTimer();
-            rotationTemps.Interval = TimeSpan.FromMilliseconds(Constante.TEMPS_ROTATION_NAVIRE);
-            rotationTemps.Tick += AnimationRotation;
         }
 
         public void TirerBoulet()

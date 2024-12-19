@@ -16,17 +16,17 @@ namespace Survival_Island.Outils
         public const int JOUEUR_VIE_MAX = 100;
         public const int AMELIO_VIE_MAX = 20;
 
-        public const int JOUEUR_VITESSE = 300;
-        public const int AMELIO_VITESSE_MAX = 550;
-        public const double AMELIO_VITESSE = 10;
+        public const int JOUEUR_VITESSE = 300;  // Vitesse en px/s
+        public const int AMELIO_VITESSE_MAX = 550;  // Vitesse en px/s
+        public const double AMELIO_VITESSE = 40;  // Vitesse en px/s
 
         public const int JOUEUR_DEGATS = 40;
         public const int AMELIO_DEGATS = 5;
 
-        public const double JOUEUR_RECHARGEMENT_CANON = 1;
+        public const double JOUEUR_RECHARGEMENT_CANON = 1.0;    // En seconde
         public static readonly TimeSpan TEMPS_REAPPARITION = TimeSpan.FromSeconds(5);
 
-        public const double BATEAU_ACCELERATION = 200;
+        public const double BATEAU_ACCELERATION = 200;  // Vitesse en px/s
 
         public const int JOUEUR_EXPERIENCE_MAX_N1 = 100;
         public const double MULTIPLICATEUR_NIVEAU = 1.5;
@@ -34,7 +34,7 @@ namespace Survival_Island.Outils
         public const int LARGEUR_NAVIRE = 50;
         public const int HAUTEUR_NAVIRE = 100;
 
-        public const int VITESSE_BOULET = 500;
+        public const int VITESSE_BOULET = 500;  // Vitesse en px/s
         public const int TAILLE_BOULET_INIT = 10;
 
         public const int ILE_VIE_MAX = 1000;
@@ -46,7 +46,7 @@ namespace Survival_Island.Outils
         public const int NOMBRE_ROCHERS_CARTE = 100;
         public const double MULTIPLICATEUR_TAILLE_ROCHER = 0.5;
 
-        public const int TEMPS_ROTATION_NAVIRE = 10;    // Millisecondes
+        public const int VITESSE_ROTATION_BATEAU = 250;     // Vitesse en deg/s
         public const int TOLERANCE_ANGLE_ROTATION = 5;  // En degré
 
         public const int BASE_COFFRE_VIE = JOUEUR_DEGATS * 3;

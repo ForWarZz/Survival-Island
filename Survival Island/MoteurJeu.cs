@@ -111,9 +111,12 @@ namespace Survival_Island
             miseAJourTemps = tempsActuel;
 
             Joueur.Deplacer(deltaTemps);
+            Joueur.MiseAJourRotation(deltaTemps);
+
             foreach (Ennemi ennemi in GestionVagues.EnnemisActuels)
             {
                 ennemi.Deplacer(deltaTemps);
+                ennemi.MiseAJourRotation(deltaTemps);
                 ennemi.VerifierJoueursDansRayon();
 
                 if (ennemi.CanonActif)
