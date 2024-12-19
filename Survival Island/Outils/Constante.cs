@@ -76,7 +76,7 @@ namespace Survival_Island.Outils
         public const int VAGUE_MAX_ENNEMI = 8;
 
         public const string MESSAGE_VAGUE_EN_COURS = "Les ennemis arrivent. Protégez l'île à tout prix !";
-        public const string MESSAGE_VAGUE_EN_ATTENTE = "Allez cherchez des trésors pour vous restaurez. Les ennemis arrivent dans {0} secondes !";
+        public const string MESSAGE_VAGUE_EN_ATTENTE = "Allez cherchez des trésors pour vous restaurer. Les ennemis arrivent dans {0} secondes !";
 
         public const int VIE_BASE_ENNEMI = 100;
         public const int MULTIPLICATEUR_VIE_ENNEMI = 2;

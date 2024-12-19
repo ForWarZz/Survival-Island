@@ -67,6 +67,8 @@ namespace Survival_Island
                     Canvas.SetTop(carreauMer, i * bitmapMer.Height);
 
                     carte.Children.Add(carreauMer);
+
+                    //Console.WriteLine("DEBUG: Ajout carreau mer");
                 }
             }
         }
@@ -156,7 +158,7 @@ namespace Survival_Island
         {
             if (Calcul.DistanceAvec(collision.Centre, Ile.Centre) < Constante.MARGE_ILE)
             {
-                Console.WriteLine("DEBUG: Trop proche de l'île");
+                //Console.WriteLine("DEBUG: Trop proche de l'île");
                 return false;
             }
 
@@ -164,7 +166,7 @@ namespace Survival_Island
             {
                 if (obstacleDejaPresent != null && obstacleDejaPresent.EnCollisionAvec(collision))
                 {
-                    Console.WriteLine("DEBUG: Collision avec obstacle");
+                    //Console.WriteLine("DEBUG: Collision avec obstacle");
                     return false;
                 }
             }
@@ -173,7 +175,7 @@ namespace Survival_Island
             {
                 if (objetsBonusDejaPresent != null && objetsBonusDejaPresent.EnCollisionAvec(collision))
                 {
-                    Console.WriteLine("DEBUG: Collision avec objet bonus");
+                    //Console.WriteLine("DEBUG: Collision avec objet bonus");
                     return false;
                 }
             }

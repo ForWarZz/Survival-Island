@@ -214,6 +214,8 @@ namespace Survival_Island
                 {
                     if (boulet.EnCollisionAvec(obstacle))
                     {
+                        //Console.WriteLine("DEBUG: Boulet touché obstacle");
+
                         bouletsASupprimer.Add(boulet);
                         break;
                     }
@@ -226,6 +228,8 @@ namespace Survival_Island
                     {
                         GestionCarte.Ile.InfligerDegats(boulet.Tireur.Degats);
                     }
+
+                    //Console.WriteLine("DEBUG: Boulet touché l'île");
 
                     bouletsASupprimer.Add(boulet);
                     continue;
@@ -250,6 +254,8 @@ namespace Survival_Island
                             ObjetsBonus.RemoveAt(j);
                         }
 
+                        //Console.WriteLine("DEBUG: Objet bonus touché");
+
                         bouletsASupprimer.Add(boulet);
                         break;
                     }
@@ -260,6 +266,9 @@ namespace Survival_Island
                 {
                     Joueur.InfligerDegats(boulet.Tireur.Degats);
                     bouletsASupprimer.Add(boulet);
+
+                    //Console.WriteLine("DEBUG: Joueur touché");
+
                     continue;
                 }
 
@@ -280,6 +289,8 @@ namespace Survival_Island
                             Joueur.AjouterExperience(Constante.RECOMPENSE_EXP_ENNEMI_TUE);
                             Joueur.MettreAJour();
                         }
+
+                        //Console.WriteLine("DEBUG: Ennemi touché");
 
                         bouletsASupprimer.Add(boulet);
                         break;
