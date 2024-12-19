@@ -90,15 +90,37 @@ namespace Survival_Island.Outils
 
 
         public static readonly double[] MODE_QUATRE = [4.0, 360.0, 1.1];
+
+        public const string MODE_IGNORE_NOM = "IGNORER";
+        public const string MODE_CLASSIQUE_NOM = "CLASSIQUE";
+        public const string MODE_QUATRE_NOM = "QUATRE";
+
         public static readonly double[] MODE_DOUBLE = [2.0, 0.0, 1.1, 10.0];
+        public const string MODE_DOUBLE_NOM = "DOUBLE";
+
         public static readonly double[] MODE_POMPE = [3.0, 20.0, 1.1];
+        public const string MODE_POMPE_NOM = "POMPE";
+
         public static readonly double[] MODE_OCTOPUS = [8.0, 360.0, 1.3];
+        public const string MODE_OCTOPUS_NOM = "OCTOPUS";
+
         public static readonly double[] MODE_QUATRO_PLUS = [4.0, 360.0, 0.8, 10.0, 30.0];
+        public const string MODE_QUATRO_PLUS_NOM = "QUATRO+";
+
         public static readonly double[] MODE_TRIO = [3.0, 0.0, 1.0, 15.0, 15.0];
+        public const string MODE_TRIO_NOM = "TRIO";
+
         public static readonly double[] MODE_MEGA = [1.0, 0.0, 1.8, 20.0, 60.0];
+        public const string MODE_MEGA_NOM = "MEGA";
+
         public static readonly double[] MODE_EVENTAILLE = [6.0, 180.0, 1.0];
+        public const string MODE_EVENTAILLE_NOM = "EVENTAILLE";
+
         public static readonly double[] MODE_SNIPER = [1.0, 0.0, 3.0, 40.0, 0.0];
+        public const string MODE_SNIPER_NOM = "SNIPER";
+
         public static readonly double[] MODE_MK30 = [5.0, 35.0, 0.8, 20.0, 15.0];
+        public const string MODE_MK30_NOM = "MK30";
 
         public const int MUSIQUE_DE_BASE = 0;
         public const int NB_MUSIQUE = 4;

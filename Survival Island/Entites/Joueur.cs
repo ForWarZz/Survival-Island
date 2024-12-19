@@ -65,105 +65,96 @@ namespace Survival_Island.Entites
 
         private void AfficherMenuClasse()
         {
-            if (ModeBateau == "classique")
+            if (ModeBateau == Constante.MODE_CLASSIQUE_NOM)
             {
                 //Affichage du menu de niveau 5
 
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
-                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("quatre"); };
-                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("pompe"); };
-                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("double"); };
+                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse(Constante.MODE_QUATRE_NOM); };
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse(Constante.MODE_POMPE_NOM); };
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse(Constante.MODE_DOUBLE_NOM); };
             }
-            else if (ModeBateau == "quatre")
+            else if (ModeBateau == Constante.MODE_QUATRE_NOM)
             {
-
                 fenetre.menuClasse.Visibility = Visibility.Visible;
-
 
                 fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ImageOcto;
                 fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ImageQuatroPlus;
                 fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ImageEventaille;
 
+                fenetre.btnQuatre.Content = Constante.MODE_OCTOPUS_NOM;
+                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse(Constante.MODE_OCTOPUS_NOM); };
 
-                fenetre.btnQuatre.Content = "Octopus";
-                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("octopus"); };
+                fenetre.btnPompe.Content = Constante.MODE_QUATRO_PLUS_NOM;
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse(Constante.MODE_QUATRO_PLUS_NOM); };
 
-                fenetre.btnPompe.Content = "QuatroPlus";
-                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("quatroPlus"); };
-
-                fenetre.btnDouble.Content = "Eventaille";
-                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
+                fenetre.btnDouble.Content = Constante.MODE_EVENTAILLE_NOM;
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse(Constante.MODE_EVENTAILLE_NOM); };
             }
-            else if (ModeBateau == "double")
+            else if (ModeBateau == Constante.MODE_DOUBLE_NOM)
             {
-
                 fenetre.menuClasse.Visibility = Visibility.Visible;
-
 
                 fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ImageTrio;
                 fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ImageMega;
                 fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ImageEventaille;
 
+                fenetre.btnQuatre.Content = Constante.MODE_TRIO_NOM;
+                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse(Constante.MODE_TRIO_NOM); };
 
+                fenetre.btnPompe.Content = Constante.MODE_MEGA_NOM;
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse(Constante.MODE_MEGA_NOM); };
 
-                fenetre.btnQuatre.Content = "trio";
-                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("trio"); };
-
-                fenetre.btnPompe.Content = "Mega";
-                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("Mega"); };
-
-                fenetre.btnDouble.Content = "Eventaille";
-                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
+                fenetre.btnDouble.Content = Constante.MODE_EVENTAILLE_NOM;
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse(Constante.MODE_EVENTAILLE_NOM); };
             }
-            else if (ModeBateau == "pompe")
+            else if (ModeBateau == Constante.MODE_POMPE_NOM)
             {
-
                 fenetre.menuClasse.Visibility = Visibility.Visible;
 
                 fenetre.imgModeDeTir1.Source = MoteurJeu.GestionImages.ImageSniper;
                 fenetre.imgModeDeTir2.Source = MoteurJeu.GestionImages.ImageMk30;
                 fenetre.imgModeDeTir3.Source = MoteurJeu.GestionImages.ImageEventaille;
 
+                fenetre.btnQuatre.Content = Constante.MODE_SNIPER_NOM;
+                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse(Constante.MODE_SNIPER_NOM); };
 
-                fenetre.btnQuatre.Content = "sniper";
-                fenetre.btnQuatre.Click += (sender, e) => { ChoisirClasse("sniper"); };
+                fenetre.btnPompe.Content = Constante.MODE_MK30_NOM;
+                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse(Constante.MODE_MK30_NOM); };
 
-                fenetre.btnPompe.Content = "mk30";
-                fenetre.btnPompe.Click += (sender, e) => { ChoisirClasse("mk30"); };
-
-                fenetre.btnDouble.Content = "Eventaille";
-                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse("Eventaille"); };
+                fenetre.btnDouble.Content = Constante.MODE_EVENTAILLE_NOM;
+                fenetre.btnDouble.Click += (sender, e) => { ChoisirClasse(Constante.MODE_EVENTAILLE_NOM); };
             }
 
-            fenetre.btnIgnore.Click += (sender, e) => { ChoisirClasse("ignore"); };
+            fenetre.btnIgnore.Click += (sender, e) => { ChoisirClasse(Constante.MODE_IGNORE_NOM); };
         }
 
         private void ChoisirClasse(string classe)
         {
             // Appliquer les modifications en fonction de la classe choisie
-            if (Niveau >= 5 && ModeBateau == "classique" && classe != "ignore")
+            if (Niveau >= 5 && ModeBateau == Constante.MODE_CLASSIQUE_NOM && classe != Constante.MODE_IGNORE_NOM)
             {
-                if (classe == "quatre")
+                if (classe == Constante.MODE_QUATRE_NOM)
                 {
-                    ModeBateau = "quatre";
+                    ModeBateau = Constante.MODE_QUATRE_NOM;
                     this.nombreBouletsParShoot = (int)Constante.MODE_QUATRE[0];
                     this.angleBoulets = (int)Constante.MODE_QUATRE[1];
                     this.TempsRechargementCanon = Constante.MODE_QUATRE[2];
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                 }
-                else if (classe == "double")
+                else if (classe == Constante.MODE_DOUBLE_NOM)
                 {
-                    ModeBateau = "double";
+                    ModeBateau = Constante.MODE_DOUBLE_NOM;
                     this.nombreBouletsParShoot = (int)Constante.MODE_DOUBLE[0];
                     this.angleBoulets = (int)Constante.MODE_DOUBLE[1];
                     this.TempsRechargementCanon = Constante.MODE_DOUBLE[2];
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                     this.espacementBoulets = (int)Constante.MODE_DOUBLE[3];
                 }
-                else if (classe == "pompe")
+                else if (classe == Constante.MODE_POMPE_NOM)
                 {
-                    ModeBateau = "pompe";
+                    ModeBateau = Constante.MODE_POMPE_NOM;
                     this.nombreBouletsParShoot = (int)Constante.MODE_POMPE[0];
                     this.angleBoulets = (int)Constante.MODE_POMPE[1];
                     this.TempsRechargementCanon = Constante.MODE_POMPE[2];
@@ -171,33 +162,33 @@ namespace Survival_Island.Entites
                 }
                 this.NiveauClasse = 1;
             }
-            else if (Niveau >= 15 && classe != "ignore")
+            else if (Niveau >= 15 && classe != Constante.MODE_IGNORE_NOM)
             {
-                if (ModeBateau == "quatre")
+                if (ModeBateau == Constante.MODE_QUATRE_NOM)
                 {
-                    if (classe == "octopus")
+                    if (classe == Constante.MODE_OCTOPUS_NOM)
                     {
-                        ModeBateau = "octopus";
+                        ModeBateau = Constante.MODE_OCTOPUS_NOM;
                         this.nombreBouletsParShoot = (int)Constante.MODE_OCTOPUS[0];
                         this.angleBoulets = (int)Constante.MODE_OCTOPUS[1];
                         this.TempsRechargementCanon = Constante.MODE_OCTOPUS[2];
                         this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                     }
-                    else if (classe == "quatroPlus")
+                    else if (classe == Constante.MODE_QUATRO_PLUS_NOM)
                     {
-                        ModeBateau = "quatroPlus";
+                        ModeBateau = Constante.MODE_QUATRO_PLUS_NOM;
                         this.nombreBouletsParShoot = (int)Constante.MODE_QUATRO_PLUS[0];
                         this.angleBoulets = (int)Constante.MODE_QUATRO_PLUS[1];
                         this.TempsRechargementCanon = Constante.MODE_QUATRO_PLUS[2];
-                        this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_QUATRO_PLUS[3]) ; 
+                        this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_QUATRO_PLUS[3]);
                         this.TailleBoulets = (int)Constante.MODE_QUATRO_PLUS[4];
                     }
                 }
-                else if (ModeBateau == "double")
+                else if (ModeBateau == Constante.MODE_DOUBLE_NOM)
                 {
-                    if (classe == "trio")
+                    if (classe == Constante.MODE_TRIO_NOM)
                     {
-                        ModeBateau = "trio";
+                        ModeBateau = Constante.MODE_TRIO_NOM;
                         this.nombreBouletsParShoot = (int)Constante.MODE_TRIO[0];
                         this.angleBoulets = (int)Constante.MODE_TRIO[1];
                         this.TempsRechargementCanon = Constante.MODE_TRIO[2];
@@ -205,43 +196,40 @@ namespace Survival_Island.Entites
                         this.espacementBoulets = (int)Constante.MODE_TRIO[3];
                         this.TailleBoulets = (int)Constante.MODE_TRIO[4];
                     }
-                    else if (classe == "Mega")
+                    else if (classe == Constante.MODE_MEGA_NOM)
                     {
-                        ModeBateau = "Mega";
+                        ModeBateau = Constante.MODE_MEGA_NOM;
                         this.nombreBouletsParShoot = (int)Constante.MODE_MEGA[0];
                         this.angleBoulets = (int)Constante.MODE_MEGA[1];
                         this.TempsRechargementCanon = Constante.MODE_MEGA[2];
                         this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_MEGA[3]);
                         this.TailleBoulets = (int)Constante.MODE_MEGA[4];
                     }
-                    
                 }
-                else if (ModeBateau == "pompe")
+                else if (ModeBateau == Constante.MODE_POMPE_NOM)
                 {
-                    if (classe == "sniper")
+                    if (classe == Constante.MODE_SNIPER_NOM)
                     {
-                        ModeBateau = "sniper";
+                        ModeBateau = Constante.MODE_SNIPER_NOM;
                         this.nombreBouletsParShoot = (int)Constante.MODE_SNIPER[0];
                         this.angleBoulets = (int)Constante.MODE_SNIPER[1];
                         this.TempsRechargementCanon = Constante.MODE_SNIPER[2];
                         this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_SNIPER[3]);
                         this.espacementBoulets = (int)Constante.MODE_SNIPER[4];
                     }
-                    else if (classe == "mk30")
+                    else if (classe == Constante.MODE_MK30_NOM)
                     {
-                        ModeBateau = "mk30";
+                        ModeBateau = Constante.MODE_MK30_NOM;
                         this.nombreBouletsParShoot = (int)Constante.MODE_MK30[0];
                         this.angleBoulets = (int)Constante.MODE_MK30[1];
                         this.TempsRechargementCanon = Constante.MODE_MK30[2];
                         this.Degats = (int)((this.Degats / this.nombreBouletsParShoot) * 2 + Constante.MODE_MK30[3]);
                         this.TailleBoulets = (int)Constante.MODE_MK30[4];
                     }
-                    
-                    
                 }
-                if (classe == "Eventaille")
+                if (classe == Constante.MODE_EVENTAILLE_NOM)
                 {
-                    ModeBateau = "Eventaille";
+                    ModeBateau = Constante.MODE_EVENTAILLE_NOM;
                     this.nombreBouletsParShoot = (int)Constante.MODE_EVENTAILLE[0];
                     this.angleBoulets = (int)Constante.MODE_EVENTAILLE[1];
                     this.TempsRechargementCanon = Constante.MODE_EVENTAILLE[2];
@@ -253,8 +241,6 @@ namespace Survival_Island.Entites
             // Masquer le menu de sélection de classe
             fenetre.menuClasse.Visibility = Visibility.Hidden;
         }
-
-
 
         public override void Apparaitre(Point position)
         {

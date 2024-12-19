@@ -65,7 +65,7 @@ namespace Survival_Island.Entites.Navire
             espacementBoulets = 0;
             angleBoulets = 0;
 
-            ModeBateau = "classique";
+            ModeBateau = Constante.MODE_CLASSIQUE_NOM;
         }
 
         public virtual void Deplacer(double deltaTemps)
