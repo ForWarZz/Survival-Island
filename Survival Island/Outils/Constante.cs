@@ -1,4 +1,6 @@
-﻿namespace Survival_Island.Outils
+﻿using System.Collections.Immutable;
+
+namespace Survival_Island.Outils
 {
     internal class Constante
     {
@@ -81,5 +83,10 @@
         public const double TEMPS_RECHARGEMENT_MIN_ENNEMI = 1.0;
         public const double TEMPS_RECHARGEMENT_BASE_ENNEMI = 3.0;
         public const double TEMPS_RECHARGEMENT_MULTIPLICATEUR_ENNEMI = 3.0;
+
+
+        public static readonly ImmutableArray<double> VALEUR_MODE_QUATRE = ImmutableArray.Create(4, 360, 1.1);
+
+
     }
 }

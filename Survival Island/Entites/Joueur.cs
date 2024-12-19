@@ -85,7 +85,9 @@ namespace Survival_Island.Entites
 
                 fenetre.btnSpread.Content = "QuatroPlus";
                 fenetre.btnSpread.Click += (sender, e) => { ChoisirClasse("quatroPlus"); };
-                fenetre.btnDuo.Click += (sender, e) => { ChoisirClasse("duo"); };
+
+                fenetre.btnDuo.Content = "trioDuo";
+                fenetre.btnDuo.Click += (sender, e) => { ChoisirClasse("trioDuo"); };
             }
 
             fenetre.btnIgnore.Click += (sender, e) => { ChoisirClasse("ignore"); };
@@ -150,13 +152,48 @@ namespace Survival_Island.Entites
                         this.TailleBoulets = 30;
 
                     }
+                    else if (classe == "trioDuo")
+                    {
+                        ModeBateau = "trioDuo";
+                        this.nombreBouletsParShoot = 6;
+                        this.angleBoulets = 180;
+                        this.TempsRechargementCanon = 1;
+                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                    }
 
                     this.NiveauClasse = 2;
                 }
             }
 
-            // Masquer le menu de sélection de classe
-            fenetre.menuClasse.Visibility = Visibility.Hidden;
+            else if (ModeBateau == "quatre")
+            {
+                if (classe == "octopus")
+                {
+
+                    ModeBateau = "octopus";
+                    this.nombreBouletsParShoot = 8;
+                    this.angleBoulets = 360;
+                    this.TempsRechargementCanon = 1.3;
+                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+
+                }
+                else if (classe == "quatroPlus")
+                {
+
+                    ModeBateau = "quatroPlus";
+                    this.nombreBouletsParShoot = 4;
+                    this.angleBoulets = 360;
+                    this.TempsRechargementCanon = 0.8;
+                    this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 10;
+                    this.TailleBoulets = 30;
+
+                }
+
+                this.NiveauClasse = 2;
+            }
+        
+        // Masquer le menu de sélection de classe
+        fenetre.menuClasse.Visibility = Visibility.Hidden;
         }
 
 
