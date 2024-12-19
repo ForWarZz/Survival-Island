@@ -147,7 +147,6 @@ namespace Survival_Island.Entites
                 }
                 else if (classe == "pompe")
                 {
-
                     ModeBateau = "pompe";
                     this.nombreBouletsParShoot = 3;
                     this.angleBoulets = 20;
@@ -182,6 +181,35 @@ namespace Survival_Island.Entites
                         this.TailleBoulets = 30;
 
                     }
+                    
+
+                    this.NiveauClasse = 2;
+                }
+
+                else if (ModeBateau == "double")
+                {
+                    if (classe == "trio")
+                    {
+
+                        ModeBateau = "trio";
+                        this.nombreBouletsParShoot = 3;
+                        this.angleBoulets = 0;
+                        this.TempsRechargementCanon = 1.0;
+                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                        this.espacementBoulets = 10;
+                    }
+                    else if (classe == "MegaDouble")
+                    {
+
+                        ModeBateau = "MegaDouble";
+                        this.nombreBouletsParShoot = 2;
+                        this.angleBoulets = 0;
+                        this.TempsRechargementCanon = 1.8;
+                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
+                        this.TailleBoulets = 40;
+
+
+                    }
                     else if (classe == "Eventaille")
                     {
                         ModeBateau = "Eventaille";
@@ -193,79 +221,53 @@ namespace Survival_Island.Entites
 
                     this.NiveauClasse = 2;
                 }
-            }
 
-            else if (ModeBateau == "double")
-            {
-                if (classe == "trio")
+                else if (ModeBateau == "pompe")
                 {
+                    if (classe == "sniper")
+                    {
 
-                    ModeBateau = "trio";
-                    this.nombreBouletsParShoot = 3;
-                    this.angleBoulets = 0;
-                    this.TempsRechargementCanon = 1.0;
-                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                    this.espacementBoulets = 10;
+                        ModeBateau = "sniper";
+                        this.nombreBouletsParShoot = 12;
+                        this.angleBoulets = 5;
+                        this.TempsRechargementCanon = 3.0;
+                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                        this.espacementBoulets = 10;
+                    }
+                    else if (classe == "mk30")
+                    {
+
+                        ModeBateau = "mk30";
+                        this.nombreBouletsParShoot = 5;
+                        this.angleBoulets = 35;
+                        this.TempsRechargementCanon = 0.8;
+                        this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
+                        this.TailleBoulets = 15;
+
+
+                    }
+                    else if (classe == "Eventaille")
+                    {
+                        ModeBateau = "Eventaille";
+                        this.nombreBouletsParShoot = 6;
+                        this.angleBoulets = 180;
+                        this.TempsRechargementCanon = 1;
+                        this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
+                    }
+
+                    this.NiveauClasse = 2;
                 }
-                else if (classe == "MegaDouble")
-                {
 
-                    ModeBateau = "MegaDouble";
-                    this.nombreBouletsParShoot = 2;
-                    this.angleBoulets = 0;
-                    this.TempsRechargementCanon = 1.8;
-                    this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
-                    this.TailleBoulets = 40;
-
-
-                }
-                else if (classe == "Eventaille")
-                {
-                    ModeBateau = "Eventaille";
-                    this.nombreBouletsParShoot = 6;
-                    this.angleBoulets = 180;
-                    this.TempsRechargementCanon = 1;
-                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                }
-
-                this.NiveauClasse = 2;
-            }
-
-            else if (ModeBateau == "pompe")
-            {
-                if (classe == "sniper")
-                {
-
-                    ModeBateau = "sniper";
-                    this.nombreBouletsParShoot = 12;
-                    this.angleBoulets = 5;
-                    this.TempsRechargementCanon = 3.0;
-                    this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
-                    this.espacementBoulets = 10;
-                }
-                else if (classe == "mk30")
-                {
-
-                    ModeBateau = "mk30";
-                    this.nombreBouletsParShoot = 5;
-                    this.angleBoulets = 35;
-                    this.TempsRechargementCanon = 0.8;
-                    this.Degats = ((this.Degats / this.nombreBouletsParShoot) * 2) + 20;
-                    this.TailleBoulets = 15;
-
-
-                }
-                else if (classe == "Eventaille")
+                if (classe == "Eventaille")
                 {
                     ModeBateau = "Eventaille";
                     this.nombreBouletsParShoot = 6;
-                    this.angleBoulets = 180;
+                    this.angleBoulets = 160;
                     this.TempsRechargementCanon = 1;
                     this.Degats = (this.Degats / this.nombreBouletsParShoot) * 2;
                 }
-
-                this.NiveauClasse = 2;
             }
+
 
             // Masquer le menu de sélection de classe
             fenetre.menuClasse.Visibility = Visibility.Hidden;
