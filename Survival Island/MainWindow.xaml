@@ -65,44 +65,49 @@
             Height="20"
             VerticalAlignment="Top"
             Background="White">
-            <MenuItem Background="White" Header="Paramètres">
+            <MenuItem Background="White" Header="_Paramètres">
                 <MenuItem
                     x:Name="MenuSon"
                     Click="MenuSonClick"
-                    Header="Son..." />
+                    Header="_Son..." />
                 <MenuItem
                     x:Name="MenuChangerBateau"
                     Click="MenuChangerBateau_Click"
-                    Header="Changer Bateau..." />
+                    Header="_Changer Bateau..." />
             </MenuItem>
             <MenuItem
                 x:Name="MenuQuitter"
                 Click="MenuQuitter_Click"
-                Header="Quitter" />
+                Header="_Quitter" />
         </Menu>
+
 
         <TextBlock
             x:Name="txtStatusVague"
             Margin="0,39,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
+            FontFamily="Stencil"
             Text="Les ennemies vont arriver. Rapprochez vous de l'île."
-            Visibility="Hidden" FontFamily="Stencil" />
+            Visibility="Hidden" />
 
         <TextBlock
             x:Name="txtVagueActuelle"
             Margin="25,39,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
+            FontFamily="Stencil"
+            FontSize="14"
             Text="Vague actuelle : 1"
-            Visibility="Hidden" FontFamily="Stencil" FontSize="14" />
-        
+            Visibility="Hidden" />
+
         <TextBlock
             x:Name="txtNombreTue"
             Margin="0,39,25,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Visibility="Hidden" FontFamily="Stencil"><Run Language="fr-fr" Text="Ennemis tués" /><Run Text=" :" /><Run Text=" 0" /></TextBlock>
+            FontFamily="Stencil"
+            Visibility="Hidden"><Run Language="fr-fr" Text="Ennemis tués" /><Run Text=" :" /><Run Text=" 0" /></TextBlock>
 
         <StackPanel
             x:Name="hudJoueur"
@@ -179,30 +184,30 @@
                 Background="#6d5445"
                 BorderBrush="#6d5445"
                 Click="btnJouer_Click"
-                FontFamily="Stencil"
                 Content="Jouer"
+                FontFamily="Stencil"
                 FontSize="18"
                 Foreground="White" />
             <Button
                 x:Name="btnOuvrirOptions"
-                FontFamily="Stencil"
                 Height="40"
                 Margin="0,20,0,0"
                 Background="#6d5445"
                 BorderBrush="#6d5445"
                 Click="btnOuvrirOptions_Click"
                 Content="Paramètres"
+                FontFamily="Stencil"
                 FontSize="18"
                 Foreground="White" />
             <Button
                 x:Name="btnFermerJeu"
-                FontFamily="Stencil"
                 Height="40"
                 Margin="0,60,0,0"
                 Background="#6d5445"
                 BorderBrush="#6d5445"
                 Click="btnFermerJeu_Click"
                 Content="Retour au bureau"
+                FontFamily="Stencil"
                 FontSize="18"
                 Foreground="White" />
         </StackPanel>
@@ -537,9 +542,10 @@
                     VerticalAlignment="Center"
                     Background="#6d5445"
                     BorderBrush="#6d5445"
+                    Click="btnRejouer_Click"
                     Content="Rejouer"
                     FontSize="18"
-                    Foreground="White" Click="btnRejouer_Click" />
+                    Foreground="White" />
             </StackPanel>
         </StackPanel>
 
