@@ -22,20 +22,18 @@ namespace Survival_Island
         public int IndiceMusiqueJoue { get; set; }
         public int IndiceSonJoue { get; set; }
 
-
         public GestionSons()
         {
 
             InitMusique();
-
             InitSons();
-
 
             IndiceSonJoue = Constante.SON_DE_BASE;
             IndiceMusiqueJoue = Constante.MUSIQUE_DE_BASE;
 
             Musiques[IndiceMusiqueJoue].Play();
 
+            // Les sounds players n'étant pas idéal, nous utilisons les media players
             //SoundPlayerTire = new SoundPlayer(Application.GetResourceStream(new Uri(Chemin.SON_TIRE)).Stream);
         }
 

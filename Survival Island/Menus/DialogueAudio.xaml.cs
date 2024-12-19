@@ -24,12 +24,12 @@ namespace Survival_Island
         {
             InitializeComponent();
             this.moteurJeu = moteurJeu;
-            SlideMusique.Value = moteurJeu.GestionSons.Musiques[moteurJeu.GestionSons.indiceMusiqueJoue].Volume;
+            SlideMusique.Value = moteurJeu.GestionSons.Musiques[moteurJeu.GestionSons.IndiceMusiqueJoue].Volume;
         }
 
         private void btnAppliquer_Click(object sender, RoutedEventArgs e)
         {
-            moteurJeu.GestionSons.Musiques[moteurJeu.GestionSons.indiceMusiqueJoue].Volume = SlideMusique.Value;
+            moteurJeu.GestionSons.Musiques[moteurJeu.GestionSons.IndiceMusiqueJoue].Volume = SlideMusique.Value;
             DialogResult = true;
         }
 
