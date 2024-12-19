@@ -33,8 +33,6 @@ namespace Survival_Island
         {
             imageActuelle = images[numBateau];
             imgBateau.Source = imageActuelle;
-
-            ((Image)joueur.CanvaElement).Source = imageActuelle;
         }
 
         private void btnDroite_Click(object sender, RoutedEventArgs e)
@@ -55,6 +53,7 @@ namespace Survival_Island
 
         private void btnValider_Click(object sender, RoutedEventArgs e)
         {
+            ((Image)joueur.CanvaElement).Source = imageActuelle;
             DialogResult = true;
         }
     }

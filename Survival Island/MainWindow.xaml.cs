@@ -154,11 +154,6 @@ namespace Survival_Island
         {
             DialogueAudio dialog = new DialogueAudio(moteurJeu);
             bool? result = dialog.ShowDialog();
-
-            if (result == false)
-            {
-                moteurJeu.GestionSons.MediaPlayerMusique.Volume = dialog.SlideMusique.Value;
-            }
         }
 
         private void MenuBateauChange()

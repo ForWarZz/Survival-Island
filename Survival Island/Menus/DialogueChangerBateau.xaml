@@ -40,7 +40,7 @@
                     VerticalAlignment="Center"
                     Content="&gt;" Click="btnDroite_Click" />
             </StackPanel>
-            <Button x:Name="btnValider" Content="Valider" HorizontalAlignment="Center" Width="100" Height="20" Click="btnValider_Click"/>
+            <Button x:Name="btnValider" Content="Appliquer" HorizontalAlignment="Center" Width="100" Height="20" Click="btnValider_Click"/>
         </StackPanel>
     </Grid>
 </Window>
