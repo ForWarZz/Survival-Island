@@ -65,9 +65,9 @@ namespace Survival_Island.Outils
 
         public const int RAYON_DETECTION_JOUEUR = 300;
         public const int MARGE_APPARITION_ENNEMI = 500;
-        public const int TOLERANCE_CIBLE_ENNEMI = 50;
+        public const int TOLERANCE_CIBLE_ENNEMI = 100;
 
-        public const double DISTANCE_EVASION = 50.0;
+        public const double DISTANCE_EVASION = 100.0;
 
         public const int TEMPS_ENTRE_VAGUE = 20;    // En seconde
 
