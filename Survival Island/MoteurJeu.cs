@@ -316,7 +316,8 @@ namespace Survival_Island
 
         public void Rejouer()
         {
-            Carte.Children.Remove(GestionCarte.Ile.CanvaElement);
+            GestionCarte.Ile.Disparaitre();
+            Joueur.Disparaitre();
 
             for (int i = Boulets.Count - 1; i >= 0; i--)
             {
