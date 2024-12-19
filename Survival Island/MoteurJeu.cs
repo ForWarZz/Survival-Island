@@ -360,7 +360,10 @@ namespace Survival_Island
                 GestionVagues.EnnemisActuels.RemoveAt(i);
             }
 
-            Joueur = new Joueur(this);
+            Joueur nouveauJoueur = new Joueur(this);
+            ((Image)nouveauJoueur.CanvaElement).Source = ((Image)Joueur.CanvaElement).Source;
+
+            Joueur = nouveauJoueur;
             InitJeu();
 
             EstPause = false;
