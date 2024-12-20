@@ -14,7 +14,7 @@ namespace Survival_Island
         public int numBateau;
 
         private BitmapImage[] images;
-        public BitmapImage imageActuelle;
+        private BitmapImage imageActuelle;
 
         private Joueur joueur;
 

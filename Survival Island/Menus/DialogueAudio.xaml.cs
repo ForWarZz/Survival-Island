@@ -19,7 +19,7 @@ namespace Survival_Island
 
     public partial class DialogueAudio : Window
     {
-        MoteurJeu moteurJeu;
+        private MoteurJeu moteurJeu;
         public DialogueAudio(MoteurJeu moteurJeu)
         {
             InitializeComponent();

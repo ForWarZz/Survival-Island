@@ -119,6 +119,8 @@ namespace Survival_Island.Entites
             {
                 joueurDansRayon = false;
                 cibleActuelle = ciblePrincipale;
+
+                ChangerOrientation(orientationFinale);
                 return;
             }
 
